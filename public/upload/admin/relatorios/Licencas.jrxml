@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notaCredito" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d063b865-d206-41e6-8d71-fe91c210e883">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zebrar" mode="Opaque">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+			<style backcolor="#FBFBFB"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="diretorio" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\laragon\\www\\api-mutue-negocio\\public\\upload\\admin\\relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dirSubreportEmpresa" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     licencas.`id` AS licencas_id,
+     licencas.`tipo_licenca_id` AS licencas_tipo_licenca_id,
+     licencas.`designacao` AS licencas_designacao,
+     licencas.`status_licenca_id` AS licencas_status_licenca_id,
+     licencas.`created_at` AS licencas_created_at,
+     licencas.`updated_at` AS licencas_updated_at,
+     licencas.`canal_id` AS licencas_canal_id,
+     licencas.`user_id` AS licencas_user_id,
+     licencas.`descricao` AS licencas_descricao,
+     licencas.`valor` AS licencas_valor,
+     licencas.`tipo_taxa_id` AS licencas_tipo_taxa_id,
+     licencas.`limite_usuario` AS licencas_limite_usuario
+FROM
+     `licencas` licencas]]>
+	</queryString>
+	<field name="licencas_id" class="java.lang.Long"/>
+	<field name="licencas_tipo_licenca_id" class="java.lang.Long"/>
+	<field name="licencas_designacao" class="java.lang.String"/>
+	<field name="licencas_status_licenca_id" class="java.lang.Long"/>
+	<field name="licencas_created_at" class="java.sql.Timestamp"/>
+	<field name="licencas_updated_at" class="java.sql.Timestamp"/>
+	<field name="licencas_canal_id" class="java.lang.Long"/>
+	<field name="licencas_user_id" class="java.math.BigInteger"/>
+	<field name="licencas_descricao" class="java.lang.String"/>
+	<field name="licencas_valor" class="java.lang.Double"/>
+	<field name="licencas_tipo_taxa_id" class="java.lang.Long"/>
+	<field name="licencas_limite_usuario" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="146" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="144" width="555" height="1" uuid="0020e540-be4e-4c91-b217-039680cfe39f"/>
+			</line>
+			<subreport>
+				<reportElement x="354" y="3" width="200" height="141" uuid="8837b28a-323f-4cd1-8105-dcb83f560612"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{dirSubreportEmpresa}+"subreportLicenca.jasper"]]></subreportExpression>
+			</subreport>
+			<image>
+				<reportElement x="0" y="0" width="100" height="50" uuid="065cfc41-df53-4002-858a-01af3a2ae190"/>
+				<imageExpression><![CDATA[$P{diretorio}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="19"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="2" width="27" height="20" backcolor="#FBFBFB" uuid="5e4fec0e-c20b-4f5e-b40e-1f95515edd87"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="27" y="2" width="140" height="20" backcolor="#FBFBFB" uuid="c0db9939-c1fc-4ef6-8d7a-ba0e013fd76a"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Licença]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="167" y="2" width="152" height="20" backcolor="#FBFBFB" uuid="65110ad4-faf5-4551-82c0-02179b6b22fb"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="319" y="2" width="235" height="20" backcolor="#FBFBFB" uuid="b9c30483-62e0-462f-bb40-a3a24b83617f"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº Utilizadores]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="27" height="20" uuid="d6b730b1-fa05-46f2-80c5-08092ef5548a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="28" y="0" width="139" height="20" uuid="33a55bac-6c46-4a2a-af32-93e7d71c5d2d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{licencas_designacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="167" y="0" width="152" height="20" uuid="e3a4c853-a7e7-482e-bbd6-602958b0413e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{licencas_valor}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0">
+				<reportElement x="319" y="0" width="235" height="20" uuid="7a358263-a315-4273-8de9-ef1d1c470002"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{licencas_limite_usuario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="97">
+			<staticText>
+				<reportElement x="1" y="59" width="555" height="15" uuid="3f1514aa-f181-4fe0-a6be-acff970ad818"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Software de gestão comercial online, desenvolvido e Assistido pela Ramossoft-WinMarket]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="54" width="555" height="1" uuid="c008273b-ef4d-4a79-8224-3955379122bf"/>
+			</line>
+			<line>
+				<reportElement x="197" y="32" width="164" height="1" uuid="665860b2-01c8-40ee-b0b3-72699b25daa8"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="2" width="554" height="13" uuid="06eafaf4-98c8-4b92-bbea-8eb84576a695"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[A assinatura]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="38" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="5" width="4" height="31" backcolor="#3D5476" uuid="c2b2a3a1-a5a3-4095-a1d9-0bf4feda5a2d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="15" y="18" width="531" height="20" uuid="a03a96e9-3e2c-465c-902b-90df3d163309"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Caso falte licenças  na lista, o utilizador deverá solicitar o suporte técnico
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="5" width="40" height="13" uuid="5223282c-459f-4bc5-849d-835efd2f031f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOTA:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

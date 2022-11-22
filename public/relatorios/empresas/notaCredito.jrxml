@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notaCredito" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d063b865-d206-41e6-8d71-fe91c210e883">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="notaCreditoId" class="java.lang.String"/>
+	<parameter name="empresa_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     empresas.`id` AS empresas_id,
+     empresas.`nome` AS empresas_nome,
+     empresas.`pessoal_Contacto` AS empresas_pessoal_Contacto,
+     empresas.`endereco` AS empresas_endereco,
+     empresas.`pais_id` AS empresas_pais_id,
+     empresas.`saldo` AS empresas_saldo,
+     empresas.`canal_id` AS empresas_canal_id,
+     empresas.`status_id` AS empresas_status_id,
+     empresas.`nif` AS empresas_nif,
+     empresas.`gestor_cliente_id` AS empresas_gestor_cliente_id,
+     empresas.`tipo_cliente_id` AS empresas_tipo_cliente_id,
+     empresas.`tipo_regime_id` AS empresas_tipo_regime_id,
+     empresas.`logotipo` AS empresas_logotipo,
+     empresas.`website` AS empresas_website,
+     empresas.`email` AS empresas_email,
+     empresas.`referencia` AS empresas_referencia,
+     empresas.`pessoa_de_contacto` AS empresas_pessoa_de_contacto,
+     empresas.`created_at` AS empresas_created_at,
+     empresas.`updated_at` AS empresas_updated_at,
+     empresas.`cidade` AS empresas_cidade,
+     clientes.`id` AS clientes_id,
+     clientes.`nome` AS clientes_nome,
+     clientes.`pessoa_contacto` AS clientes_pessoa_contacto,
+     clientes.`email` AS clientes_email,
+     clientes.`website` AS clientes_website,
+     clientes.`numero_contrato` AS clientes_numero_contrato,
+     clientes.`data_contrato` AS clientes_data_contrato,
+     clientes.`tipo_conta_corrente` AS clientes_tipo_conta_corrente,
+     clientes.`conta_corrente` AS clientes_conta_corrente,
+     clientes.`telefone_cliente` AS clientes_telefone_cliente,
+     clientes.`taxa_de_desconto` AS clientes_taxa_de_desconto,
+     clientes.`limite_de_credito` AS clientes_limite_de_credito,
+     clientes.`endereco` AS clientes_endereco,
+     clientes.`gestor_id` AS clientes_gestor_id,
+     clientes.`canal_id` AS clientes_canal_id,
+     clientes.`status_id` AS clientes_status_id,
+     clientes.`nif` AS clientes_nif,
+     clientes.`operador` AS clientes_operador,
+     clientes.`tipo_cliente_id` AS clientes_tipo_cliente_id,
+     clientes.`user_id` AS clientes_user_id,
+     clientes.`empresa_id` AS clientes_empresa_id,
+     clientes.`created_at` AS clientes_created_at,
+     clientes.`updated_at` AS clientes_updated_at,
+     clientes.`pais_id` AS clientes_pais_id,
+     clientes.`diversos` AS clientes_diversos,
+     clientes.`cidade` AS clientes_cidade,
+     notas_credito_clientes.`id` AS notas_credito_clientes_id,
+     notas_credito_clientes.`empresa_id` AS notas_credito_clientes_empresa_id,
+     notas_credito_clientes.`cliente_id` AS notas_credito_clientes_cliente_id,
+     notas_credito_clientes.`numeracaoNotaCredito` AS notas_credito_clientes_numeracaoNotaCredito,
+     notas_credito_clientes.`valor_credito` AS notas_credito_clientes_valor_credito,
+     notas_credito_clientes.`descricao` AS notas_credito_clientes_descricao,
+     notas_credito_clientes.`numSequenciaNotaCredito` AS notas_credito_clientes_numSequenciaNotaCredito,
+     notas_credito_clientes.`valor_extenso` AS notas_credito_clientes_valor_extenso,
+     notas_credito_clientes.`user_id` AS notas_credito_clientes_user_id,
+     notas_credito_clientes.`created_at` AS notas_credito_clientes_created_at,
+     notas_credito_clientes.`updated_at` AS notas_credito_clientes_updated_at,
+     notas_credito_clientes.`tipo_user_id` AS notas_credito_clientes_tipo_user_id,
+     notas_credito_clientes.`hash` AS notas_credito_clientes_hash,
+     notas_credito_clientes.`nome_do_cliente` AS notas_credito_clientes_nome_do_cliente,
+     notas_credito_clientes.`telefone_cliente` AS notas_credito_clientes_telefone_cliente,
+     notas_credito_clientes.`nif_cliente` AS notas_credito_clientes_nif_cliente,
+     notas_credito_clientes.`email_cliente` AS notas_credito_clientes_email_cliente,
+     notas_credito_clientes.`endereco_cliente` AS notas_credito_clientes_endereco_cliente,
+     notas_credito_clientes.`conta_corrente_cliente` AS notas_credito_clientes_conta_corrente_cliente
+FROM
+     `empresas` empresas INNER JOIN `clientes` clientes ON empresas.`id` = clientes.`empresa_id`
+     INNER JOIN `notas_credito_clientes` notas_credito_clientes ON clientes.`id` = notas_credito_clientes.`cliente_id`
+     AND empresas.`id` = notas_credito_clientes.`empresa_id`
+WHERE
+     notas_credito_clientes.`empresa_id` = $P{empresa_id}
+     and notas_credito_clientes.`id` = $P{notaCreditoId}]]>
+	</queryString>
+	<field name="empresas_id" class="java.lang.Long"/>
+	<field name="empresas_nome" class="java.lang.String"/>
+	<field name="empresas_pessoal_Contacto" class="java.lang.String"/>
+	<field name="empresas_endereco" class="java.lang.String"/>
+	<field name="empresas_pais_id" class="java.lang.Long"/>
+	<field name="empresas_saldo" class="java.lang.Double"/>
+	<field name="empresas_canal_id" class="java.lang.Long"/>
+	<field name="empresas_status_id" class="java.lang.Long"/>
+	<field name="empresas_nif" class="java.lang.String"/>
+	<field name="empresas_gestor_cliente_id" class="java.lang.Long"/>
+	<field name="empresas_tipo_cliente_id" class="java.lang.Long"/>
+	<field name="empresas_tipo_regime_id" class="java.lang.Long"/>
+	<field name="empresas_logotipo" class="java.lang.String"/>
+	<field name="empresas_website" class="java.lang.String"/>
+	<field name="empresas_email" class="java.lang.String"/>
+	<field name="empresas_referencia" class="java.lang.String"/>
+	<field name="empresas_pessoa_de_contacto" class="java.lang.String"/>
+	<field name="empresas_created_at" class="java.sql.Timestamp"/>
+	<field name="empresas_updated_at" class="java.sql.Timestamp"/>
+	<field name="empresas_cidade" class="java.lang.String"/>
+	<field name="clientes_id" class="java.lang.Long"/>
+	<field name="clientes_nome" class="java.lang.String"/>
+	<field name="clientes_pessoa_contacto" class="java.lang.String"/>
+	<field name="clientes_email" class="java.lang.String"/>
+	<field name="clientes_website" class="java.lang.String"/>
+	<field name="clientes_numero_contrato" class="java.lang.String"/>
+	<field name="clientes_data_contrato" class="java.sql.Date"/>
+	<field name="clientes_tipo_conta_corrente" class="java.lang.String"/>
+	<field name="clientes_conta_corrente" class="java.lang.String"/>
+	<field name="clientes_telefone_cliente" class="java.lang.String"/>
+	<field name="clientes_taxa_de_desconto" class="java.lang.Double"/>
+	<field name="clientes_limite_de_credito" class="java.lang.Double"/>
+	<field name="clientes_endereco" class="java.lang.String"/>
+	<field name="clientes_gestor_id" class="java.lang.Long"/>
+	<field name="clientes_canal_id" class="java.lang.Long"/>
+	<field name="clientes_status_id" class="java.lang.Long"/>
+	<field name="clientes_nif" class="java.lang.String"/>
+	<field name="clientes_operador" class="java.lang.Long"/>
+	<field name="clientes_tipo_cliente_id" class="java.lang.Long"/>
+	<field name="clientes_user_id" class="java.lang.Long"/>
+	<field name="clientes_empresa_id" class="java.lang.Long"/>
+	<field name="clientes_created_at" class="java.sql.Timestamp"/>
+	<field name="clientes_updated_at" class="java.sql.Timestamp"/>
+	<field name="clientes_pais_id" class="java.lang.Long"/>
+	<field name="clientes_diversos" class="java.lang.String"/>
+	<field name="clientes_cidade" class="java.lang.String"/>
+	<field name="notas_credito_clientes_id" class="java.lang.Long"/>
+	<field name="notas_credito_clientes_empresa_id" class="java.lang.Long"/>
+	<field name="notas_credito_clientes_cliente_id" class="java.lang.Long"/>
+	<field name="notas_credito_clientes_numeracaoNotaCredito" class="java.lang.String"/>
+	<field name="notas_credito_clientes_valor_credito" class="java.lang.Double"/>
+	<field name="notas_credito_clientes_descricao" class="java.lang.String"/>
+	<field name="notas_credito_clientes_numSequenciaNotaCredito" class="java.lang.Integer"/>
+	<field name="notas_credito_clientes_valor_extenso" class="java.lang.String"/>
+	<field name="notas_credito_clientes_user_id" class="java.lang.Long"/>
+	<field name="notas_credito_clientes_created_at" class="java.sql.Timestamp"/>
+	<field name="notas_credito_clientes_updated_at" class="java.sql.Timestamp"/>
+	<field name="notas_credito_clientes_tipo_user_id" class="java.lang.Long"/>
+	<field name="notas_credito_clientes_hash" class="java.lang.String"/>
+	<field name="notas_credito_clientes_nome_do_cliente" class="java.lang.String"/>
+	<field name="notas_credito_clientes_telefone_cliente" class="java.lang.String"/>
+	<field name="notas_credito_clientes_nif_cliente" class="java.lang.String"/>
+	<field name="notas_credito_clientes_email_cliente" class="java.lang.String"/>
+	<field name="notas_credito_clientes_endereco_cliente" class="java.lang.String"/>
+	<field name="notas_credito_clientes_conta_corrente_cliente" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="58" splitType="Stretch">
+			<textField pattern="MM/dd/yyyy">
+				<reportElement x="492" y="38" width="63" height="20" uuid="5d2326c5-93a2-415f-a14e-1dccdd030b30"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{notas_credito_clientes_created_at}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="449" y="38" width="43" height="20" uuid="0451438f-2126-4b45-b792-5e842a1a7c78"/>
+				<text><![CDATA[Emitido:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1" y="38" width="100" height="20" uuid="faf93465-eb31-4b39-ab39-21ca07f5e3e2"/>
+				<textFieldExpression><![CDATA[$F{empresas_nome}.toUpperCase()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="242" splitType="Stretch">
+			<rectangle>
+				<reportElement x="361" y="22" width="3" height="121" backcolor="#FF0000" uuid="ac47d178-9d18-4a48-98fc-3f3ac422edcb"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="376" y="27" width="48" height="16" uuid="2023ed53-0289-4022-90bf-2863b27daf2a"/>
+				<text><![CDATA[CLIENTE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="377" y="43" width="178" height="20" uuid="1ae1769a-2af4-4ab9-a2e6-39b59fa25b4c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{notas_credito_clientes_nome_do_cliente}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="377" y="63" width="48" height="16" uuid="c4d12c46-689f-4ff6-a444-bfb2a33ecc2e"/>
+				<text><![CDATA[Telefone:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="22" width="3" height="121" backcolor="#FF0000" uuid="963b1588-cc5e-41b3-a1c7-3f16ebdb1be5"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="13" y="27" width="26" height="16" uuid="3cf17959-b183-40b2-917d-5f9831db9bdc"/>
+				<text><![CDATA[DE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="13" y="43" width="100" height="20" uuid="34b14970-4155-4323-b68d-ad2d3b8b1219"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_nome}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="377" y="127" width="82" height="16" uuid="3262030a-8a13-4693-a311-f5699a6995f8"/>
+				<text><![CDATA[Conta corrente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="79" width="36" height="16" uuid="09fdb900-8a79-4a88-b687-e6fb31d799af"/>
+				<text><![CDATA[E-mail:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="95" width="25" height="16" uuid="b8f734c6-927d-4cd6-b1ee-894ce9ddcc11"/>
+				<text><![CDATA[NIF:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="111" width="48" height="16" uuid="fa9ebdef-7d1b-4ee3-a968-9a59bb976c61"/>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="79" width="26" height="16" uuid="0dd1cfe3-7367-4f98-8c1b-8c8346f119be"/>
+				<text><![CDATA[NIF:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="127" width="36" height="16" uuid="cd3f7d5f-7e10-42f7-84f8-1dfebe02ff87"/>
+				<text><![CDATA[E-mail:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="95" width="48" height="16" uuid="15663512-4fce-4e66-aea5-85c24600ca8a"/>
+				<text><![CDATA[Telefone:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="63" width="48" height="16" uuid="2a3bd37e-1449-4620-9e92-fae5fa476385"/>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="111" width="48" height="16" uuid="e0b65428-68ba-4e52-b63e-84f20fb22d64"/>
+				<text><![CDATA[Website:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="168" width="3" height="57" backcolor="#000099" uuid="6d1f0b7e-d083-4bf1-82c4-a5a009cf7ad1"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="13" y="168" width="100" height="15" uuid="975b4151-11b6-41a4-9b11-7a0be3cf1b56"/>
+				<text><![CDATA[LUANDA, ANGOLA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="183" width="100" height="15" uuid="69e083b6-e635-4dd7-b808-6e702e406fc9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nota de Crédito]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="1" width="555" height="1" uuid="0020e540-be4e-4c91-b217-039680cfe39f"/>
+			</line>
+			<textField>
+				<reportElement x="425" y="63" width="130" height="16" uuid="a5d6505a-ee77-459f-9db3-65c373b95c42"/>
+				<textFieldExpression><![CDATA[$F{notas_credito_clientes_telefone_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="413" y="79" width="142" height="16" uuid="4437ed30-d449-4f5d-b0bf-e8d1d8f2d29f"/>
+				<textFieldExpression><![CDATA[$F{notas_credito_clientes_email_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="402" y="95" width="153" height="16" uuid="45ac9bc7-ed6d-40c1-b102-e9df5fc15dd3"/>
+				<textFieldExpression><![CDATA[$F{notas_credito_clientes_nif_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="425" y="111" width="130" height="16" uuid="5e698702-5201-4195-8400-b5501ea4682a"/>
+				<textFieldExpression><![CDATA[$F{notas_credito_clientes_endereco_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="459" y="127" width="96" height="16" uuid="a6804272-e567-409e-a7b9-198da0f8eec1"/>
+				<textFieldExpression><![CDATA[$F{notas_credito_clientes_conta_corrente_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="61" y="63" width="257" height="16" uuid="8e53e348-cd3d-4a5a-b7a0-f6553a9dcd3c"/>
+				<textFieldExpression><![CDATA[$F{empresas_endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="39" y="79" width="279" height="16" uuid="84c4bc07-ad63-4a68-86ef-124abb93d8ae"/>
+				<textFieldExpression><![CDATA[$F{empresas_nif}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="61" y="95" width="257" height="16" uuid="52d9610c-6de5-40d3-b867-d25d56b9f450"/>
+				<textFieldExpression><![CDATA[$F{empresas_pessoal_Contacto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="61" y="111" width="257" height="16" uuid="e8533466-1e18-4f94-9b73-f7a8e2b5c74f"/>
+				<textFieldExpression><![CDATA[$F{empresas_website}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="49" y="127" width="269" height="16" uuid="2b193e63-9870-48ec-bcdc-6c26b8ca69f7"/>
+				<textFieldExpression><![CDATA[$F{empresas_email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="13" y="198" width="348" height="20" uuid="505860c9-49ef-48fd-b166-b35b3c55316c"/>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="41" width="150" height="20" backcolor="#DDDDDD" uuid="5e4fec0e-c20b-4f5e-b40e-1f95515edd87"/>
+				<textElement>
+					<font isBold="true"/>
+					<paragraph firstLineIndent="5"/>
+				</textElement>
+				<text><![CDATA[Data Operação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="150" y="41" width="254" height="20" backcolor="#DDDDDD" uuid="c0db9939-c1fc-4ef6-8d7a-ba0e013fd76a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="404" y="41" width="151" height="20" backcolor="#DDDDDD" uuid="c4578970-ac58-4f99-8eab-4e343183df6d"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="1" y="0" width="147" height="20" backcolor="#EEEEEE" uuid="b95b1396-f780-40b5-b043-0bd3c826476d"/>
+				<textElement>
+					<paragraph firstLineIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{notas_credito_clientes_created_at}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="147" y="0" width="255" height="20" backcolor="#EEEEEE" uuid="5197c4cd-0e47-4dfb-9628-88ad61370121"/>
+				<textFieldExpression><![CDATA[$F{notas_credito_clientes_descricao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement mode="Opaque" x="401" y="0" width="154" height="20" backcolor="#EEEEEE" uuid="c28eff05-d71c-42a8-9d82-7dd2ad8b5436"/>
+				<textElement textAlignment="Right">
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{notas_credito_clientes_valor_credito}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="146" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="54" uuid="d2eb6020-de55-443a-b8da-1107c08d5370"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="4" y="10" width="57" height="15" uuid="c33cc920-fab1-4087-be00-e0dc0df390cf"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Operador:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="459" y="10" width="33" height="15" uuid="a102abd3-ed63-4fb8-ac06-6b4c742b3601"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="492" y="10" width="46" height="15" uuid="c64ae83e-0e22-464d-b747-c57e3318fa24"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{notas_credito_clientes_valor_credito}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="78" y="32" width="96" height="15" uuid="496f634b-d585-4531-9b43-fdaea2a975a4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total por extenso:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="174" y="32" width="364" height="15" uuid="5cffe765-1fd8-4fb7-84d4-d7429a381389"/>
+				<textFieldExpression><![CDATA[$F{notas_credito_clientes_valor_extenso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="16" y="60" width="33" height="20" uuid="457586cf-65ed-4840-9250-c809184726aa"/>
+				<textFieldExpression><![CDATA[($F{notas_credito_clientes_hash}.toUpperCase()).toString().substring(0,4)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="49" y="60" width="455" height="20" uuid="d40f2328-2df9-4943-bbcf-e75237f9e8cc"/>
+				<text><![CDATA[- Processado por programa Certificado nº X/AGT/2020 (Mutue-Negócio)
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="93" width="555" height="1" uuid="c008273b-ef4d-4a79-8224-3955379122bf"/>
+			</line>
+			<staticText>
+				<reportElement x="-3" y="94" width="558" height="15" uuid="3f1514aa-f181-4fe0-a6be-acff970ad818"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Software de gestão comercial online, desenvolvido e Assistido pela Ramossoft-Fábrica de Softwares]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

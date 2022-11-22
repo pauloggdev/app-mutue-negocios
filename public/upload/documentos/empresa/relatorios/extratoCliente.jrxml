@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="extratoCliente" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="46823a27-87c3-4add-9695-d7d0236fcb10">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="diretorio" class="java.lang.String"/>
+	<parameter name="empresa_id" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     movimentos.`Codigo` AS movimentos_Codigo,
+     movimentos.`DataMovimento` AS movimentos_DataMovimento,
+     movimentos.`Descricao` AS movimentos_Descricao,
+     movimentos.`CodigoUtilizador` AS movimentos_CodigoUtilizador,
+     movimentos.`CodEmpresa` AS movimentos_CodEmpresa,
+     movimentos.`AnoFinanceiro` AS movimentos_AnoFinanceiro,
+     movimentos.`CodigoStatus` AS movimentos_CodigoStatus,
+     movimentos.`CodigoContaDebito` AS movimentos_CodigoContaDebito,
+     movimentos.`CodigoContaCredito` AS movimentos_CodigoContaCredito,
+     movimentos.`CodigoCentroCusto` AS movimentos_CodigoCentroCusto,
+     movimentos.`NextMovimento` AS movimentos_NextMovimento,
+     movimentos.`movimentoReferences` AS movimentos_movimentoReferences,
+     movimentos.`CodigoFactura` AS movimentos_CodigoFactura,
+     movimentos.`ContaCliente` AS movimentos_ContaCliente,
+     movimentos.`TipoMovimento` AS movimentos_TipoMovimento,
+     movimentos.`TipoDocumento` AS movimentos_TipoDocumento,
+     movimentos.`hash` AS movimentos_hash,
+     movimentos.`forma` AS movimentos_forma,
+     movimentos.`telefoneCliente` AS movimentos_telefoneCliente,
+     movimentos.`nifCliente` AS movimentos_nifCliente,
+     movimentos.`morada` AS movimentos_morada,
+     movimentos.`NomeCliente` AS movimentos_NomeCliente
+FROM
+     `movimentos` movimentos]]>
+	</queryString>
+	<field name="movimentos_Codigo" class="java.lang.Long"/>
+	<field name="movimentos_DataMovimento" class="java.sql.Timestamp"/>
+	<field name="movimentos_Descricao" class="java.lang.String"/>
+	<field name="movimentos_CodigoUtilizador" class="java.lang.Long"/>
+	<field name="movimentos_CodEmpresa" class="java.lang.Long"/>
+	<field name="movimentos_AnoFinanceiro" class="java.lang.Long"/>
+	<field name="movimentos_CodigoStatus" class="java.lang.Integer"/>
+	<field name="movimentos_CodigoContaDebito" class="java.lang.Long"/>
+	<field name="movimentos_CodigoContaCredito" class="java.lang.Long"/>
+	<field name="movimentos_CodigoCentroCusto" class="java.lang.Long"/>
+	<field name="movimentos_NextMovimento" class="java.lang.String"/>
+	<field name="movimentos_movimentoReferences" class="java.lang.String"/>
+	<field name="movimentos_CodigoFactura" class="java.lang.String"/>
+	<field name="movimentos_ContaCliente" class="java.lang.String"/>
+	<field name="movimentos_TipoMovimento" class="java.lang.String"/>
+	<field name="movimentos_TipoDocumento" class="java.lang.Long"/>
+	<field name="movimentos_hash" class="java.lang.String"/>
+	<field name="movimentos_forma" class="java.lang.Long"/>
+	<field name="movimentos_telefoneCliente" class="java.lang.String"/>
+	<field name="movimentos_nifCliente" class="java.lang.String"/>
+	<field name="movimentos_morada" class="java.lang.String"/>
+	<field name="movimentos_NomeCliente" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="224" splitType="Stretch">
+			<staticText>
+				<reportElement x="204" y="156" width="100" height="20" uuid="d23315fb-ba60-4ded-bda4-568d260d55ee"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teste]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="100" height="50" uuid="84bb4079-9194-4205-a0ab-531178419ae7"/>
+				<imageExpression><![CDATA[$P{diretorio}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

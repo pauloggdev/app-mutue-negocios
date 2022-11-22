@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MotivoIsencaoSubreport" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="21773834-712c-462c-a67b-731bc481294d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="empresa_id" class="java.lang.String"/>
+	<parameter name="facturaId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+SUM(factura_items.incidencia_produto) AS total_incidencia,
+SUM(factura_items.incidencia_produto) AS total_incidencia,
+SUM(factura_items.iva_produto) AS total_iva,factura_items.factura_id,
+tipotaxa.descricao,
+motivo.codigoMotivo AS motivoCodigo,
+motivo.descricao AS motivoDescricao
+
+FROM facturas
+INNER JOIN factura_items ON factura_items.factura_id = facturas.id
+INNER JOIN produtos ON factura_items.produto_id = produtos.id
+INNER JOIN tipotaxa ON tipotaxa.codigo = produtos.codigo_taxa
+INNER JOIN motivo ON motivo.codigo = produtos.motivo_isencao_id
+WHERE facturas.empresa_id = $P{empresa_id} AND facturas.id = $P{facturaId}
+GROUP BY tipotaxa.descricao, motivo.codigoMotivo, motivo.descricao]]>
+	</queryString>
+	<field name="total_incidencia" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_iva" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factura_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="motivoCodigo" class="java.lang.String"/>
+	<field name="motivoDescricao" class="java.lang.String"/>
+	<columnHeader>
+		<band height="12">
+			<staticText>
+				<reportElement key="staticText-51" positionType="Float" mode="Transparent" x="1" y="0" width="77" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="faa2ea3b-1235-4f25-b006-b02b804901de"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.0" lineColor="#666666"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="0.0" lineColor="#666666"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+					<paragraph firstLineIndent="1"/>
+				</textElement>
+				<text><![CDATA[Taxa/Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-51" positionType="Float" mode="Transparent" x="78" y="0" width="65" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="e97b1721-b018-405d-8d53-5fb9cbfceafd"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.0" lineColor="#666666"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="0.0" lineColor="#666666"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+					<paragraph firstLineIndent="1"/>
+				</textElement>
+				<text><![CDATA[Taxa/Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-51" positionType="Float" mode="Transparent" x="143" y="0" width="65" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="402f384d-b9fb-4e36-b186-331276a353cb"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.0" lineColor="#666666"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="0.0" lineColor="#666666"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+					<paragraph firstLineIndent="1"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-51" positionType="Float" mode="Transparent" x="209" y="0" width="346" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="cc5e3622-7c72-410d-b449-6cf7ba2b74ca"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.0" lineColor="#666666"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="0.0" lineColor="#666666"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<text><![CDATA[Motivo Isenção/código]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="-1" width="76" height="12" uuid="152130f4-a843-450e-b954-e4a6313b310a"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="208" y="0" width="347" height="12" uuid="1a989094-6100-4c31-aa5d-4b18a8896ea1"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_iva} > 0 ?"": $F{motivoDescricao}+" - " +$F{motivoCodigo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="78" y="0" width="65" height="12" uuid="5b004dd7-ef29-407a-843c-0f5945e3872c"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_incidencia}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="143" y="0" width="65" height="12" uuid="0a9735ba-935e-4f1a-b1c3-9bd91c34819e"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_iva}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

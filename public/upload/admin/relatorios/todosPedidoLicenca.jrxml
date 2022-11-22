@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notaCredito" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d063b865-d206-41e6-8d71-fe91c210e883">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zebrar" mode="Opaque">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+			<style backcolor="#FBFBFB"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="diretorio" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\laragon\\www\\api-mutue-negocio\\public\\upload\\admin\\relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dirSubreportEmpresa" class="java.lang.String"/>
+	<parameter name="statuId" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+     activacao_licencas.`id` AS activacao_licencas_id,
+     activacao_licencas.`licenca_id` AS activacao_licencas_licenca_id,
+     activacao_licencas.`empresa_id` AS activacao_licencas_empresa_id,
+     activacao_licencas.`pagamento_id` AS activacao_licencas_pagamento_id,
+     activacao_licencas.`data_inicio` AS activacao_licencas_data_inicio,
+     activacao_licencas.`data_fim` AS activacao_licencas_data_fim,
+     activacao_licencas.`data_activacao` AS activacao_licencas_data_activacao,
+     activacao_licencas.`user_id` AS activacao_licencas_user_id,
+     activacao_licencas.`canal_id` AS activacao_licencas_canal_id,
+     activacao_licencas.`status_licenca_id` AS activacao_licencas_status_licenca_id,
+     activacao_licencas.`created_at` AS activacao_licencas_created_at,
+     activacao_licencas.`updated_at` AS activacao_licencas_updated_at,
+     activacao_licencas.`data_rejeicao` AS activacao_licencas_data_rejeicao,
+     activacao_licencas.`observacao` AS activacao_licencas_observacao,
+     activacao_licencas.`data_notificaticao` AS activacao_licencas_data_notificaticao,
+     activacao_licencas.`notificacaoFimLicenca` AS activacao_licencas_notificacaoFimLicenca,
+     empresas.`id` AS empresas_id,
+     empresas.`nome` AS empresas_nome,
+     empresas.`pessoal_Contacto` AS empresas_pessoal_Contacto,
+     empresas.`endereco` AS empresas_endereco,
+     empresas.`empresa_id` AS empresas_empresa_id,
+     empresas.`pais_id` AS empresas_pais_id,
+     empresas.`saldo` AS empresas_saldo,
+     empresas.`nif` AS empresas_nif,
+     empresas.`gestor_cliente_id` AS empresas_gestor_cliente_id,
+     empresas.`tipo_cliente_id` AS empresas_tipo_cliente_id,
+     empresas.`tipo_regime_id` AS empresas_tipo_regime_id,
+     empresas.`logotipo` AS empresas_logotipo,
+     empresas.`Website` AS empresas_Website,
+     empresas.`email` AS empresas_email,
+     empresas.`referencia` AS empresas_referencia,
+     empresas.`pessoa_de_contacto` AS empresas_pessoa_de_contacto,
+     empresas.`status_id` AS empresas_status_id,
+     empresas.`canal_id` AS empresas_canal_id,
+     empresas.`user_id` AS empresas_user_id,
+     empresas.`created_at` AS empresas_created_at,
+     empresas.`updated_at` AS empresas_updated_at,
+     empresas.`cidade` AS empresas_cidade,
+     licencas.`id` AS licencas_id,
+     licencas.`tipo_licenca_id` AS licencas_tipo_licenca_id,
+     licencas.`designacao` AS licencas_designacao,
+     licencas.`status_licenca_id` AS licencas_status_licenca_id,
+     licencas.`created_at` AS licencas_created_at,
+     licencas.`updated_at` AS licencas_updated_at,
+     licencas.`canal_id` AS licencas_canal_id,
+     licencas.`user_id` AS licencas_user_id,
+     licencas.`descricao` AS licencas_descricao,
+     licencas.`valor` AS licencas_valor,
+     licencas.`tipo_taxa_id` AS licencas_tipo_taxa_id,
+     licencas.`limite_usuario` AS licencas_limite_usuario,
+     status_licencas.`id` AS status_licencas_id,
+     status_licencas.`designacao` AS status_licencas_designacao
+FROM
+     `empresas` empresas INNER JOIN `activacao_licencas` activacao_licencas ON empresas.`id` = activacao_licencas.`empresa_id`
+     INNER JOIN `licencas` licencas ON activacao_licencas.`licenca_id` = licencas.`id`
+     INNER JOIN `status_licencas` status_licencas ON activacao_licencas.`status_licenca_id` = status_licencas.`id` where activacao_licencas.`status_licenca_id` = $P{statuId}]]>
+	</queryString>
+	<field name="activacao_licencas_id" class="java.math.BigInteger"/>
+	<field name="activacao_licencas_licenca_id" class="java.lang.Long"/>
+	<field name="activacao_licencas_empresa_id" class="java.lang.Long"/>
+	<field name="activacao_licencas_pagamento_id" class="java.lang.Long"/>
+	<field name="activacao_licencas_data_inicio" class="java.sql.Date"/>
+	<field name="activacao_licencas_data_fim" class="java.sql.Date"/>
+	<field name="activacao_licencas_data_activacao" class="java.sql.Date"/>
+	<field name="activacao_licencas_user_id" class="java.math.BigInteger"/>
+	<field name="activacao_licencas_canal_id" class="java.lang.Long"/>
+	<field name="activacao_licencas_status_licenca_id" class="java.lang.Long"/>
+	<field name="activacao_licencas_created_at" class="java.sql.Timestamp"/>
+	<field name="activacao_licencas_updated_at" class="java.sql.Timestamp"/>
+	<field name="activacao_licencas_data_rejeicao" class="java.sql.Timestamp"/>
+	<field name="activacao_licencas_observacao" class="java.lang.String"/>
+	<field name="activacao_licencas_data_notificaticao" class="java.sql.Date"/>
+	<field name="activacao_licencas_notificacaoFimLicenca" class="java.sql.Date"/>
+	<field name="empresas_id" class="java.lang.Long"/>
+	<field name="empresas_nome" class="java.lang.String"/>
+	<field name="empresas_pessoal_Contacto" class="java.lang.String"/>
+	<field name="empresas_endereco" class="java.lang.String"/>
+	<field name="empresas_empresa_id" class="java.lang.Integer"/>
+	<field name="empresas_pais_id" class="java.lang.Long"/>
+	<field name="empresas_saldo" class="java.lang.Double"/>
+	<field name="empresas_nif" class="java.lang.String"/>
+	<field name="empresas_gestor_cliente_id" class="java.lang.Long"/>
+	<field name="empresas_tipo_cliente_id" class="java.lang.Long"/>
+	<field name="empresas_tipo_regime_id" class="java.lang.Long"/>
+	<field name="empresas_logotipo" class="java.lang.String"/>
+	<field name="empresas_Website" class="java.lang.String"/>
+	<field name="empresas_email" class="java.lang.String"/>
+	<field name="empresas_referencia" class="java.lang.String"/>
+	<field name="empresas_pessoa_de_contacto" class="java.lang.String"/>
+	<field name="empresas_status_id" class="java.lang.Long"/>
+	<field name="empresas_canal_id" class="java.lang.Long"/>
+	<field name="empresas_user_id" class="java.math.BigInteger"/>
+	<field name="empresas_created_at" class="java.sql.Timestamp"/>
+	<field name="empresas_updated_at" class="java.sql.Timestamp"/>
+	<field name="empresas_cidade" class="java.lang.String"/>
+	<field name="licencas_id" class="java.lang.Long"/>
+	<field name="licencas_tipo_licenca_id" class="java.lang.Long"/>
+	<field name="licencas_designacao" class="java.lang.String"/>
+	<field name="licencas_status_licenca_id" class="java.lang.Long"/>
+	<field name="licencas_created_at" class="java.sql.Timestamp"/>
+	<field name="licencas_updated_at" class="java.sql.Timestamp"/>
+	<field name="licencas_canal_id" class="java.lang.Long"/>
+	<field name="licencas_user_id" class="java.math.BigInteger"/>
+	<field name="licencas_descricao" class="java.lang.String"/>
+	<field name="licencas_valor" class="java.lang.Double"/>
+	<field name="licencas_tipo_taxa_id" class="java.lang.Long"/>
+	<field name="licencas_limite_usuario" class="java.lang.Integer"/>
+	<field name="status_licencas_id" class="java.lang.Long"/>
+	<field name="status_licencas_designacao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="173" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="144" width="555" height="1" uuid="0020e540-be4e-4c91-b217-039680cfe39f"/>
+			</line>
+			<subreport>
+				<reportElement x="354" y="3" width="200" height="141" uuid="8837b28a-323f-4cd1-8105-dcb83f560612"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{dirSubreportEmpresa}+"subreportLicenca.jasper"]]></subreportExpression>
+			</subreport>
+			<image>
+				<reportElement x="0" y="0" width="100" height="50" uuid="065cfc41-df53-4002-858a-01af3a2ae190"/>
+				<imageExpression><![CDATA[$P{diretorio}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="1" y="153" width="40" height="20" uuid="c442e1c0-8d9b-4e45-8a7b-bf79c6c28435"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="41" y="153" width="248" height="20" uuid="7fd317d2-781c-4eea-90cf-9886ab431c37"/>
+				<textFieldExpression><![CDATA[$P{statuId}== 1?"Activo":($P{statuId}== 2 ?"Rejeitado":"Pendente")]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="22"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="2" width="27" height="20" backcolor="#FBFBFB" uuid="5e4fec0e-c20b-4f5e-b40e-1f95515edd87"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="27" y="2" width="170" height="20" backcolor="#FBFBFB" uuid="c0db9939-c1fc-4ef6-8d7a-ba0e013fd76a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome empresa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="197" y="2" width="109" height="20" backcolor="#FBFBFB" uuid="65110ad4-faf5-4551-82c0-02179b6b22fb"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NIF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="306" y="2" width="47" height="20" backcolor="#FBFBFB" uuid="b9c30483-62e0-462f-bb40-a3a24b83617f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Licença]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="353" y="2" width="68" height="20" backcolor="#FBFBFB" uuid="f81db1e6-999b-4092-8e93-0e92b7d3f427"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Pedido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="421" y="2" width="79" height="20" backcolor="#FBFBFB" uuid="d684e3ba-3e59-4a36-a9f0-ca510e24638a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data inicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="500" y="1" width="54" height="20" backcolor="#FBFBFB" uuid="390ce8e1-406c-4cda-8bf1-cb3f5fd7cec4"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[status]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement style="zebrar" x="1" y="0" width="26" height="16" uuid="17731e79-ce5f-42b6-bd76-6e2d0eaeb29d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zebrar" x="27" y="0" width="170" height="16" uuid="d8a3ca97-9305-4b4f-9020-47cc691e07bf"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_nome}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="zebrar" x="197" y="0" width="109" height="16" uuid="3a474044-b004-40d9-9604-7294a2352ff4"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_nif}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="zebrar" x="306" y="1" width="47" height="16" uuid="23c32702-4b93-4ac7-94c8-9a1cdeee3145"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{licencas_designacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="zebrar" x="353" y="1" width="68" height="16" uuid="35a273d2-6c7e-4bb9-b2ba-09643e3a1c17"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{activacao_licencas_created_at}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement style="zebrar" x="421" y="1" width="79" height="16" uuid="09c81997-b606-4808-b949-b502d4290de1"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{activacao_licencas_data_inicio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="zebrar" x="500" y="0" width="56" height="16" uuid="494665a7-6984-41d3-af81-98caf603d985"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status_licencas_designacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="97">
+			<staticText>
+				<reportElement x="1" y="59" width="555" height="15" uuid="3f1514aa-f181-4fe0-a6be-acff970ad818"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Software de gestão comercial, desenvolvido  pela Mutue - Soluções Tecnológicas Inteligentes]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="54" width="555" height="1" uuid="c008273b-ef4d-4a79-8224-3955379122bf"/>
+			</line>
+			<line>
+				<reportElement x="197" y="32" width="164" height="1" uuid="665860b2-01c8-40ee-b0b3-72699b25daa8"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="2" width="554" height="13" uuid="06eafaf4-98c8-4b92-bbea-8eb84576a695"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[A assinatura]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="38" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="5" width="4" height="31" backcolor="#3D5476" uuid="c2b2a3a1-a5a3-4095-a1d9-0bf4feda5a2d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="15" y="18" width="531" height="20" uuid="a03a96e9-3e2c-465c-902b-90df3d163309"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Caso falte pedidos de activação na lista, o utilizador deverá solicitar o suporte técnico
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="5" width="40" height="13" uuid="5223282c-459f-4bc5-849d-835efd2f031f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOTA:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Factura_A4" pageWidth="595" pageHeight="842" columnWidth="565" leftMargin="15" rightMargin="15" topMargin="2" bottomMargin="28" uuid="c4dd8eb3-a28a-4623-a6b1-1da1e63092a8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="zebrar" mode="Opaque">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+			<style backcolor="#FBFBFB"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\laragon\\www\\api-mutue-negocio\\public\\upload\\documentos\\empresa\\modelosFacturas\\a4\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="diretorio" class="java.lang.String"/>
+	<parameter name="dirSubreportEmpresa" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     empresas.`id` AS empresas_id,
+     empresas.`nome` AS empresas_nome,
+     empresas.`pessoal_Contacto` AS empresas_pessoal_Contacto,
+     empresas.`endereco` AS empresas_endereco,
+     empresas.`empresa_id` AS empresas_empresa_id,
+     empresas.`pais_id` AS empresas_pais_id,
+     empresas.`saldo` AS empresas_saldo,
+     empresas.`nif` AS empresas_nif,
+     empresas.`gestor_cliente_id` AS empresas_gestor_cliente_id,
+     empresas.`tipo_cliente_id` AS empresas_tipo_cliente_id,
+     empresas.`tipo_regime_id` AS empresas_tipo_regime_id,
+     empresas.`logotipo` AS empresas_logotipo,
+     empresas.`Website` AS empresas_Website,
+     empresas.`email` AS empresas_email,
+     empresas.`referencia` AS empresas_referencia,
+     empresas.`pessoa_de_contacto` AS empresas_pessoa_de_contacto,
+     empresas.`status_id` AS empresas_status_id,
+     empresas.`canal_id` AS empresas_canal_id,
+     empresas.`user_id` AS empresas_user_id,
+     empresas.`licenca` AS empresas_licenca,
+     empresas.`created_at` AS empresas_created_at,
+     empresas.`updated_at` AS empresas_updated_at,
+     empresas.`cidade` AS empresas_cidade,
+     tipos_regimes.`id` AS tipos_regimes_id,
+     tipos_regimes.`Designacao` AS tipos_regimes_Designacao
+FROM
+     `tipos_regimes` tipos_regimes INNER JOIN `empresas` empresas ON tipos_regimes.`id` = empresas.`tipo_regime_id` where empresas.`id` != 1 ORDER BY empresas.licenca]]>
+	</queryString>
+	<field name="empresas_id" class="java.lang.Long"/>
+	<field name="empresas_nome" class="java.lang.String"/>
+	<field name="empresas_pessoal_Contacto" class="java.lang.String"/>
+	<field name="empresas_endereco" class="java.lang.String"/>
+	<field name="empresas_empresa_id" class="java.lang.Integer"/>
+	<field name="empresas_pais_id" class="java.lang.Long"/>
+	<field name="empresas_saldo" class="java.lang.Double"/>
+	<field name="empresas_nif" class="java.lang.String"/>
+	<field name="empresas_gestor_cliente_id" class="java.lang.Long"/>
+	<field name="empresas_tipo_cliente_id" class="java.lang.Long"/>
+	<field name="empresas_tipo_regime_id" class="java.lang.Long"/>
+	<field name="empresas_logotipo" class="java.lang.String"/>
+	<field name="empresas_Website" class="java.lang.String"/>
+	<field name="empresas_email" class="java.lang.String"/>
+	<field name="empresas_referencia" class="java.lang.String"/>
+	<field name="empresas_pessoa_de_contacto" class="java.lang.String"/>
+	<field name="empresas_status_id" class="java.lang.Long"/>
+	<field name="empresas_canal_id" class="java.lang.Long"/>
+	<field name="empresas_user_id" class="java.math.BigInteger"/>
+	<field name="empresas_licenca" class="java.lang.String"/>
+	<field name="empresas_created_at" class="java.sql.Timestamp"/>
+	<field name="empresas_updated_at" class="java.sql.Timestamp"/>
+	<field name="empresas_cidade" class="java.lang.String"/>
+	<field name="tipos_regimes_id" class="java.lang.Long"/>
+	<field name="tipos_regimes_Designacao" class="java.lang.String"/>
+	<variable name="factura_items_Total_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[new Double(0)]]></variableExpression>
+	</variable>
+	<variable name="factura_items_Total_2" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[new Double(0)]]></variableExpression>
+	</variable>
+	<variable name="QTD" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[new Double(0)]]></variableExpression>
+	</variable>
+	<variable name="totalRetencao" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[new Double(0)]]></variableExpression>
+	</variable>
+	<variable name="totalDesconto" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[new Double(0)]]></variableExpression>
+	</variable>
+	<variable name="totalItens" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[new Double(0)]]></variableExpression>
+	</variable>
+	<variable name="IPC" class="java.lang.Boolean">
+		<variableExpression><![CDATA[new Boolean(true)]]></variableExpression>
+		<initialValueExpression><![CDATA[false]]></initialValueExpression>
+	</variable>
+	<group name="Categorias">
+		<groupExpression><![CDATA["Categoria Teste"]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="212" splitType="Stretch">
+			<image>
+				<reportElement key="image-1" x="5" y="5" width="122" height="51" uuid="e122d80a-73f9-4a3c-8eb6-d02eda4297ac"/>
+				<imageExpression><![CDATA[$P{diretorio}]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="280" y="-203" width="89" height="12" uuid="148649f4-59ee-4066-be74-a0cccf6b772a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="280" y="-203" width="89" height="12" uuid="4ba3ce63-d7b7-4a7b-b69e-0978b4eab566"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-48" positionType="Float" mode="Transparent" x="353" y="-116" width="103" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="144919c6-a681-42a2-8e9c-b3713ef1ba2a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total da Fatura]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-75" x="1" y="185" width="565" height="14" uuid="5f1605a1-1a22-4c08-ba93-661308ea55a9"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["LISTA DE CLIENTES"]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="327" y="77" width="235" height="43" uuid="9b58144f-e228-4908-806b-89cf0bcd2c99"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{dirSubreportEmpresa}+"listarClienteEmpresa.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-57" positionType="Float" mode="Transparent" x="315" y="0" width="76" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="dd71783d-0bab-4b16-9789-6837fc43b7b8"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[NIF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-61" positionType="Float" mode="Transparent" x="35" y="0" width="209" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="5d3de50c-0745-455e-bf0e-cdd27349b915"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-59" positionType="Float" mode="Transparent" x="445" y="0" width="121" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="dbb5e2ca-cd2c-4f0d-8169-ac02a9c1371f"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[E-mail]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-77" positionType="Float" mode="Transparent" x="391" y="0" width="54" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="e866a7e7-9cb1-430e-98ed-752f1296acd6"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Telefone]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-60" positionType="Float" mode="Transparent" x="3" y="0" width="32" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="9382e159-3411-40d8-9664-48565f769fac"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<text><![CDATA[N.º]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-61" positionType="Float" mode="Transparent" x="244" y="0" width="71" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="9abd34d7-f4ae-4693-99e9-81403d0548b9"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Licença]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="zebrar" mode="Opaque" x="35" y="1" width="209" height="15" uuid="9bb07907-3f55-4e7b-8f91-fab580304d9c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zebrar" mode="Opaque" x="3" y="1" width="32" height="15" uuid="f9ba50c2-6563-4590-ad57-c4c67c97b362"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="zebrar" mode="Opaque" x="315" y="1" width="76" height="15" uuid="0c9fa146-e053-413b-afa9-3010929257e5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_nif}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement style="zebrar" mode="Opaque" x="391" y="1" width="54" height="15" uuid="65b2dc76-fb94-4c11-b519-cca2ac5c15e6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_pessoal_Contacto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="zebrar" mode="Opaque" x="445" y="1" width="120" height="15" uuid="243151cf-b32e-47e2-90ac-e5ba60ab0d42"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zebrar" mode="Opaque" x="244" y="1" width="71" height="15" uuid="c153f4b9-c4f8-43e8-abda-5035f06a614e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_licenca}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<lastPageFooter>
+		<band height="145" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement key="staticText-45" positionType="Float" mode="Transparent" x="-1" y="129" width="566" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="be50f170-c9be-43dd-8bc7-eec9cdf68211"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Software de gestão comercial, desenvolvido e assistido pela Fábrica de softwares]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="0" y="72" width="565" height="13" forecolor="#000000" uuid="2b5c5bfb-2750-4b0d-8da2-e3d8cbb1ca9a"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Assinatura"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="227" y="108" width="112" height="1" uuid="a86085d6-14f4-4bd7-96d8-f7b204f93b64"/>
+			</line>
+		</band>
+	</lastPageFooter>
+</jasperReport>

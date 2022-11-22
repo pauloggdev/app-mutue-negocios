@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FaturaReciboBalcao" pageWidth="250" pageHeight="315" columnWidth="190" leftMargin="30" rightMargin="30" topMargin="10" bottomMargin="10" uuid="1c3b2974-cd96-44b1-8fa3-64625ff78932">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="255"/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="facturaId" class="java.lang.String"/>
+	<parameter name="empresa_id" class="java.lang.String"/>
+	<parameter name="viaImpressao" class="java.lang.String"/>
+	<parameter name="logotipo" class="java.lang.String"/>
+	<parameter name="dirSubreportBanco" class="java.lang.String"/>
+	<parameter name="dirSubreportTaxa" class="java.lang.String"/>
+	<parameter name="tipo_regime" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     facturas.`id` AS facturas_id,
+     facturas.`total_preco_factura` AS facturas_total_preco_factura,
+     facturas.`valor_a_pagar` AS facturas_valor_a_pagar,
+     facturas.`valor_entregue` AS facturas_valor_entregue,
+     facturas.`troco` AS facturas_troco,
+     facturas.`valor_extenso` AS facturas_valor_extenso,
+     facturas.`codigo_moeda` AS facturas_codigo_moeda,
+     facturas.`desconto` AS facturas_desconto,
+     facturas.`total_iva` AS facturas_total_iva,
+     facturas.`total_incidencia` AS facturas_total_incidencia,
+     facturas.`tipo_user_id` AS facturas_tipo_user_id,
+     facturas.`multa` AS facturas_multa,
+     facturas.`statusFactura` AS facturas_statusFactura,
+     facturas.`anulado` AS facturas_anulado,
+     facturas.`nome_do_cliente` AS facturas_nome_do_cliente,
+     facturas.`telefone_cliente` AS facturas_telefone_cliente,
+     facturas.`nif_cliente` AS facturas_nif_cliente,
+     facturas.`email_cliente` AS facturas_email_cliente,
+     facturas.`endereco_cliente` AS facturas_endereco_cliente,
+     facturas.`conta_corrente_cliente` AS facturas_conta_corrente_cliente,
+     facturas.`numeroItems` AS facturas_numeroItems,
+     facturas.`tipo_documento` AS facturas_tipo_documento,
+     facturas.`tipoFolha` AS facturas_tipoFolha,
+     facturas.`retencao` AS facturas_retencao,
+     facturas.`nextFactura` AS facturas_nextFactura,
+     facturas.`faturaReference` AS facturas_faturaReference,
+     facturas.`numSequenciaFactura` AS facturas_numSequenciaFactura,
+     facturas.`numeracaoFactura` AS facturas_numeracaoFactura,
+     facturas.`hashValor` AS facturas_hashValor,
+     facturas.`retificado` AS facturas_retificado,
+     facturas.`formas_pagamento_id` AS facturas_formas_pagamento_id,
+     facturas.`descricao` AS facturas_descricao,
+     facturas.`observacao` AS facturas_observacao,
+     facturas.`armazen_id` AS facturas_armazen_id,
+     facturas.`cliente_id` AS facturas_cliente_id,
+     facturas.`empresa_id` AS facturas_empresa_id,
+     facturas.`canal_id` AS facturas_canal_id,
+     facturas.`status_id` AS facturas_status_id,
+     facturas.`user_id` AS facturas_user_id,
+     facturas.`created_at` AS facturas_created_at,
+     facturas.`updated_at` AS facturas_updated_at,
+     facturas.`data_vencimento` AS facturas_data_vencimento,
+     facturas.`operador` AS facturas_operador,
+     factura_items.`descricao_produto` AS factura_items_descricao_produto,
+     factura_items.`preco_compra_produto` AS factura_items_preco_compra_produto,
+     factura_items.`preco_venda_produto` AS factura_items_preco_venda_produto,
+     factura_items.`quantidade_produto` AS factura_items_quantidade_produto,
+     factura_items.`desconto_produto` AS factura_items_desconto_produto,
+     factura_items.`incidencia_produto` AS factura_items_incidencia_produto,
+     factura_items.`retencao_produto` AS factura_items_retencao_produto,
+     factura_items.`iva_produto` AS factura_items_iva_produto,
+     factura_items.`total_preco_produto` AS factura_items_total_preco_produto,
+     factura_items.`produto_id` AS factura_items_produto_id,
+     factura_items.`factura_id` AS factura_items_factura_id,
+     empresas.`id` AS empresas_id,
+     empresas.`nome` AS empresas_nome,
+     empresas.`pessoal_Contacto` AS empresas_pessoal_Contacto,
+     empresas.`endereco` AS empresas_endereco,
+     empresas.`pais_id` AS empresas_pais_id,
+     empresas.`saldo` AS empresas_saldo,
+     empresas.`canal_id` AS empresas_canal_id,
+     empresas.`status_id` AS empresas_status_id,
+     empresas.`nif` AS empresas_nif,
+     empresas.`gestor_cliente_id` AS empresas_gestor_cliente_id,
+     empresas.`tipo_cliente_id` AS empresas_tipo_cliente_id,
+     empresas.`tipo_regime_id` AS empresas_tipo_regime_id,
+     empresas.`logotipo` AS empresas_logotipo,
+     empresas.`website` AS empresas_website,
+     empresas.`email` AS empresas_email,
+     empresas.`referencia` AS empresas_referencia,
+     empresas.`pessoa_de_contacto` AS empresas_pessoa_de_contacto,
+     empresas.`created_at` AS empresas_created_at,
+     empresas.`updated_at` AS empresas_updated_at,
+     empresas.`cidade` AS empresas_cidade,
+     produtos.`id` AS produtos_id,
+     produtos.`designacao` AS produtos_designacao,
+     produtos.`preco_venda` AS produtos_preco_venda,
+     produtos.`preco_compra` AS produtos_preco_compra,
+     produtos.`marca_id` AS produtos_marca_id,
+     produtos.`categoria_id` AS produtos_categoria_id,
+     produtos.`classe_id` AS produtos_classe_id,
+     produtos.`unidade_medida_id` AS produtos_unidade_medida_id,
+     produtos.`fabricante_id` AS produtos_fabricante_id,
+     produtos.`user_id` AS produtos_user_id,
+     produtos.`canal_id` AS produtos_canal_id,
+     produtos.`status_id` AS produtos_status_id,
+     produtos.`codigo_taxa` AS produtos_codigo_taxa,
+     produtos.`motivo_isencao_id` AS produtos_motivo_isencao_id,
+     produtos.`quantidade_minima` AS produtos_quantidade_minima,
+     produtos.`quantidade_critica` AS produtos_quantidade_critica,
+     produtos.`imagem_produto` AS produtos_imagem_produto,
+     produtos.`referencia` AS produtos_referencia,
+     produtos.`codigo_barra` AS produtos_codigo_barra,
+     produtos.`data_expiracao` AS produtos_data_expiracao,
+     produtos.`descricao` AS produtos_descricao,
+     produtos.`stocavel` AS produtos_stocavel,
+     produtos.`empresa_id` AS produtos_empresa_id,
+     produtos.`created_at` AS produtos_created_at,
+     produtos.`updated_at` AS produtos_updated_at,
+     tipo_documentos.`id` AS tipo_documentos_id,
+     tipo_documentos.`designacao` AS tipo_documentos_designacao,
+     tipo_documentos.`sigla` AS tipo_documentos_sigla,
+     tipos_regimes.`id` AS tipos_regimes_id,
+     tipos_regimes.`Designacao` AS tipos_regimes_Designacao,
+     moedas.`id` AS moedas_id,
+     moedas.`designacao` AS moedas_designacao,
+     moedas.`codigo` AS moedas_codigo,
+     moedas.`cambio` AS moedas_cambio,
+      formas_pagamentos_geral.`id` AS formas_pagamentos_geral_id,
+     formas_pagamentos_geral.`descricao` AS formas_pagamentos_geral_descricao,
+     formas_pagamentos_geral.`sigla_tipo_pagamento` AS formas_pagamentos_geral_sigla_tipo_pagamento,
+     formas_pagamentos_geral.`tipo_credito` AS formas_pagamentos_geral_tipo_credito,
+     tipotaxa.`codigo` AS tipotaxa_codigo,
+     tipotaxa.`taxa` AS tipotaxa_taxa,
+     tipotaxa.`codigostatus` AS tipotaxa_codigostatus,
+     tipotaxa.`codigoMotivo` AS tipotaxa_codigoMotivo,
+     tipotaxa.`descricao` AS tipotaxa_descricao,
+     tipotaxa.`created_at` AS tipotaxa_created_at,
+     tipotaxa.`updated_at` AS tipotaxa_updated_at,
+     tipotaxa.`empresa_id` AS tipotaxa_empresa_id
+
+FROM
+     `facturas` facturas
+     INNER JOIN `factura_items` factura_items ON facturas.`id` = factura_items.`factura_id`
+     INNER JOIN `empresas` empresas ON facturas.`empresa_id` = empresas.`id`
+     INNER JOIN `produtos` produtos ON factura_items.`produto_id` = produtos.`id`
+     INNER JOIN `tipo_documentos` tipo_documentos ON facturas.`tipo_documento` = tipo_documentos.`id`
+     INNER JOIN `tipos_regimes` tipos_regimes ON empresas.`tipo_regime_id` = tipos_regimes.`id`
+     INNER JOIN `moedas` moedas ON facturas.`codigo_moeda` = moedas.`id`
+     LEFT JOIN `formas_pagamentos_geral` formas_pagamentos_geral ON facturas.`formas_pagamento_id` = formas_pagamentos_geral.`id`
+     LEFT JOIN `tipotaxa` tipotaxa ON produtos.`codigo_taxa` = tipotaxa.`codigo`
+WHERE
+     facturas.empresa_id = $P{empresa_id}
+ AND facturas.id = $P{facturaId}]]>
+	</queryString>
+	<field name="facturas_id" class="java.lang.Long"/>
+	<field name="facturas_total_preco_factura" class="java.lang.Double"/>
+	<field name="facturas_valor_a_pagar" class="java.lang.Double"/>
+	<field name="facturas_valor_entregue" class="java.lang.Double"/>
+	<field name="facturas_troco" class="java.lang.Double"/>
+	<field name="facturas_valor_extenso" class="java.lang.String"/>
+	<field name="facturas_codigo_moeda" class="java.lang.Long"/>
+	<field name="facturas_desconto" class="java.lang.Double"/>
+	<field name="facturas_total_iva" class="java.lang.Double"/>
+	<field name="facturas_total_incidencia" class="java.lang.Double"/>
+	<field name="facturas_tipo_user_id" class="java.lang.Long"/>
+	<field name="facturas_multa" class="java.lang.Double"/>
+	<field name="facturas_statusFactura" class="java.lang.String"/>
+	<field name="facturas_anulado" class="java.lang.Integer"/>
+	<field name="facturas_nome_do_cliente" class="java.lang.String"/>
+	<field name="facturas_telefone_cliente" class="java.lang.String"/>
+	<field name="facturas_nif_cliente" class="java.lang.String"/>
+	<field name="facturas_email_cliente" class="java.lang.String"/>
+	<field name="facturas_endereco_cliente" class="java.lang.String"/>
+	<field name="facturas_conta_corrente_cliente" class="java.lang.String"/>
+	<field name="facturas_numeroItems" class="java.lang.Long"/>
+	<field name="facturas_tipo_documento" class="java.lang.Long"/>
+	<field name="facturas_tipoFolha" class="java.lang.String"/>
+	<field name="facturas_retencao" class="java.lang.Double"/>
+	<field name="facturas_nextFactura" class="java.lang.String"/>
+	<field name="facturas_faturaReference" class="java.lang.String"/>
+	<field name="facturas_numSequenciaFactura" class="java.lang.Long"/>
+	<field name="facturas_numeracaoFactura" class="java.lang.String"/>
+	<field name="facturas_hashValor" class="java.lang.String"/>
+	<field name="facturas_retificado" class="java.lang.String"/>
+	<field name="facturas_formas_pagamento_id" class="java.lang.Long"/>
+	<field name="facturas_descricao" class="java.lang.String"/>
+	<field name="facturas_observacao" class="java.lang.String"/>
+	<field name="facturas_armazen_id" class="java.lang.Long"/>
+	<field name="facturas_cliente_id" class="java.lang.Long"/>
+	<field name="facturas_empresa_id" class="java.lang.Long"/>
+	<field name="facturas_canal_id" class="java.lang.Long"/>
+	<field name="facturas_status_id" class="java.lang.Long"/>
+	<field name="facturas_user_id" class="java.lang.Long"/>
+	<field name="facturas_created_at" class="java.sql.Timestamp"/>
+	<field name="facturas_updated_at" class="java.sql.Timestamp"/>
+	<field name="facturas_data_vencimento" class="java.sql.Date"/>
+	<field name="facturas_operador" class="java.lang.String"/>
+	<field name="factura_items_descricao_produto" class="java.lang.String"/>
+	<field name="factura_items_preco_compra_produto" class="java.lang.Double"/>
+	<field name="factura_items_preco_venda_produto" class="java.lang.Double"/>
+	<field name="factura_items_quantidade_produto" class="java.lang.Long"/>
+	<field name="factura_items_desconto_produto" class="java.lang.Double"/>
+	<field name="factura_items_incidencia_produto" class="java.lang.Double"/>
+	<field name="factura_items_retencao_produto" class="java.lang.Double"/>
+	<field name="factura_items_iva_produto" class="java.lang.Double"/>
+	<field name="factura_items_total_preco_produto" class="java.lang.Double"/>
+	<field name="factura_items_produto_id" class="java.lang.Long"/>
+	<field name="factura_items_factura_id" class="java.lang.Long"/>
+	<field name="empresas_id" class="java.lang.Long"/>
+	<field name="empresas_nome" class="java.lang.String"/>
+	<field name="empresas_pessoal_Contacto" class="java.lang.String"/>
+	<field name="empresas_endereco" class="java.lang.String"/>
+	<field name="empresas_pais_id" class="java.lang.Long"/>
+	<field name="empresas_saldo" class="java.lang.Double"/>
+	<field name="empresas_canal_id" class="java.lang.Long"/>
+	<field name="empresas_status_id" class="java.lang.Long"/>
+	<field name="empresas_nif" class="java.lang.String"/>
+	<field name="empresas_gestor_cliente_id" class="java.lang.Long"/>
+	<field name="empresas_tipo_cliente_id" class="java.lang.Long"/>
+	<field name="empresas_tipo_regime_id" class="java.lang.Long"/>
+	<field name="empresas_logotipo" class="java.lang.String"/>
+	<field name="empresas_website" class="java.lang.String"/>
+	<field name="empresas_email" class="java.lang.String"/>
+	<field name="empresas_referencia" class="java.lang.String"/>
+	<field name="empresas_pessoa_de_contacto" class="java.lang.String"/>
+	<field name="empresas_created_at" class="java.sql.Timestamp"/>
+	<field name="empresas_updated_at" class="java.sql.Timestamp"/>
+	<field name="empresas_cidade" class="java.lang.String"/>
+	<field name="produtos_id" class="java.lang.Long"/>
+	<field name="produtos_designacao" class="java.lang.String"/>
+	<field name="produtos_preco_venda" class="java.lang.Double"/>
+	<field name="produtos_preco_compra" class="java.lang.Double"/>
+	<field name="produtos_marca_id" class="java.lang.Long"/>
+	<field name="produtos_categoria_id" class="java.lang.Long"/>
+	<field name="produtos_classe_id" class="java.lang.Long"/>
+	<field name="produtos_unidade_medida_id" class="java.lang.Long"/>
+	<field name="produtos_fabricante_id" class="java.lang.Long"/>
+	<field name="produtos_user_id" class="java.lang.Long"/>
+	<field name="produtos_canal_id" class="java.lang.Long"/>
+	<field name="produtos_status_id" class="java.lang.Long"/>
+	<field name="produtos_codigo_taxa" class="java.lang.Long"/>
+	<field name="produtos_motivo_isencao_id" class="java.lang.Long"/>
+	<field name="produtos_quantidade_minima" class="java.lang.Long"/>
+	<field name="produtos_quantidade_critica" class="java.lang.Long"/>
+	<field name="produtos_imagem_produto" class="java.lang.String"/>
+	<field name="produtos_referencia" class="java.lang.String"/>
+	<field name="produtos_codigo_barra" class="java.lang.String"/>
+	<field name="produtos_data_expiracao" class="java.sql.Date"/>
+	<field name="produtos_descricao" class="java.lang.String"/>
+	<field name="produtos_stocavel" class="java.lang.String"/>
+	<field name="produtos_empresa_id" class="java.lang.Long"/>
+	<field name="produtos_created_at" class="java.sql.Timestamp"/>
+	<field name="produtos_updated_at" class="java.sql.Timestamp"/>
+	<field name="tipo_documentos_id" class="java.lang.Long"/>
+	<field name="tipo_documentos_designacao" class="java.lang.String"/>
+	<field name="tipo_documentos_sigla" class="java.lang.String"/>
+	<field name="tipos_regimes_id" class="java.lang.Long"/>
+	<field name="tipos_regimes_Designacao" class="java.lang.String"/>
+	<field name="moedas_id" class="java.lang.Long"/>
+	<field name="moedas_designacao" class="java.lang.String"/>
+	<field name="moedas_codigo" class="java.lang.String"/>
+	<field name="moedas_cambio" class="java.lang.Double"/>
+	<field name="formas_pagamentos_geral_id" class="java.lang.Long"/>
+	<field name="formas_pagamentos_geral_descricao" class="java.lang.String"/>
+	<field name="formas_pagamentos_geral_sigla_tipo_pagamento" class="java.lang.String"/>
+	<field name="formas_pagamentos_geral_tipo_credito" class="java.lang.String"/>
+	<field name="tipotaxa_codigo" class="java.lang.Long"/>
+	<field name="tipotaxa_taxa" class="java.lang.Integer"/>
+	<field name="tipotaxa_codigostatus" class="java.lang.Long"/>
+	<field name="tipotaxa_codigoMotivo" class="java.lang.Long"/>
+	<field name="tipotaxa_descricao" class="java.lang.String"/>
+	<field name="tipotaxa_created_at" class="java.sql.Timestamp"/>
+	<field name="tipotaxa_updated_at" class="java.sql.Timestamp"/>
+	<field name="tipotaxa_empresa_id" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="107" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="59" y="12" width="131" height="10" uuid="e24037a7-b1b3-4c08-b324-c767430f4448"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_endereco}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField" x="59" y="0" width="131" height="12" uuid="0ca1e4b5-cb60-4431-9c80-1f6d1cb176dd"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_nome}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="59" y="22" width="131" height="10" uuid="6f1bf1b9-1c57-4491-859b-f38200fc40a6"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Tel: "+$F{empresas_pessoal_Contacto}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="2" y="0" width="47" height="42" uuid="8e35b67f-e493-49fb-af6f-c11bf0626d1a"/>
+				<imageExpression><![CDATA[$P{logotipo}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="59" y="32" width="131" height="10" uuid="5fb9e2b3-93c0-487a-b8f7-9d84aaabc066"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nif: "+$F{empresas_nif}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="0" y="48" width="190" height="10" uuid="afcff282-689e-4063-be1e-64e0cbee42ad"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["########################################################"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField" x="2" y="59" width="188" height="13" uuid="76530d00-c5d7-4e65-b6c6-47c5ad010e7e"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{facturas_numeracaoFactura}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="0" y="93" width="190" height="10" uuid="5e420c55-b3b7-40cd-9da2-b4c6e749a089"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["########################################################"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="102" y="73" width="88" height="20" uuid="75fb49d7-1c90-4ec0-bd46-9d7a06b32c1e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{facturas_created_at}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="60" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="2" y="50" width="113" height="10" uuid="9a2d10f2-4364-485f-89a8-8575ae29d07c"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="5" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ARTIGO"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="115" y="50" width="75" height="10" uuid="b58c6428-1873-4114-ab8b-70ed47e54233"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="5" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TOTAL"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="0" y="0" width="188" height="10" uuid="e93d88bd-5f65-4b8c-bdbc-4b0f6d44beea"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cliente: "+$F{facturas_nome_do_cliente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="0" y="10" width="188" height="10" uuid="accb1b88-9d71-40d9-88f5-469ecbfc0eb8"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["NIF: "+($F{facturas_nif_cliente}.equals("") ? "Consumidor final" : $F{facturas_nif_cliente})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="0" y="20" width="188" height="10" uuid="2f5440b8-bcbb-425f-921f-30fef119ce51"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Forma de Pagamento: "+$F{formas_pagamentos_geral_descricao}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="1" y="40" width="190" height="10" uuid="39e005f0-5f3c-46a2-992f-41a9df8aa61f"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["########################################################"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="30" width="105" height="10" uuid="c27d3d4e-2668-4bff-8ba4-41fc93fc33a4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="5" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+			<textField pattern="HH.mm.ss" isBlankWhenNull="false">
+				<reportElement key="textField-2" x="153" y="30" width="35" height="10" uuid="b2ee76bb-d3b1-45e5-a016-3568e52c2ee3"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="5" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField-1" x="107" y="30" width="46" height="10" uuid="8d2e2249-7a82-4070-984a-40868b666ad1"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="5" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField" x="1" y="1" width="114" height="15" uuid="4118bdde-7240-4b6c-b59f-1be1c93e73d3"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="html">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>"+$F{factura_items_quantidade_produto}+ " x "+$F{factura_items_descricao_produto} + "</b><br/> " + new DecimalFormat("#,##0.00").format
+($F{factura_items_preco_venda_produto}) + " - " +$F{tipotaxa_taxa}+ "%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" x="115" y="1" width="74" height="15" uuid="098f5221-4e6e-44c4-b252-a1cf8ee343e4"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="html">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new DecimalFormat("#,##0.00").format
+($F{factura_items_iva_produto})+"Kz"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="163" splitType="Stretch">
+			<line>
+				<reportElement x="2" y="120" width="188" height="1" uuid="50601b15-85f6-43c3-83c3-d12567058961"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-22" x="14" y="120" width="162" height="27" uuid="339369f3-29b0-4df8-80a6-872b7636d1c6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Arial" size="5" isBold="false" isItalic="false" isStrikeThrough="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Software de gestão comercial, desenvolvido e assistido pela Ramosoft. www.ramossoft.com]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="0" y="0" width="190" height="10" uuid="e716bbc9-8ac1-44e7-9e81-3d2e8367fe5f"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["########################################################"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField" x="0" y="10" width="190" height="13" uuid="ebfef844-b775-4160-87b3-a38bdeac211c"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="html">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>Subtotal: </b>" + new DecimalFormat("#,##0.00").format
+($F{facturas_total_preco_factura})+" Kz"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField" x="0" y="23" width="190" height="13" uuid="8a46660d-9eec-42c3-b649-9e9db97242fd"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="html">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>IVA: </b>" + $F{facturas_total_iva}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField" x="0" y="36" width="190" height="13" uuid="9ec10591-ccf3-4734-af52-3d91b5acaa40"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="html">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>Desconto: </b>" + $F{facturas_desconto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField" x="1" y="88" width="188" height="13" uuid="3aecac02-a7f0-4e2b-aa14-a844e4258cd5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="5" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{facturas_hashValor}.toUpperCase()).toString().substring(0,4) + " - Programa Certificado nº 32/AGT/2019"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="106" width="188" height="11" uuid="c808f02d-82ae-4520-8c7f-67acf7ed0fc1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="5" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["- "+$F{tipos_regimes_Designacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

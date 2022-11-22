@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MotivoIsencaoSubreport" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="21773834-712c-462c-a67b-731bc481294d">
+	<property name="ireport.zoom" value="6.0"/>
+	<property name="ireport.x" value="366"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="empresa_id" class="java.lang.String"/>
+	<parameter name="facturaId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+SUM(factura_items.incidencia_produto) AS total_incidencia,
+SUM(factura_items.incidencia_produto) AS total_incidencia,
+SUM(factura_items.iva_produto) AS total_iva,factura_items.factura_id,
+tipotaxa.descricao,
+tipotaxa.taxa,
+motivo.codigoMotivo AS motivoCodigo,
+motivo.descricao AS motivoDescricao
+
+FROM facturas
+INNER JOIN factura_items ON factura_items.factura_id = facturas.id
+INNER JOIN produtos ON factura_items.produto_id = produtos.id
+INNER JOIN tipotaxa ON tipotaxa.codigo = produtos.codigo_taxa
+INNER JOIN motivo ON motivo.codigo = produtos.motivo_isencao_id
+WHERE facturas.empresa_id = $P{empresa_id} AND facturas.id = $P{facturaId}
+GROUP BY tipotaxa.descricao, motivo.codigoMotivo, motivo.descricao,tipotaxa.taxa]]>
+	</queryString>
+	<field name="total_incidencia" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_iva" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factura_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="taxa" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="motivoCodigo" class="java.lang.String"/>
+	<field name="motivoDescricao" class="java.lang.String"/>
+	<columnHeader>
+		<band height="13">
+			<staticText>
+				<reportElement x="70" y="2" width="65" height="11" uuid="7cffa920-26e0-4ec1-a303-37f6ab7441b6"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Incidência]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="2" width="355" height="11" uuid="8e67cddf-cd84-4b5b-bc3d-2745bfdb2d29"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<text><![CDATA[Motivo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="2" width="65" height="11" uuid="37e8a402-9a43-4ef9-9cae-d6f0439db7b4"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Imposto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="1" width="68" height="11" uuid="7f2b3481-b66b-47b4-a3ec-804f6104ec6f"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Taxa]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="1" width="68" height="10" uuid="152130f4-a843-450e-b954-e4a6313b310a"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxa} > 0? $F{descricao}: "ISENTO(0,00%)"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="200" y="2" width="355" height="10" uuid="1a989094-6100-4c31-aa5d-4b18a8896ea1"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_iva} > 0 ?"": $F{motivoDescricao}+" - " +$F{motivoCodigo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="70" y="2" width="65" height="10" uuid="5b004dd7-ef29-407a-843c-0f5945e3872c"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_incidencia}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="135" y="2" width="65" height="10" uuid="0a9735ba-935e-4f1a-b1c3-9bd91c34819e"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_iva}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="testeSubreport" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e3a46e8a-1725-4f7f-b0c6-c7d67a45f153">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     bancos.`id` AS bancos_id,
+     bancos.`designacao` AS bancos_designacao,
+     bancos.`sigla` AS bancos_sigla,
+     bancos.`num_conta` AS bancos_num_conta,
+     bancos.`iban` AS bancos_iban,
+     bancos.`status_id` AS bancos_status_id,
+     bancos.`canal_id` AS bancos_canal_id,
+     bancos.`created_at` AS bancos_created_at,
+     bancos.`empresa_id` AS bancos_empresa_id,
+     bancos.`tipo_user_id` AS bancos_tipo_user_id,
+     bancos.`user_id` AS bancos_user_id,
+     bancos.`updated_at` AS bancos_updated_at
+FROM
+     `bancos` bancos]]>
+	</queryString>
+	<field name="bancos_id" class="java.lang.Long"/>
+	<field name="bancos_designacao" class="java.lang.String"/>
+	<field name="bancos_sigla" class="java.lang.String"/>
+	<field name="bancos_num_conta" class="java.lang.String"/>
+	<field name="bancos_iban" class="java.lang.String"/>
+	<field name="bancos_status_id" class="java.lang.Long"/>
+	<field name="bancos_canal_id" class="java.lang.Long"/>
+	<field name="bancos_created_at" class="java.sql.Timestamp"/>
+	<field name="bancos_empresa_id" class="java.lang.Long"/>
+	<field name="bancos_tipo_user_id" class="java.lang.Long"/>
+	<field name="bancos_user_id" class="java.lang.Long"/>
+	<field name="bancos_updated_at" class="java.sql.Timestamp"/>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="143" y="48" width="191" height="20" uuid="758f68cf-9605-4288-8e2f-4d3de9501505"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teste subreport]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

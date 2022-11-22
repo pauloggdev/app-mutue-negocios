@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notaCredito" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d063b865-d206-41e6-8d71-fe91c210e883">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zebrar" mode="Opaque">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+			<style backcolor="#FBFBFB"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="diretorio" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\laragon\\www\\api-mutue-negocio\\public\\upload\\admin\\relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dirSubreportEmpresa" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     bancos.`id` AS bancos_id,
+     bancos.`designacao` AS bancos_designacao,
+     bancos.`sigla` AS bancos_sigla,
+     bancos.`status_id` AS bancos_status_id,
+     bancos.`canal_id` AS bancos_canal_id,
+     bancos.`user_id` AS bancos_user_id,
+     bancos.`created_at` AS bancos_created_at,
+     bancos.`updated_at` AS bancos_updated_at
+FROM
+     `bancos` bancos]]>
+	</queryString>
+	<field name="bancos_id" class="java.lang.Long"/>
+	<field name="bancos_designacao" class="java.lang.String"/>
+	<field name="bancos_sigla" class="java.lang.String"/>
+	<field name="bancos_status_id" class="java.lang.Long"/>
+	<field name="bancos_canal_id" class="java.lang.Long"/>
+	<field name="bancos_user_id" class="java.math.BigInteger"/>
+	<field name="bancos_created_at" class="java.sql.Timestamp"/>
+	<field name="bancos_updated_at" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="146" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="144" width="555" height="1" uuid="0020e540-be4e-4c91-b217-039680cfe39f"/>
+			</line>
+			<subreport>
+				<reportElement x="354" y="3" width="200" height="141" uuid="8837b28a-323f-4cd1-8105-dcb83f560612"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{dirSubreportEmpresa}+"subreportLicenca.jasper"]]></subreportExpression>
+			</subreport>
+			<image>
+				<reportElement x="0" y="0" width="100" height="50" uuid="065cfc41-df53-4002-858a-01af3a2ae190"/>
+				<imageExpression><![CDATA[$P{diretorio}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="19"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="2" width="27" height="20" backcolor="#FBFBFB" uuid="5e4fec0e-c20b-4f5e-b40e-1f95515edd87"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="27" y="2" width="91" height="20" backcolor="#FBFBFB" uuid="c0db9939-c1fc-4ef6-8d7a-ba0e013fd76a"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="118" y="2" width="300" height="20" backcolor="#FBFBFB" uuid="65110ad4-faf5-4551-82c0-02179b6b22fb"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome do banco]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="418" y="2" width="136" height="20" backcolor="#FBFBFB" uuid="b9c30483-62e0-462f-bb40-a3a24b83617f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sigla]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="0" width="26" height="20" uuid="df971dd0-5c5a-4b10-8e90-590ddcfc02bb"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="27" y="0" width="91" height="20" uuid="62f02dc5-f89f-4fb0-a15e-549ce290594f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{bancos_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="118" y="0" width="300" height="20" uuid="fee00026-5be7-4643-ba67-8480e8083f0c"/>
+				<textFieldExpression><![CDATA[$F{bancos_designacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="418" y="0" width="136" height="20" uuid="635b81d2-9e97-4159-ac12-c6da9e9f9a61"/>
+				<textFieldExpression><![CDATA[$F{bancos_sigla}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="97">
+			<staticText>
+				<reportElement x="1" y="59" width="555" height="15" uuid="3f1514aa-f181-4fe0-a6be-acff970ad818"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Software de gestão comercial online, desenvolvido e Assistido pela Ramossoft-WinMarket]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="54" width="555" height="1" uuid="c008273b-ef4d-4a79-8224-3955379122bf"/>
+			</line>
+			<line>
+				<reportElement x="197" y="32" width="164" height="1" uuid="665860b2-01c8-40ee-b0b3-72699b25daa8"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="2" width="554" height="13" uuid="06eafaf4-98c8-4b92-bbea-8eb84576a695"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[A assinatura]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="38" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="5" width="4" height="31" backcolor="#3D5476" uuid="c2b2a3a1-a5a3-4095-a1d9-0bf4feda5a2d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="15" y="18" width="531" height="20" uuid="a03a96e9-3e2c-465c-902b-90df3d163309"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Caso falte bancos  na lista, o utilizador deverá solicitar o suporte técnico
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="5" width="40" height="13" uuid="5223282c-459f-4bc5-849d-835efd2f031f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOTA:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

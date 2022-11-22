@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="documento_anuladoFacturasSubreport" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="844c4d64-760d-4d07-9fb3-324587589e94">
+	<property name="ireport.zoom" value="5.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="empresa_id" class="java.lang.Integer"/>
+	<parameter name="docAnuladoId" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT motivo.codigoMotivo AS motivoCodigo, tipotaxa.taxa, tipotaxa.descricao,motivo.descricao AS motivoDescricao,SUM(nota_credito_items.incidencia_produto) AS total_incidencia,SUM(nota_credito_items.iva_produto) AS total_iva,nota_credito_items.codigoNotaCredito from notas_credito INNER JOIN nota_credito_items ON nota_credito_items.codigoNotaCredito = notas_credito.id
+                INNER JOIN produtos ON nota_credito_items.produto_id = produtos.id
+                INNER JOIN tipotaxa ON tipotaxa.codigo = produtos.codigo_taxa
+                INNER JOIN motivo ON tipotaxa.codigoMotivo = motivo.codigo WHERE notas_credito.id = $P{docAnuladoId} AND notas_credito.empresa_id = $P{empresa_id} GROUP BY tipotaxa.codigo]]>
+	</queryString>
+	<field name="motivoCodigo" class="java.lang.String"/>
+	<field name="taxa" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="motivoDescricao" class="java.lang.String"/>
+	<field name="total_incidencia" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_iva" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigoNotaCredito" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="68" height="15" uuid="b3ce3a83-a8ef-485f-8289-e9e3c20fb189"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Taxa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="68" y="0" width="65" height="15" uuid="1a0f2f80-8fba-4e6e-8876-ba964c20ba50"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Incid]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="133" y="0" width="65" height="15" uuid="0f309181-fd42-4282-a565-b4ce096f1f06"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Imposto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="198" y="0" width="357" height="15" uuid="a92f781b-249a-4d66-9a87-d64ea982a0f9"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<text><![CDATA[Motivo Isenção]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="68" height="15" uuid="602f7f2c-d363-4242-a2f6-9f1f324d2c0e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxa} > 0?$F{descricao}:"ISENTO(0,00%)"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="68" y="0" width="65" height="15" uuid="3411d647-beb1-40a0-8c01-34caf839d251"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_incidencia}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="133" y="0" width="65" height="15" uuid="0fa08729-96d4-4af8-a6cc-b2498c0d266d"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_iva}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="198" y="0" width="357" height="15" uuid="02b81fbb-e449-4a66-bdfc-588569b058bc"/>
+				<textElement>
+					<font size="8"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_iva} > 0 ?"": $F{motivoDescricao}+" - " +$F{motivoCodigo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

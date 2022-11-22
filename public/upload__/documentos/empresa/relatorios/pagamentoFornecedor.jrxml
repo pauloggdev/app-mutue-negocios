@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notaCredito" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d063b865-d206-41e6-8d71-fe91c210e883">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="292"/>
+	<parameter name="empresa_id" class="java.lang.String"/>
+	<parameter name="pagamentoId" class="java.lang.String"/>
+	<parameter name="viaImpressao" class="java.lang.String"/>
+	<parameter name="logotipo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     pagamento_fornecedor.`id` AS pagamento_fornecedor_id,
+     pagamento_fornecedor.`entrada_produto_id` AS pagamento_fornecedor_entrada_produto_id,
+     pagamento_fornecedor.`dataPagamento` AS pagamento_fornecedor_dataPagamento,
+     pagamento_fornecedor.`created_at` AS pagamento_fornecedor_created_at,
+     pagamento_fornecedor.`updated_at` AS pagamento_fornecedor_updated_at,
+     pagamento_fornecedor.`valor` AS pagamento_fornecedor_valor,
+     pagamento_fornecedor.`formaPagamentoId` AS pagamento_fornecedor_formaPagamentoId,
+     pagamento_fornecedor.`conta_fornecedor` AS pagamento_fornecedor_conta_fornecedor,
+     pagamento_fornecedor.`fornecedor_id` AS pagamento_fornecedor_fornecedor_id,
+     pagamento_fornecedor.`user_id` AS pagamento_fornecedor_user_id,
+     pagamento_fornecedor.`tipo_user_id` AS pagamento_fornecedor_tipo_user_id,
+     pagamento_fornecedor.`nFactura` AS pagamento_fornecedor_nFactura,
+     pagamento_fornecedor.`status_id` AS pagamento_fornecedor_status_id,
+     pagamento_fornecedor.`nextPagamento` AS pagamento_fornecedor_nextPagamento,
+     pagamento_fornecedor.`empresa_id` AS pagamento_fornecedor_empresa_id,
+     empresas.`id` AS empresas_id,
+     empresas.`nome` AS empresas_nome,
+     empresas.`pessoal_Contacto` AS empresas_pessoal_Contacto,
+     empresas.`endereco` AS empresas_endereco,
+     empresas.`pais_id` AS empresas_pais_id,
+     empresas.`saldo` AS empresas_saldo,
+     empresas.`canal_id` AS empresas_canal_id,
+     empresas.`status_id` AS empresas_status_id,
+     empresas.`nif` AS empresas_nif,
+     empresas.`gestor_cliente_id` AS empresas_gestor_cliente_id,
+     empresas.`tipo_cliente_id` AS empresas_tipo_cliente_id,
+     empresas.`tipo_regime_id` AS empresas_tipo_regime_id,
+     empresas.`logotipo` AS empresas_logotipo,
+     empresas.`website` AS empresas_website,
+     empresas.`email` AS empresas_email,
+     empresas.`referencia` AS empresas_referencia,
+     empresas.`pessoa_de_contacto` AS empresas_pessoa_de_contacto,
+     empresas.`created_at` AS empresas_created_at,
+     empresas.`updated_at` AS empresas_updated_at,
+     empresas.`cidade` AS empresas_cidade,
+     entradas_stocks.`id` AS entradas_stocks_id,
+     entradas_stocks.`data_factura_fornecedor` AS entradas_stocks_data_factura_fornecedor,
+     entradas_stocks.`fornecedor_id` AS entradas_stocks_fornecedor_id,
+     entradas_stocks.`empresa_id` AS entradas_stocks_empresa_id,
+     entradas_stocks.`forma_pagamento_id` AS entradas_stocks_forma_pagamento_id,
+     entradas_stocks.`tipo_user_id` AS entradas_stocks_tipo_user_id,
+     entradas_stocks.`num_factura_fornecedor` AS entradas_stocks_num_factura_fornecedor,
+     entradas_stocks.`descricao` AS entradas_stocks_descricao,
+     entradas_stocks.`total_compras` AS entradas_stocks_total_compras,
+     entradas_stocks.`total_venda` AS entradas_stocks_total_venda,
+     entradas_stocks.`total_iva` AS entradas_stocks_total_iva,
+     entradas_stocks.`total_desconto` AS entradas_stocks_total_desconto,
+     entradas_stocks.`total_retencao` AS entradas_stocks_total_retencao,
+     entradas_stocks.`user_id` AS entradas_stocks_user_id,
+     entradas_stocks.`canal_id` AS entradas_stocks_canal_id,
+     entradas_stocks.`status_id` AS entradas_stocks_status_id,
+     entradas_stocks.`statusPagamento` AS entradas_stocks_statusPagamento,
+     entradas_stocks.`created_at` AS entradas_stocks_created_at,
+     entradas_stocks.`updated_at` AS entradas_stocks_updated_at,
+     entradas_stocks.`armazem_id` AS entradas_stocks_armazem_id,
+     entradas_stocks.`totalLucro` AS entradas_stocks_totalLucro,
+     entradas_stocks.`operador` AS entradas_stocks_operador,
+     fornecedores.`id` AS fornecedores_id,
+     fornecedores.`nome` AS fornecedores_nome,
+     fornecedores.`telefone_empresa` AS fornecedores_telefone_empresa,
+     fornecedores.`email_empresa` AS fornecedores_email_empresa,
+     fornecedores.`nif` AS fornecedores_nif,
+     fornecedores.`website` AS fornecedores_website,
+     fornecedores.`pessoal_contacto` AS fornecedores_pessoal_contacto,
+     fornecedores.`endereco` AS fornecedores_endereco,
+     fornecedores.`telefone_contacto` AS fornecedores_telefone_contacto,
+     fornecedores.`email_contacto` AS fornecedores_email_contacto,
+     fornecedores.`conta_corrente` AS fornecedores_conta_corrente,
+     fornecedores.`empresa_id` AS fornecedores_empresa_id,
+     fornecedores.`canal_id` AS fornecedores_canal_id,
+     fornecedores.`status_id` AS fornecedores_status_id,
+     fornecedores.`user_id` AS fornecedores_user_id,
+     fornecedores.`data_contracto` AS fornecedores_data_contracto,
+     fornecedores.`pais_nacionalidade_id` AS fornecedores_pais_nacionalidade_id,
+     fornecedores.`created_at` AS fornecedores_created_at,
+     fornecedores.`updated_at` AS fornecedores_updated_at,
+     fornecedores.`tipo_user_id` AS fornecedores_tipo_user_id,
+     fornecedores.`diversos` AS fornecedores_diversos
+FROM
+     `empresas` empresas INNER JOIN `pagamento_fornecedor` pagamento_fornecedor ON empresas.`id` = pagamento_fornecedor.`empresa_id`
+     INNER JOIN `entradas_stocks` entradas_stocks ON empresas.`id` = entradas_stocks.`empresa_id`
+     AND entradas_stocks.`id` = pagamento_fornecedor.`entrada_produto_id`
+     INNER JOIN `fornecedores` fornecedores ON entradas_stocks.`fornecedor_id` = fornecedores.`id`
+     AND fornecedores.`id` = pagamento_fornecedor.`fornecedor_id`
+     AND empresas.`id` = fornecedores.`empresa_id` where empresas.`id` = $P{empresa_id} and pagamento_fornecedor.`id` = $P{pagamentoId}]]>
+	</queryString>
+	<field name="pagamento_fornecedor_id" class="java.lang.Long"/>
+	<field name="pagamento_fornecedor_entrada_produto_id" class="java.lang.Long"/>
+	<field name="pagamento_fornecedor_dataPagamento" class="java.sql.Timestamp"/>
+	<field name="pagamento_fornecedor_created_at" class="java.sql.Timestamp"/>
+	<field name="pagamento_fornecedor_updated_at" class="java.sql.Timestamp"/>
+	<field name="pagamento_fornecedor_valor" class="java.lang.Double"/>
+	<field name="pagamento_fornecedor_formaPagamentoId" class="java.lang.Long"/>
+	<field name="pagamento_fornecedor_conta_fornecedor" class="java.lang.String"/>
+	<field name="pagamento_fornecedor_fornecedor_id" class="java.lang.Long"/>
+	<field name="pagamento_fornecedor_user_id" class="java.lang.Integer"/>
+	<field name="pagamento_fornecedor_tipo_user_id" class="java.lang.Integer"/>
+	<field name="pagamento_fornecedor_nFactura" class="java.lang.String"/>
+	<field name="pagamento_fornecedor_status_id" class="java.lang.Long"/>
+	<field name="pagamento_fornecedor_nextPagamento" class="java.lang.String"/>
+	<field name="pagamento_fornecedor_empresa_id" class="java.lang.Long"/>
+	<field name="empresas_id" class="java.lang.Long"/>
+	<field name="empresas_nome" class="java.lang.String"/>
+	<field name="empresas_pessoal_Contacto" class="java.lang.String"/>
+	<field name="empresas_endereco" class="java.lang.String"/>
+	<field name="empresas_pais_id" class="java.lang.Long"/>
+	<field name="empresas_saldo" class="java.lang.Double"/>
+	<field name="empresas_canal_id" class="java.lang.Long"/>
+	<field name="empresas_status_id" class="java.lang.Long"/>
+	<field name="empresas_nif" class="java.lang.String"/>
+	<field name="empresas_gestor_cliente_id" class="java.lang.Long"/>
+	<field name="empresas_tipo_cliente_id" class="java.lang.Long"/>
+	<field name="empresas_tipo_regime_id" class="java.lang.Long"/>
+	<field name="empresas_logotipo" class="java.lang.String"/>
+	<field name="empresas_website" class="java.lang.String"/>
+	<field name="empresas_email" class="java.lang.String"/>
+	<field name="empresas_referencia" class="java.lang.String"/>
+	<field name="empresas_pessoa_de_contacto" class="java.lang.String"/>
+	<field name="empresas_created_at" class="java.sql.Timestamp"/>
+	<field name="empresas_updated_at" class="java.sql.Timestamp"/>
+	<field name="empresas_cidade" class="java.lang.String"/>
+	<field name="entradas_stocks_id" class="java.lang.Long"/>
+	<field name="entradas_stocks_data_factura_fornecedor" class="java.sql.Date"/>
+	<field name="entradas_stocks_fornecedor_id" class="java.lang.Long"/>
+	<field name="entradas_stocks_empresa_id" class="java.lang.Long"/>
+	<field name="entradas_stocks_forma_pagamento_id" class="java.lang.Long"/>
+	<field name="entradas_stocks_tipo_user_id" class="java.lang.Long"/>
+	<field name="entradas_stocks_num_factura_fornecedor" class="java.lang.String"/>
+	<field name="entradas_stocks_descricao" class="java.lang.String"/>
+	<field name="entradas_stocks_total_compras" class="java.lang.Double"/>
+	<field name="entradas_stocks_total_venda" class="java.lang.Double"/>
+	<field name="entradas_stocks_total_iva" class="java.lang.Double"/>
+	<field name="entradas_stocks_total_desconto" class="java.lang.Double"/>
+	<field name="entradas_stocks_total_retencao" class="java.lang.Double"/>
+	<field name="entradas_stocks_user_id" class="java.lang.Long"/>
+	<field name="entradas_stocks_canal_id" class="java.lang.Long"/>
+	<field name="entradas_stocks_status_id" class="java.lang.Long"/>
+	<field name="entradas_stocks_statusPagamento" class="java.lang.Long"/>
+	<field name="entradas_stocks_created_at" class="java.sql.Timestamp"/>
+	<field name="entradas_stocks_updated_at" class="java.sql.Timestamp"/>
+	<field name="entradas_stocks_armazem_id" class="java.lang.Long"/>
+	<field name="entradas_stocks_totalLucro" class="java.lang.Double"/>
+	<field name="entradas_stocks_operador" class="java.lang.String"/>
+	<field name="fornecedores_id" class="java.lang.Long"/>
+	<field name="fornecedores_nome" class="java.lang.String"/>
+	<field name="fornecedores_telefone_empresa" class="java.lang.String"/>
+	<field name="fornecedores_email_empresa" class="java.lang.String"/>
+	<field name="fornecedores_nif" class="java.lang.String"/>
+	<field name="fornecedores_website" class="java.lang.String"/>
+	<field name="fornecedores_pessoal_contacto" class="java.lang.String"/>
+	<field name="fornecedores_endereco" class="java.lang.String"/>
+	<field name="fornecedores_telefone_contacto" class="java.lang.String"/>
+	<field name="fornecedores_email_contacto" class="java.lang.String"/>
+	<field name="fornecedores_conta_corrente" class="java.lang.String"/>
+	<field name="fornecedores_empresa_id" class="java.lang.Long"/>
+	<field name="fornecedores_canal_id" class="java.lang.Long"/>
+	<field name="fornecedores_status_id" class="java.lang.Long"/>
+	<field name="fornecedores_user_id" class="java.lang.Long"/>
+	<field name="fornecedores_data_contracto" class="java.sql.Date"/>
+	<field name="fornecedores_pais_nacionalidade_id" class="java.lang.Long"/>
+	<field name="fornecedores_created_at" class="java.sql.Timestamp"/>
+	<field name="fornecedores_updated_at" class="java.sql.Timestamp"/>
+	<field name="fornecedores_tipo_user_id" class="java.lang.Long"/>
+	<field name="fornecedores_diversos" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="76" splitType="Stretch">
+			<staticText>
+				<reportElement x="400" y="38" width="43" height="20" uuid="0451438f-2126-4b45-b792-5e842a1a7c78"/>
+				<text><![CDATA[Emitido:]]></text>
+			</staticText>
+			<image isUsingCache="false">
+				<reportElement x="2" y="11" width="76" height="50" uuid="68177a70-bf9d-478c-a9b5-32f2db2111a0"/>
+				<imageExpression><![CDATA[$P{logotipo}]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="443" y="39" width="112" height="20" uuid="0b368a6b-0ced-4dd4-9014-69d1f76b84e2"/>
+				<textFieldExpression><![CDATA[$F{pagamento_fornecedor_created_at}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="242" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="43" width="3" height="95" backcolor="#FF0000" uuid="963b1588-cc5e-41b3-a1c7-3f16ebdb1be5"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="13" y="27" width="143" height="16" uuid="3cf17959-b183-40b2-917d-5f9831db9bdc"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DADOS DO FORNECEDOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="74" width="26" height="16" uuid="0dd1cfe3-7367-4f98-8c1b-8c8346f119be"/>
+				<text><![CDATA[NIF:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="106" width="36" height="16" uuid="cd3f7d5f-7e10-42f7-84f8-1dfebe02ff87"/>
+				<text><![CDATA[E-mail:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="90" width="48" height="16" uuid="15663512-4fce-4e66-aea5-85c24600ca8a"/>
+				<text><![CDATA[Telefone:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="43" width="48" height="16" uuid="2a3bd37e-1449-4620-9e92-fae5fa476385"/>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="168" width="3" height="63" backcolor="#000099" uuid="6d1f0b7e-d083-4bf1-82c4-a5a009cf7ad1"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="13" y="168" width="100" height="15" uuid="975b4151-11b6-41a4-9b11-7a0be3cf1b56"/>
+				<text><![CDATA[Luanda, Angola]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="196" width="351" height="15" uuid="69e083b6-e635-4dd7-b808-6e702e406fc9"/>
+				<text><![CDATA[Este documento não serve de factura
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="1" width="555" height="1" uuid="0020e540-be4e-4c91-b217-039680cfe39f"/>
+			</line>
+			<textField>
+				<reportElement x="13" y="211" width="351" height="20" uuid="9f83e395-3340-402d-bd62-5bf2cfcbff97"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{viaImpressao}.equals("1")?"Original":"2ª via, em conformidade com a original"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="183" width="100" height="15" uuid="ae170478-583d-49cb-bedd-8d2e22ad9ad6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Recibo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="122" width="82" height="16" uuid="95ac7002-a9cd-42f5-840f-ca3c6704ff09"/>
+				<text><![CDATA[Conta corrente:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="61" y="43" width="337" height="16" uuid="7d8fc69b-9d64-4242-806a-736d7de959ec"/>
+				<textFieldExpression><![CDATA[$F{fornecedores_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="59" width="47" height="16" uuid="d46d6111-4d81-4b33-8cf4-71962f4c89b2"/>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="61" y="58" width="337" height="16" uuid="8069dc0b-7632-4dea-85e3-c8cbf344c893"/>
+				<textFieldExpression><![CDATA[$F{fornecedores_endereco}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="40" y="75" width="358" height="16" uuid="76c4f82c-7525-49ae-bb28-03ba695f7d78"/>
+				<textFieldExpression><![CDATA[$F{fornecedores_nif}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="61" y="91" width="337" height="16" uuid="0c3cc3f2-4c81-44bb-9a2a-189cf75695a8"/>
+				<textFieldExpression><![CDATA[$F{fornecedores_telefone_contacto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="49" y="107" width="349" height="16" uuid="73a0e124-512a-4f16-8b47-0af62ab0a7fc"/>
+				<textFieldExpression><![CDATA[$F{fornecedores_email_contacto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="95" y="122" width="303" height="16" uuid="8e1b6dd6-1a05-460a-90f7-a3e4faa8a4bb"/>
+				<textFieldExpression><![CDATA[$F{fornecedores_conta_corrente}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="39" y="41" width="99" height="20" backcolor="#FFFFFF" uuid="5e4fec0e-c20b-4f5e-b40e-1f95515edd87"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº Recibo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="138" y="41" width="129" height="20" backcolor="#FFFFFF" uuid="c0db9939-c1fc-4ef6-8d7a-ba0e013fd76a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº Factura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="398" y="41" width="157" height="20" backcolor="#FFFFFF" uuid="c4578970-ac58-4f99-8eab-4e343183df6d"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="267" y="41" width="131" height="20" backcolor="#FFFFFF" uuid="62c73483-7c4d-4085-a34e-d0cb25dd30d2"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Pagamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="41" width="38" height="20" backcolor="#FFFFFF" uuid="d2d462ff-def7-4e23-891a-e83a75ef6c98"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+					<paragraph firstLineIndent="5"/>
+				</textElement>
+				<text><![CDATA[Nº Recibo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement mode="Opaque" x="398" y="0" width="157" height="20" backcolor="#FFFFFF" uuid="c28eff05-d71c-42a8-9d82-7dd2ad8b5436"/>
+				<textElement textAlignment="Right">
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pagamento_fornecedor_valor}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement mode="Opaque" x="40" y="0" width="98" height="20" backcolor="#FFFFFF" uuid="3b436953-2b6d-4c60-8e46-73b0770b7337"/>
+				<textElement>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pagamento_fornecedor_nextPagamento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement mode="Opaque" x="138" y="0" width="129" height="20" backcolor="#FFFFFF" uuid="3ab796a5-04c6-4eff-8ffd-9e80b7bbff46"/>
+				<textElement>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pagamento_fornecedor_nFactura}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement mode="Opaque" x="267" y="0" width="131" height="20" backcolor="#FFFFFF" uuid="4d605f30-19f6-4e20-8388-464162da7215"/>
+				<textElement>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pagamento_fornecedor_created_at}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="0" width="38" height="20" uuid="607559b0-e5f3-4a51-a765-9890a103b8d0"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="109" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="54" uuid="d2eb6020-de55-443a-b8da-1107c08d5370"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="4" y="10" width="57" height="15" uuid="c33cc920-fab1-4087-be00-e0dc0df390cf"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Operador:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="426" y="10" width="33" height="15" uuid="a102abd3-ed63-4fb8-ac06-6b4c742b3601"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="93" width="555" height="1" uuid="c008273b-ef4d-4a79-8224-3955379122bf"/>
+			</line>
+			<staticText>
+				<reportElement x="-3" y="94" width="558" height="15" uuid="3f1514aa-f181-4fe0-a6be-acff970ad818"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Software de gestão comercial, desenvolvido  pela Mutue - Soluções Tecnológicas Inteligentes]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="56" y="10" width="176" height="15" uuid="56bb8ae7-f1f3-4e21-8113-34e30815af07"/>
+				<textFieldExpression><![CDATA[$F{pagamento_fornecedor_tipo_user_id} == 2?"Administrador":"Funcionário"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="459" y="10" width="86" height="15" uuid="460405d2-36e1-4539-a593-080fdc2eecad"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{pagamento_fornecedor_valor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

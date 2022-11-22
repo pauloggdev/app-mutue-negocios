@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notaCredito" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d063b865-d206-41e6-8d71-fe91c210e883">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="146"/>
+	<style name="zebrar" mode="Opaque">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+			<style backcolor="#FBFBFB"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="logotipo" class="java.lang.String"/>
+	<parameter name="empresa_id" class="java.lang.Integer"/>
+	<parameter name="user_id" class="java.lang.Integer"/>
+	<parameter name="data_fecho" class="java.util.Date"/>
+	<parameter name="valorCash" class="java.lang.Double"/>
+	<parameter name="facturaProforma" class="java.lang.Double"/>
+	<parameter name="facturaAnulado" class="java.lang.Double"/>
+	<parameter name="valorTransferencia" class="java.lang.Double"/>
+	<parameter name="valorDeposito" class="java.lang.Double"/>
+	<parameter name="valorMulticaixa" class="java.lang.Double"/>
+	<parameter name="valorTotalFacturado" class="java.lang.Double"/>
+	<parameter name="operador" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     empresas.`id` AS empresas_id,
+     empresas.`nome` AS empresas_nome,
+     empresas.`pessoal_Contacto` AS empresas_pessoal_Contacto,
+     empresas.`endereco` AS empresas_endereco,
+     empresas.`nif` AS empresas_nif,
+     empresas.`logotipo` AS empresas_logotipo,
+     empresas.`email` AS empresas_email,
+     empresas.`website` AS empresas_website
+FROM
+     `empresas` empresas where empresas.`id` = $P{empresa_id} LIMIT 1]]>
+	</queryString>
+	<field name="empresas_id" class="java.lang.Long"/>
+	<field name="empresas_nome" class="java.lang.String"/>
+	<field name="empresas_pessoal_Contacto" class="java.lang.String"/>
+	<field name="empresas_endereco" class="java.lang.String"/>
+	<field name="empresas_nif" class="java.lang.String"/>
+	<field name="empresas_logotipo" class="java.lang.String"/>
+	<field name="empresas_email" class="java.lang.String"/>
+	<field name="empresas_website" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="427" splitType="Stretch">
+			<image>
+				<reportElement x="-1" y="0" width="100" height="50" uuid="556df531-6cab-41f0-8a45-6f59e05569ce"/>
+				<imageExpression><![CDATA[$P{logotipo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="1" y="187" width="552" height="20" uuid="ad380430-7a22-4f32-aebd-9fa0d59d0425"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecho de caixa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="98" width="48" height="16" uuid="e661f880-26f3-4478-9703-5d261c5f6e4f"/>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="78" width="267" height="20" uuid="ac1d8b73-7dfc-4036-8689-1c2d1f4e2503"/>
+				<textFieldExpression><![CDATA[$F{empresas_nome}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="146" width="48" height="16" uuid="358591e0-bff7-49a5-a902-53022c8d96e0"/>
+				<text><![CDATA[Website:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="130" width="48" height="16" uuid="fa481132-2e1d-4f2d-b8fa-fed7f03039bf"/>
+				<text><![CDATA[Telefone:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="46" y="162" width="328" height="16" uuid="3b62ab5a-aca3-4f2c-87f4-e40ed4fab560"/>
+				<textFieldExpression><![CDATA[$F{empresas_email}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="1" y="62" width="3" height="114" backcolor="#FF0000" uuid="24bd9c83-f598-4412-bfb0-8d0c049ba859"/>
+			</rectangle>
+			<textField>
+				<reportElement x="36" y="114" width="267" height="16" uuid="806acfea-80fe-41a2-8cb9-2d9ff83b0c9a"/>
+				<textFieldExpression><![CDATA[$F{empresas_nif}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="58" y="146" width="267" height="16" uuid="ae86ce7c-c049-4b5d-9582-1a4c81937b31"/>
+				<textFieldExpression><![CDATA[$F{empresas_website}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="58" y="98" width="267" height="16" uuid="2d0f8beb-165b-4757-941d-11c3b90c3bc3"/>
+				<textFieldExpression><![CDATA[$F{empresas_endereco}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="62" width="26" height="16" uuid="96288c90-ee3f-4392-9b9b-3a16dcb62501"/>
+				<text><![CDATA[DE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="162" width="36" height="16" uuid="69fa990b-0b24-4928-ae2b-47fee7d6e498"/>
+				<text><![CDATA[E-mail:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="114" width="26" height="16" uuid="4f42c1bf-5973-40d3-91fb-55e5ae1730b4"/>
+				<text><![CDATA[NIF:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="58" y="130" width="267" height="16" uuid="cc357275-8e24-45d0-9026-decc27285841"/>
+				<textFieldExpression><![CDATA[$F{empresas_pessoal_Contacto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="207" width="100" height="20" uuid="6c5da408-594d-4361-b929-0946985d69b9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Luanda - Angola]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="228" width="38" height="20" uuid="5f4d4921-5b3f-4951-b6d4-27f7d8b972d9"/>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="413" y="228" width="62" height="20" uuid="cdfcee60-f688-4916-a85f-d9f5b259a121"/>
+				<text><![CDATA[Funcionario:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="39" y="228" width="161" height="20" uuid="a1f217cd-be36-4615-9113-47270bff5ded"/>
+				<textFieldExpression><![CDATA[$P{data_fecho}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="475" y="228" width="78" height="20" uuid="13e0b00f-31fe-444f-9123-7ca82e8d04b6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{operador}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="284" width="199" height="20" backcolor="#FBFBFB" uuid="b4ea8d2d-bd1a-4a43-a945-d95d25a5586e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR TRANSFERÊNCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="264" width="200" height="20" backcolor="#FBFBFB" uuid="c0db9939-c1fc-4ef6-8d7a-ba0e013fd76a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR CASH/ DINHEIRO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="304" width="199" height="20" backcolor="#FBFBFB" uuid="9c24a71b-507d-4cc1-ba9c-c8bb5e9bd441"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR DEPÓSITO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="324" width="199" height="20" backcolor="#FBFBFB" uuid="f5fbeca8-09f2-4497-9007-0e61cb262bb7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR MULTICAIXA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="344" width="199" height="20" backcolor="#FBFBFB" uuid="20b1a6d5-9a18-4776-9471-89392b6e6c6f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR ANULADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="385" width="200" height="20" backcolor="#CCCCCC" uuid="8b962bcb-0c2a-44ab-9d4a-8f248d4f106f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL FACTURADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="365" width="199" height="20" backcolor="#FBFBFB" uuid="dffa3a8d-f5ba-4c06-b9a2-5576eb47d170"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR PROFORMA]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="200" y="264" width="174" height="20" uuid="50485b3e-325e-4048-8a10-0501465d7b45"/>
+				<textFieldExpression><![CDATA[$P{valorCash}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="200" y="284" width="174" height="20" uuid="30db108f-0640-420f-a4b5-7b39c1e8b1e2"/>
+				<textFieldExpression><![CDATA[$P{valorTransferencia}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="200" y="304" width="174" height="20" uuid="33e1a1af-384d-4af1-979b-0f6068dbb22b"/>
+				<textFieldExpression><![CDATA[$P{valorDeposito}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="200" y="324" width="174" height="20" uuid="d95dce23-1fd5-4131-8f15-54a567ebdf14"/>
+				<textFieldExpression><![CDATA[$P{valorMulticaixa}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="200" y="344" width="174" height="20" uuid="98a131a1-d856-4821-b41e-7b5f583b751b"/>
+				<textFieldExpression><![CDATA[$P{facturaAnulado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="200" y="364" width="174" height="20" uuid="5fa24978-27c7-4f5f-90b3-f3d54de91c8b"/>
+				<textFieldExpression><![CDATA[$P{facturaProforma}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="200" y="385" width="174" height="20" uuid="857c4428-afa2-436b-8e51-84ee16443439"/>
+				<textFieldExpression><![CDATA[$P{valorTotalFacturado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="22">
+			<staticText>
+				<reportElement x="1" y="7" width="555" height="15" uuid="3f1514aa-f181-4fe0-a6be-acff970ad818"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Software de gestão comercial, desenvolvido  pela Mutue - Soluções Tecnológicas Inteligentes]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="2" width="555" height="1" uuid="c008273b-ef4d-4a79-8224-3955379122bf"/>
+			</line>
+		</band>
+	</lastPageFooter>
+</jasperReport>

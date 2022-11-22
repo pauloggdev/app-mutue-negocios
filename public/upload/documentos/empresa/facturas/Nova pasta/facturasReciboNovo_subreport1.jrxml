@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturasReciboNovo_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8fd01827-7358-4bd0-8972-326d0b3f5100">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     factura_items.`id` AS factura_items_id,
+     factura_items.`descricao_produto` AS factura_items_descricao_produto,
+     factura_items.`preco_compra_produto` AS factura_items_preco_compra_produto,
+     factura_items.`preco_venda_produto` AS factura_items_preco_venda_produto,
+     factura_items.`quantidade_produto` AS factura_items_quantidade_produto,
+     factura_items.`desconto_produto` AS factura_items_desconto_produto,
+     factura_items.`incidencia_produto` AS factura_items_incidencia_produto,
+     factura_items.`retencao_produto` AS factura_items_retencao_produto,
+     factura_items.`iva_produto` AS factura_items_iva_produto,
+     factura_items.`total_preco_produto` AS factura_items_total_preco_produto,
+     factura_items.`produto_id` AS factura_items_produto_id,
+     factura_items.`factura_id` AS factura_items_factura_id,
+     motivo.`codigo` AS motivo_codigo,
+     motivo.`codigoMotivo` AS motivo_codigoMotivo,
+     motivo.`descricao` AS motivo_descricao,
+     motivo.`codigoStatus` AS motivo_codigoStatus,
+     motivo.`canal_id` AS motivo_canal_id,
+     motivo.`user_id` AS motivo_user_id,
+     motivo.`status_id` AS motivo_status_id,
+     motivo.`created_at` AS motivo_created_at,
+     motivo.`updated_at` AS motivo_updated_at,
+     produtos.`id` AS produtos_id,
+     produtos.`designacao` AS produtos_designacao,
+     produtos.`preco_venda` AS produtos_preco_venda,
+     produtos.`preco_compra` AS produtos_preco_compra,
+     produtos.`marca_id` AS produtos_marca_id,
+     produtos.`categoria_id` AS produtos_categoria_id,
+     produtos.`classe_id` AS produtos_classe_id,
+     produtos.`unidade_medida_id` AS produtos_unidade_medida_id,
+     produtos.`fabricante_id` AS produtos_fabricante_id,
+     produtos.`user_id` AS produtos_user_id,
+     produtos.`canal_id` AS produtos_canal_id,
+     produtos.`status_id` AS produtos_status_id,
+     produtos.`codigo_taxa` AS produtos_codigo_taxa,
+     produtos.`motivo_isencao_id` AS produtos_motivo_isencao_id,
+     produtos.`quantidade_minima` AS produtos_quantidade_minima,
+     produtos.`quantidade_critica` AS produtos_quantidade_critica,
+     produtos.`imagem_produto` AS produtos_imagem_produto,
+     produtos.`referencia` AS produtos_referencia,
+     produtos.`codigo_barra` AS produtos_codigo_barra,
+     produtos.`data_expiracao` AS produtos_data_expiracao,
+     produtos.`descricao` AS produtos_descricao,
+     produtos.`stocavel` AS produtos_stocavel,
+     produtos.`empresa_id` AS produtos_empresa_id,
+     produtos.`created_at` AS produtos_created_at,
+     produtos.`updated_at` AS produtos_updated_at
+FROM
+     `motivo` motivo INNER JOIN `produtos` produtos ON motivo.`codigo` = produtos.`motivo_isencao_id`
+     INNER JOIN `factura_items` factura_items ON produtos.`id` = factura_items.`produto_id`]]>
+	</queryString>
+	<field name="factura_items_id" class="java.lang.Long"/>
+	<field name="factura_items_descricao_produto" class="java.lang.String"/>
+	<field name="factura_items_preco_compra_produto" class="java.lang.Double"/>
+	<field name="factura_items_preco_venda_produto" class="java.lang.Double"/>
+	<field name="factura_items_quantidade_produto" class="java.lang.Long"/>
+	<field name="factura_items_desconto_produto" class="java.lang.Double"/>
+	<field name="factura_items_incidencia_produto" class="java.lang.Double"/>
+	<field name="factura_items_retencao_produto" class="java.lang.Double"/>
+	<field name="factura_items_iva_produto" class="java.lang.Double"/>
+	<field name="factura_items_total_preco_produto" class="java.lang.Double"/>
+	<field name="factura_items_produto_id" class="java.lang.Long"/>
+	<field name="factura_items_factura_id" class="java.lang.Long"/>
+	<field name="motivo_codigo" class="java.lang.Long"/>
+	<field name="motivo_codigoMotivo" class="java.lang.String"/>
+	<field name="motivo_descricao" class="java.lang.String"/>
+	<field name="motivo_codigoStatus" class="java.lang.Long"/>
+	<field name="motivo_canal_id" class="java.lang.Long"/>
+	<field name="motivo_user_id" class="java.lang.Long"/>
+	<field name="motivo_status_id" class="java.lang.Long"/>
+	<field name="motivo_created_at" class="java.sql.Timestamp"/>
+	<field name="motivo_updated_at" class="java.sql.Timestamp"/>
+	<field name="produtos_id" class="java.lang.Long"/>
+	<field name="produtos_designacao" class="java.lang.String"/>
+	<field name="produtos_preco_venda" class="java.lang.Double"/>
+	<field name="produtos_preco_compra" class="java.lang.Double"/>
+	<field name="produtos_marca_id" class="java.lang.Long"/>
+	<field name="produtos_categoria_id" class="java.lang.Long"/>
+	<field name="produtos_classe_id" class="java.lang.Long"/>
+	<field name="produtos_unidade_medida_id" class="java.lang.Long"/>
+	<field name="produtos_fabricante_id" class="java.lang.Long"/>
+	<field name="produtos_user_id" class="java.lang.Long"/>
+	<field name="produtos_canal_id" class="java.lang.Long"/>
+	<field name="produtos_status_id" class="java.lang.Long"/>
+	<field name="produtos_codigo_taxa" class="java.lang.Long"/>
+	<field name="produtos_motivo_isencao_id" class="java.lang.Long"/>
+	<field name="produtos_quantidade_minima" class="java.lang.Long"/>
+	<field name="produtos_quantidade_critica" class="java.lang.Long"/>
+	<field name="produtos_imagem_produto" class="java.lang.String"/>
+	<field name="produtos_referencia" class="java.lang.String"/>
+	<field name="produtos_codigo_barra" class="java.lang.String"/>
+	<field name="produtos_data_expiracao" class="java.sql.Date"/>
+	<field name="produtos_descricao" class="java.lang.String"/>
+	<field name="produtos_stocavel" class="java.lang.String"/>
+	<field name="produtos_empresa_id" class="java.lang.Long"/>
+	<field name="produtos_created_at" class="java.sql.Timestamp"/>
+	<field name="produtos_updated_at" class="java.sql.Timestamp"/>
+	<group name="factura_items_iva_produto">
+		<groupExpression><![CDATA[$F{factura_items_iva_produto}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="62" y="0" width="62" height="20" uuid="184e04d2-17d5-45f3-9b76-32dc6a68fa42"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Retenção]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="0" width="69" height="20" uuid="746b6a39-f165-4545-a7bf-641124859483"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Incid./Qtd]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="193" y="0" width="68" height="20" uuid="ec837b07-6add-4993-b0be-e3358477ca97"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[IVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="62" height="20" uuid="806ee4d6-efa1-41c7-bc5f-9afc19d22a24"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desconto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="0" width="234" height="20" uuid="c3d54832-b798-42ba-8fb2-a1c446588eb8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Motivo de isenção]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement x="62" y="0" width="62" height="20" uuid="7fcf1e70-6c33-48eb-ae8a-dc3393fd3976"/>
+				<textFieldExpression><![CDATA[$F{factura_items_retencao_produto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="124" y="1" width="69" height="20" uuid="f6b89236-9698-4169-8fdb-2ed18699abc5"/>
+				<textFieldExpression><![CDATA[$F{factura_items_incidencia_produto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="193" y="0" width="68" height="20" uuid="1707ac1f-4b71-4fee-935d-e5134618f09a"/>
+				<textFieldExpression><![CDATA[$F{factura_items_iva_produto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="0" y="0" width="62" height="20" uuid="78f13073-df76-4a70-9dc3-99c7166d7ef4"/>
+				<textFieldExpression><![CDATA[$F{factura_items_desconto_produto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="261" y="0" width="234" height="20" uuid="6202ba2d-d6cc-404d-9ad1-4d59f98e69d1"/>
+				<textFieldExpression><![CDATA[$F{motivo_descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

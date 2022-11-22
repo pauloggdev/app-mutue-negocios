@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notaCredito" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d063b865-d206-41e6-8d71-fe91c210e883">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="145"/>
+	<style name="zebrar" mode="Opaque">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+			<style backcolor="#FBFBFB"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\laragon\\www\\api-mutue-negocio\\public\\upload\\documentos\\empresa\\relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     movimentos.`Codigo` AS movimentos_Codigo,
+     movimentos.`DataMovimento` AS movimentos_DataMovimento,
+     movimentos.`Descricao` AS movimentos_Descricao,
+     movimentos.`CodigoUtilizador` AS movimentos_CodigoUtilizador,
+     movimentos.`CodEmpresa` AS movimentos_CodEmpresa,
+     movimentos.`AnoFinanceiro` AS movimentos_AnoFinanceiro,
+     movimentos.`CodigoStatus` AS movimentos_CodigoStatus,
+     movimentos.`CodigoContaDebito` AS movimentos_CodigoContaDebito,
+     movimentos.`CodigoContaCredito` AS movimentos_CodigoContaCredito,
+     movimentos.`CodigoCentroCusto` AS movimentos_CodigoCentroCusto,
+     movimentos.`NextMovimento` AS movimentos_NextMovimento,
+     movimentos.`movimentoReferences` AS movimentos_movimentoReferences,
+     movimentos.`CodigoFactura` AS movimentos_CodigoFactura,
+     movimentos.`ContaCliente` AS movimentos_ContaCliente,
+     movimentos.`TipoMovimento` AS movimentos_TipoMovimento,
+     movimentos.`TipoDocumento` AS movimentos_TipoDocumento,
+     movimentos.`hash` AS movimentos_hash,
+     movimentos.`forma` AS movimentos_forma,
+     movimentos.`telefoneCliente` AS movimentos_telefoneCliente,
+     movimentos.`nifCliente` AS movimentos_nifCliente,
+     movimentos.`morada` AS movimentos_morada,
+     movimentos.`NomeCliente` AS movimentos_NomeCliente,
+     empresas.`Codigo` AS empresas_Codigo,
+     empresas.`Nome` AS empresas_Nome,
+     empresas.`Endereco` AS empresas_Endereco,
+     empresas.`Fixo` AS empresas_Fixo,
+     empresas.`Movel` AS empresas_Movel,
+     empresas.`CapitalSocial` AS empresas_CapitalSocial,
+     empresas.`DataCadastro` AS empresas_DataCadastro,
+     empresas.`NIF` AS empresas_NIF,
+     empresas.`website` AS empresas_website,
+     empresas.`email` AS empresas_email,
+     empresas.`referenciaEmpresa` AS empresas_referenciaEmpresa,
+     movimentos_item.`Codigo` AS movimentos_item_Codigo,
+     movimentos_item.`CodigoConta` AS movimentos_item_CodigoConta,
+     movimentos_item.`CodigoTipoMovimento` AS movimentos_item_CodigoTipoMovimento,
+     movimentos_item.`Valor` AS movimentos_item_Valor,
+     movimentos_item.`OBS` AS movimentos_item_OBS,
+     movimentos_item.`CodigoMoeda` AS movimentos_item_CodigoMoeda,
+     movimentos_item.`Cambio` AS movimentos_item_Cambio,
+     movimentos_item.`CodigoMovimento` AS movimentos_item_CodigoMovimento,
+     movimentos_item.`CodigoContaDebito` AS movimentos_item_CodigoContaDebito,
+     movimentos_item.`CodigoContaCredito` AS movimentos_item_CodigoContaCredito,
+     movimentos_item.`Retencao` AS movimentos_item_Retencao,
+     movimentos_item.`RetencaoTaxa` AS movimentos_item_RetencaoTaxa,
+     movimentos_item.`IVA` AS movimentos_item_IVA,
+     movimentos_item.`IVATaxa` AS movimentos_item_IVATaxa,
+     movimentos_item.`CodigoDeposito` AS movimentos_item_CodigoDeposito,
+     subcontas.`Codigo` AS subcontas_Codigo,
+     subcontas.`Numero` AS subcontas_Numero,
+     subcontas.`Descricao` AS subcontas_Descricao,
+     subcontas.`CodConta` AS subcontas_CodConta,
+     subcontas.`CodUtilizador` AS subcontas_CodUtilizador,
+     subcontas.`DataCadastro` AS subcontas_DataCadastro,
+     subcontas.`CodTipoConta` AS subcontas_CodTipoConta,
+     subcontas.`CodEmpresa` AS subcontas_CodEmpresa,
+     subcontas.`Movimentar` AS subcontas_Movimentar,
+     subcontas.`codigoCliente` AS subcontas_codigoCliente
+FROM
+     `empresas` empresas INNER JOIN `movimentos` movimentos ON empresas.`Codigo` = movimentos.`CodEmpresa`
+     INNER JOIN `movimentos_item` movimentos_item ON movimentos.`Codigo` = movimentos_item.`CodigoMovimento`
+     INNER JOIN `subcontas` subcontas ON movimentos_item.`CodigoConta` = subcontas.`Codigo`
+     AND empresas.`Codigo` = subcontas.`CodEmpresa`]]>
+	</queryString>
+	<field name="movimentos_Codigo" class="java.lang.Long"/>
+	<field name="movimentos_DataMovimento" class="java.sql.Timestamp"/>
+	<field name="movimentos_Descricao" class="java.lang.String"/>
+	<field name="movimentos_CodigoUtilizador" class="java.lang.Long"/>
+	<field name="movimentos_CodEmpresa" class="java.lang.Long"/>
+	<field name="movimentos_AnoFinanceiro" class="java.lang.Long"/>
+	<field name="movimentos_CodigoStatus" class="java.lang.Integer"/>
+	<field name="movimentos_CodigoContaDebito" class="java.lang.Long"/>
+	<field name="movimentos_CodigoContaCredito" class="java.lang.Long"/>
+	<field name="movimentos_CodigoCentroCusto" class="java.lang.Long"/>
+	<field name="movimentos_NextMovimento" class="java.lang.String"/>
+	<field name="movimentos_movimentoReferences" class="java.lang.String"/>
+	<field name="movimentos_CodigoFactura" class="java.lang.String"/>
+	<field name="movimentos_ContaCliente" class="java.lang.String"/>
+	<field name="movimentos_TipoMovimento" class="java.lang.String"/>
+	<field name="movimentos_TipoDocumento" class="java.lang.Long"/>
+	<field name="movimentos_hash" class="java.lang.String"/>
+	<field name="movimentos_forma" class="java.lang.Long"/>
+	<field name="movimentos_telefoneCliente" class="java.lang.String"/>
+	<field name="movimentos_nifCliente" class="java.lang.String"/>
+	<field name="movimentos_morada" class="java.lang.String"/>
+	<field name="movimentos_NomeCliente" class="java.lang.String"/>
+	<field name="empresas_Codigo" class="java.lang.Long"/>
+	<field name="empresas_Nome" class="java.lang.String"/>
+	<field name="empresas_Endereco" class="java.lang.String"/>
+	<field name="empresas_Fixo" class="java.lang.String"/>
+	<field name="empresas_Movel" class="java.lang.String"/>
+	<field name="empresas_CapitalSocial" class="java.lang.Float"/>
+	<field name="empresas_DataCadastro" class="java.sql.Date"/>
+	<field name="empresas_NIF" class="java.lang.String"/>
+	<field name="empresas_website" class="java.lang.String"/>
+	<field name="empresas_email" class="java.lang.String"/>
+	<field name="empresas_referenciaEmpresa" class="java.lang.String"/>
+	<field name="movimentos_item_Codigo" class="java.lang.Long"/>
+	<field name="movimentos_item_CodigoConta" class="java.lang.Integer"/>
+	<field name="movimentos_item_CodigoTipoMovimento" class="java.lang.Long"/>
+	<field name="movimentos_item_Valor" class="java.lang.Double"/>
+	<field name="movimentos_item_OBS" class="java.lang.String"/>
+	<field name="movimentos_item_CodigoMoeda" class="java.lang.Long"/>
+	<field name="movimentos_item_Cambio" class="java.lang.Double"/>
+	<field name="movimentos_item_CodigoMovimento" class="java.lang.Long"/>
+	<field name="movimentos_item_CodigoContaDebito" class="java.lang.Long"/>
+	<field name="movimentos_item_CodigoContaCredito" class="java.lang.Long"/>
+	<field name="movimentos_item_Retencao" class="java.lang.Double"/>
+	<field name="movimentos_item_RetencaoTaxa" class="java.lang.Double"/>
+	<field name="movimentos_item_IVA" class="java.lang.Double"/>
+	<field name="movimentos_item_IVATaxa" class="java.lang.Double"/>
+	<field name="movimentos_item_CodigoDeposito" class="java.lang.Long"/>
+	<field name="subcontas_Codigo" class="java.lang.Integer"/>
+	<field name="subcontas_Numero" class="java.lang.String"/>
+	<field name="subcontas_Descricao" class="java.lang.String"/>
+	<field name="subcontas_CodConta" class="java.lang.Long"/>
+	<field name="subcontas_CodUtilizador" class="java.lang.Long"/>
+	<field name="subcontas_DataCadastro" class="java.sql.Timestamp"/>
+	<field name="subcontas_CodTipoConta" class="java.lang.Long"/>
+	<field name="subcontas_CodEmpresa" class="java.lang.Long"/>
+	<field name="subcontas_Movimentar" class="java.lang.String"/>
+	<field name="subcontas_codigoCliente" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="187" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="53" width="3" height="114" backcolor="#FF0000" uuid="963b1588-cc5e-41b3-a1c7-3f16ebdb1be5"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="186" width="555" height="1" uuid="0020e540-be4e-4c91-b217-039680cfe39f"/>
+			</line>
+			<staticText>
+				<reportElement x="10" y="121" width="48" height="16" uuid="d9ad61f0-37e7-4574-9877-053823b0caa8"/>
+				<text><![CDATA[Telefone:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="89" width="48" height="16" uuid="022304bf-8f55-4a4a-9124-5233240cb3ed"/>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="153" width="36" height="16" uuid="bcc1c29a-2997-4905-b4dc-0e64e274374e"/>
+				<text><![CDATA[E-mail:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="58" y="137" width="257" height="16" uuid="89f6677c-fe53-42c7-b267-81c3c1527893"/>
+				<textFieldExpression><![CDATA[$F{empresas_website}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="53" width="26" height="16" uuid="58acaa23-e0bd-44eb-8b93-26da77c11a68"/>
+				<text><![CDATA[DE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="137" width="48" height="16" uuid="686896f6-32bd-4249-b11e-82e5def69794"/>
+				<text><![CDATA[Website:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="36" y="105" width="279" height="16" uuid="296d0de9-cd9c-4642-9013-252fde5aff49"/>
+				<textFieldExpression><![CDATA[$F{empresas_NIF}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="69" width="100" height="20" uuid="02fd90bc-743f-421d-beae-886eb3c1a0e5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_Nome}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="105" width="26" height="16" uuid="49caf975-bb86-4ee5-8e3d-758a918e548f"/>
+				<text><![CDATA[NIF:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="58" y="89" width="257" height="16" uuid="3a8ea9f4-89b1-4e56-b410-5a1dbc5a8f34"/>
+				<textFieldExpression><![CDATA[$F{empresas_Endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="58" y="121" width="257" height="16" uuid="95b68a57-f07e-4282-8279-61b2baa2238f"/>
+				<textFieldExpression><![CDATA[$F{empresas_Movel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="46" y="153" width="269" height="16" uuid="6050a7ba-808e-419f-a4f1-ecdf138507e4"/>
+				<textFieldExpression><![CDATA[$F{empresas_email}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="83">
+			<staticText>
+				<reportElement x="-1" y="8" width="100" height="20" uuid="6c5da408-594d-4361-b929-0946985d69b9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Luanda - Angola]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="39" width="100" height="20" uuid="5f4d4921-5b3f-4951-b6d4-27f7d8b972d9"/>
+				<text><![CDATA[Periodo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="221" y="39" width="92" height="20" uuid="cdfcee60-f688-4916-a85f-d9f5b259a121"/>
+				<text><![CDATA[Extrato da Conta:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="2" width="27" height="20" backcolor="#FBFBFB" uuid="5e4fec0e-c20b-4f5e-b40e-1f95515edd87"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="27" y="2" width="83" height="20" backcolor="#FBFBFB" uuid="c0db9939-c1fc-4ef6-8d7a-ba0e013fd76a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mov.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="109" y="2" width="88" height="20" backcolor="#FBFBFB" uuid="65110ad4-faf5-4551-82c0-02179b6b22fb"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="486" y="2" width="69" height="20" backcolor="#FBFBFB" uuid="9aa1db64-d6d4-4da3-b418-21f37f0592b4"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Credito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="197" y="2" width="233" height="20" backcolor="#FBFBFB" uuid="b4ea8d2d-bd1a-4a43-a945-d95d25a5586e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="429" y="2" width="57" height="20" backcolor="#FBFBFB" uuid="15e7c383-1f55-401d-bc66-0d7606bfc50c"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Débito]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="27" height="20" uuid="084e1d2e-750b-4d4c-800a-16ce5e2e3ee2"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="27" y="0" width="83" height="20" uuid="3c8192ed-8612-4298-b4fb-fbc64e4fd490"/>
+				<textFieldExpression><![CDATA[121212121]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="0" width="87" height="20" uuid="51dd0313-ab46-4d8e-a441-d96bdfaff2be"/>
+				<textFieldExpression><![CDATA[$F{movimentos_DataMovimento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="0" width="233" height="20" uuid="46e4adfc-174c-4cfb-b0ca-e3e57a953e48"/>
+				<textFieldExpression><![CDATA[$F{movimentos_Descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="40"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="22">
+			<staticText>
+				<reportElement x="1" y="7" width="555" height="15" uuid="3f1514aa-f181-4fe0-a6be-acff970ad818"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Software de gestão comercial, desenvolvido  pela Mutue - Soluções Tecnológicas Inteligentes]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="2" width="555" height="1" uuid="c008273b-ef4d-4a79-8224-3955379122bf"/>
+			</line>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="74" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="40" width="393" height="20" uuid="0fd430c8-f5cd-48f9-8067-fe79f4de7333"/>
+				<text><![CDATA[SALDO DO PERIODO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="393" height="20" uuid="7a551ffe-99da-48e0-a8a2-e68e37d53795"/>
+				<text><![CDATA[SALDO DO PERIODO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="393" y="1" width="164" height="20" uuid="dfa3a944-cb57-403f-9510-ecc91ca5a191"/>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="393" height="20" uuid="dbe9093c-8a1f-4843-bf7e-fae61a2cb2d0"/>
+				<text><![CDATA[SALDO DO PERIODO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="391" y="20" width="164" height="20" uuid="7845aec1-35f9-4f54-a4bf-14bdc7ac0103"/>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="392" y="40" width="164" height="20" uuid="2a96651f-6f67-4bf8-a0f9-eb60d10dbf27"/>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

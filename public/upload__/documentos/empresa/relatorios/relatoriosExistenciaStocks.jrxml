@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mesas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d67a6c4e-76e8-414d-8842-3d33c1d9bacc">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="8"/>
+	<property name="ireport.y" value="23"/>
+	<style name="style1">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0F0F0"/>
+		</conditionalStyle>
+	</style>
+	<style name="styleCategoria">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#D4D4D4"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="logotipo" class="java.lang.String"/>
+	<parameter name="emailEmpresa" class="java.lang.String"/>
+	<parameter name="nifEmpresa" class="java.lang.String"/>
+	<parameter name="telefoneEmpresa" class="java.lang.String"/>
+	<parameter name="enderecoEmpresa" class="java.lang.String"/>
+	<parameter name="nomeEmpresa" class="java.lang.String"/>
+	<parameter name="empresa_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT produtos.designacao AS produtos_designaca,
+existencias_stocks.quantidade AS quantStock,
+produtos.preco_venda AS precoProduto,
+categorias.`designacao` AS categorias_designacao
+FROM
+     `existencias_stocks` existencias_stocks
+INNER JOIN `produtos` produtos ON existencias_stocks.`produto_id` = produtos.`id`
+INNER JOIN categorias ON categorias.id = produtos.categoria_id
+WHERE produtos.status_id = 1 AND produtos.empresa_id = $P{empresa_id} GROUP BY
+categorias.`id`,
+produtos.designacao,
+produtos.preco_venda,
+existencias_stocks.quantidade]]>
+	</queryString>
+	<field name="produtos_designaca" class="java.lang.String"/>
+	<field name="quantStock" class="java.lang.Long"/>
+	<field name="precoProduto" class="java.lang.Double"/>
+	<field name="categorias_designacao" class="java.lang.String"/>
+	<group name="AgruparPorCategoria">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band height="14">
+				<textField isBlankWhenNull="true">
+					<reportElement style="styleCategoria" mode="Opaque" x="23" y="1" width="510" height="12" backcolor="#F0F0F0" uuid="ec675ecf-e5ff-43c3-b84b-a9c3e2ea1a20"/>
+					<box>
+						<topPen lineWidth="0.25" lineColor="#B1B1B1"/>
+						<bottomPen lineWidth="0.25" lineColor="#B1B1B1"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="29" y="0" width="242" height="14" backcolor="#D4D4D4" uuid="85219f88-443c-4fcd-b35c-2ec811feb631"/>
+					<textElement>
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categorias_designacao}.toUpperCase()]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="25"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="225" splitType="Stretch">
+			<textField>
+				<reportElement x="23" y="109" width="509" height="25" uuid="d59eae83-0845-4643-a12c-fa021b9062ba"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["LISTAGEM DE EXISTÊNCIA STOCKS"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="23" y="210" width="279" height="15" forecolor="#FFFFFF" backcolor="#999999" uuid="63dbe477-7d14-4fc0-b3ab-de1abc3ad2df"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="302" y="210" width="131" height="15" forecolor="#FFFFFF" backcolor="#999999" uuid="f75a67ad-e482-40f1-a810-cbd36dec4f7c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QUANTIDADE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="433" y="210" width="100" height="15" forecolor="#FFFFFF" backcolor="#999999" uuid="8d9ead4c-e7be-4d62-9941-bb218cafdb99"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PREÇO DE VENDA]]></text>
+			</staticText>
+			<image>
+				<reportElement x="23" y="0" width="140" height="84" uuid="20200c4b-7b00-4a92-87d0-107840952795"/>
+				<imageExpression><![CDATA[$P{logotipo}]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-74" x="115" y="95" width="398" height="14" uuid="54589817-4ed4-41ab-9f1a-a32a1429c8c9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nomeEmpresa}.toUpperCase()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement style="style1" mode="Opaque" x="23" y="2" width="316" height="12" uuid="ddb4ab93-1a76-494a-a836-eea577fbcd49"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtos_designaca}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0">
+				<reportElement style="style1" mode="Opaque" x="329" y="2" width="104" height="12" uuid="3618d003-5dbb-44dd-a9f4-a67f46f4bb60"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantStock}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="style1" mode="Opaque" x="433" y="2" width="99" height="12" uuid="05543149-9272-4a03-8809-32fd1a81083d"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{precoProduto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="14">
+			<textField>
+				<reportElement x="433" y="0" width="80" height="14" uuid="4f84ddce-4e7f-4c36-b891-2889e59bd955"/>
+				<textElement textAlignment="Right" markup="html">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página <b>"+$V{PAGE_NUMBER}+"</b> de  "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="517" y="0" width="30" height="14" uuid="bd187200-0cca-4c74-af13-c743514aebc9"/>
+				<textElement markup="html">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" <b>" + $V{PAGE_NUMBER}+"</b>"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="28"/>
+	</summary>
+</jasperReport>

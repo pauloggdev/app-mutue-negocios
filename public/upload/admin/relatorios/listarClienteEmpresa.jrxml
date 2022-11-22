@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listarClienteEmpresa" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d0dd20f2-9d25-4bf4-a478-ebb9ccf92d1d">
+	<property name="ireport.zoom" value="5.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     empresas.`id` AS empresas_id,
+     empresas.`nome` AS empresas_nome,
+     empresas.`pessoal_Contacto` AS empresas_pessoal_Contacto,
+     empresas.`endereco` AS empresas_endereco,
+     empresas.`nif` AS empresas_nif,
+     empresas.`logotipo` AS empresas_logotipo,
+     empresas.`Website` AS empresas_Website,
+     empresas.`email` AS empresas_email,
+     empresas.`pessoa_de_contacto` AS empresas_pessoa_de_contacto
+FROM
+     `empresas` empresas where empresas.`id` = 1]]>
+	</queryString>
+	<field name="empresas_id" class="java.lang.Long"/>
+	<field name="empresas_nome" class="java.lang.String"/>
+	<field name="empresas_pessoal_Contacto" class="java.lang.String"/>
+	<field name="empresas_endereco" class="java.lang.String"/>
+	<field name="empresas_nif" class="java.lang.String"/>
+	<field name="empresas_logotipo" class="java.lang.String"/>
+	<field name="empresas_Website" class="java.lang.String"/>
+	<field name="empresas_email" class="java.lang.String"/>
+	<field name="empresas_pessoa_de_contacto" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="92" splitType="Stretch">
+			<line>
+				<reportElement key="line" x="2" y="1" width="1" height="87" uuid="d36ccebe-658a-4c91-aa54-d7a26ef6b9ff"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-78" x="50" y="19" width="504" height="14" uuid="bbbfb8a1-d4e4-4d7f-88f8-c211c2a3c9bc"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_endereco}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-76" x="33" y="65" width="514" height="14" uuid="c24d5f43-6574-44cf-a73f-31662633738f"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="false" isStrikeThrough="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="65" width="25" height="14" uuid="23f61185-00a5-441d-bc0e-864cd047d7b3"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[E-mail:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-74" x="7" y="5" width="548" height="14" uuid="7088d80b-c8b7-4ff0-b038-6604007644d1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_nome}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-75" x="43" y="55" width="504" height="14" uuid="5483a2ca-c194-4e44-9a2e-71feeb0300df"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_pessoal_Contacto}.equals("999999999")?"":$F{empresas_pessoal_Contacto}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line" x="456" y="85" width="90" height="1" uuid="04cde188-285c-4706-9ae6-0179b96634d4"/>
+			</line>
+			<line>
+				<reportElement key="line" x="546" y="5" width="1" height="78" uuid="90629081-255d-42a9-9479-2f5476907d73"/>
+			</line>
+			<line>
+				<reportElement key="line" x="2" y="1" width="100" height="1" uuid="cb74c21e-62d1-47a0-8026-eaa39a95c953"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-77" x="33" y="43" width="510" height="14" uuid="3c7c46c6-e7bf-4098-82e5-addb98e066c2"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_nif}.equals("999999999")?"Consumidor final":$F{empresas_nif}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="55" width="35" height="14" uuid="2d55a2fb-a5c1-415a-a18f-69204afdccd2"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[Telefone:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="43" width="25" height="14" uuid="db0ae4d0-a22b-400e-921c-2560ad726365"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[NIF:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="19" width="43" height="14" uuid="22e0b8b0-331b-4f82-b021-9e96536882a5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

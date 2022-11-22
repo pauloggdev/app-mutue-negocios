@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FacturaDefaultA5MotivoIsencaoSubreport" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="315fbe51-881a-42cc-8d0e-03f055dacacc">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="empresa_id" class="java.lang.String"/>
+	<parameter name="facturaId" class="java.lang.String"/>
+	<parameter name="tipo_regime" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+SUM(factura_items.incidencia_produto) AS total_incidencia,
+SUM(factura_items.incidencia_produto) AS total_incidencia,
+SUM(factura_items.iva_produto) AS total_iva,factura_items.factura_id,
+tipotaxa.descricao,
+motivo.codigoMotivo AS motivoCodigo,
+motivo.descricao AS motivoDescricao
+
+FROM facturas
+INNER JOIN factura_items ON factura_items.factura_id = facturas.id
+INNER JOIN produtos ON factura_items.produto_id = produtos.id
+INNER JOIN tipotaxa ON tipotaxa.codigo = produtos.codigo_taxa
+INNER JOIN motivo ON motivo.codigo = produtos.motivo_isencao_id
+WHERE facturas.empresa_id = $P{empresa_id} AND facturas.id = $P{facturaId}
+GROUP BY tipotaxa.descricao, motivo.codigoMotivo, motivo.descricao]]>
+	</queryString>
+	<field name="total_incidencia" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_iva" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factura_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="motivoCodigo" class="java.lang.String"/>
+	<field name="motivoDescricao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="68" y="0" width="65" height="20" uuid="31bffba8-ec35-4eb1-ac80-c213e81f8d82"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Incid./Qtd]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="68" height="20" uuid="9b475f75-9e67-4217-88f9-c2402b45641e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Taxa/Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="133" y="0" width="65" height="20" uuid="8bd26224-8f40-4dbc-89b0-8799029c31dd"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="198" y="0" width="357" height="20" uuid="47f857b7-89ec-4d84-b475-273e36872a62"/>
+				<textElement>
+					<font isBold="true"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<text><![CDATA[Motivo Isenção/código]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement x="133" y="0" width="65" height="20" uuid="4e5cd4aa-ade4-4024-8cd7-c3ccd62de236"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{total_iva}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="198" y="0" width="355" height="20" uuid="c65fc1ef-ffdf-49f7-9e96-4752b69dee6c"/>
+				<textElement>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_iva} > 0 ?"": $F{motivoDescricao}+" - " +$F{motivoCodigo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="68" y="0" width="65" height="20" uuid="0b0bf4b5-873a-43fb-9cdd-5428d80ea8ac"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{total_incidencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="68" height="20" uuid="c8ae3442-2d4e-4db7-9d2c-98ff70a5cdae"/>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

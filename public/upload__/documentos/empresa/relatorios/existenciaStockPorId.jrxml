@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notaCredito" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d063b865-d206-41e6-8d71-fe91c210e883">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zebrar" mode="Opaque">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+			<style backcolor="#FBFBFB"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="empresa_id" class="java.lang.Integer"/>
+	<parameter name="diretorio" class="java.lang.String"/>
+	<parameter name="existenciaStockId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     existencias_stocks.`id` AS existencias_stocks_id,
+     existencias_stocks.`produto_id` AS existencias_stocks_produto_id,
+     existencias_stocks.`armazem_id` AS existencias_stocks_armazem_id,
+     existencias_stocks.`tipo_stocagem_id` AS existencias_stocks_tipo_stocagem_id,
+     existencias_stocks.`quantidade` AS existencias_stocks_quantidade,
+     existencias_stocks.`canal_id` AS existencias_stocks_canal_id,
+     existencias_stocks.`user_id` AS existencias_stocks_user_id,
+     existencias_stocks.`status_id` AS existencias_stocks_status_id,
+     existencias_stocks.`empresa_id` AS existencias_stocks_empresa_id,
+     existencias_stocks.`created_at` AS existencias_stocks_created_at,
+     existencias_stocks.`updated_at` AS existencias_stocks_updated_at,
+     existencias_stocks.`observacao` AS existencias_stocks_observacao,
+     armazens.`id` AS armazens_id,
+     armazens.`designacao` AS armazens_designacao,
+     armazens.`sigla` AS armazens_sigla,
+     armazens.`codigo` AS armazens_codigo,
+     armazens.`localizacao` AS armazens_localizacao,
+     armazens.`status_id` AS armazens_status_id,
+     armazens.`user_id` AS armazens_user_id,
+     armazens.`empresa_id` AS armazens_empresa_id,
+     armazens.`created_at` AS armazens_created_at,
+     armazens.`updated_at` AS armazens_updated_at,
+     armazens.`diversos` AS armazens_diversos,
+     produtos.`id` AS produtos_id,
+     produtos.`designacao` AS produtos_designacao,
+     produtos.`preco_venda` AS produtos_preco_venda,
+     produtos.`preco_compra` AS produtos_preco_compra,
+     produtos.`marca_id` AS produtos_marca_id,
+     produtos.`categoria_id` AS produtos_categoria_id,
+     produtos.`classe_id` AS produtos_classe_id,
+     produtos.`unidade_medida_id` AS produtos_unidade_medida_id,
+     produtos.`fabricante_id` AS produtos_fabricante_id,
+     produtos.`user_id` AS produtos_user_id,
+     produtos.`canal_id` AS produtos_canal_id,
+     produtos.`status_id` AS produtos_status_id,
+     produtos.`codigo_taxa` AS produtos_codigo_taxa,
+     produtos.`motivo_isencao_id` AS produtos_motivo_isencao_id,
+     produtos.`quantidade_minima` AS produtos_quantidade_minima,
+     produtos.`quantidade_critica` AS produtos_quantidade_critica,
+     produtos.`imagem_produto` AS produtos_imagem_produto,
+     produtos.`referencia` AS produtos_referencia,
+     produtos.`codigo_barra` AS produtos_codigo_barra,
+     produtos.`data_expiracao` AS produtos_data_expiracao,
+     produtos.`descricao` AS produtos_descricao,
+     produtos.`stocavel` AS produtos_stocavel,
+     produtos.`empresa_id` AS produtos_empresa_id,
+     produtos.`created_at` AS produtos_created_at,
+     produtos.`updated_at` AS produtos_updated_at,
+     empresas.`id` AS empresas_id,
+     empresas.`nome` AS empresas_nome,
+     empresas.`pessoal_Contacto` AS empresas_pessoal_Contacto,
+     empresas.`endereco` AS empresas_endereco,
+     empresas.`pais_id` AS empresas_pais_id,
+     empresas.`saldo` AS empresas_saldo,
+     empresas.`canal_id` AS empresas_canal_id,
+     empresas.`status_id` AS empresas_status_id,
+     empresas.`nif` AS empresas_nif,
+     empresas.`gestor_cliente_id` AS empresas_gestor_cliente_id,
+     empresas.`tipo_cliente_id` AS empresas_tipo_cliente_id,
+     empresas.`tipo_regime_id` AS empresas_tipo_regime_id,
+     empresas.`logotipo` AS empresas_logotipo,
+     empresas.`website` AS empresas_website,
+     empresas.`email` AS empresas_email,
+     empresas.`referencia` AS empresas_referencia,
+     empresas.`pessoa_de_contacto` AS empresas_pessoa_de_contacto,
+     empresas.`created_at` AS empresas_created_at,
+     empresas.`updated_at` AS empresas_updated_at,
+     empresas.`cidade` AS empresas_cidade
+FROM
+     `armazens` armazens INNER JOIN `existencias_stocks` existencias_stocks ON armazens.`id` = existencias_stocks.`armazem_id`
+     INNER JOIN `produtos` produtos ON existencias_stocks.`produto_id` = produtos.`id`
+     INNER JOIN `empresas` empresas ON existencias_stocks.`empresa_id` = empresas.`id`
+     AND empresas.`id` = produtos.`empresa_id`
+     AND empresas.`id` = armazens.`empresa_id` WHERE  existencias_stocks.`empresa_id` = $P{empresa_id} AND  existencias_stocks.`id` = $P{existenciaStockId}]]>
+	</queryString>
+	<field name="existencias_stocks_id" class="java.lang.Long"/>
+	<field name="existencias_stocks_produto_id" class="java.lang.Long"/>
+	<field name="existencias_stocks_armazem_id" class="java.lang.Long"/>
+	<field name="existencias_stocks_tipo_stocagem_id" class="java.lang.Long"/>
+	<field name="existencias_stocks_quantidade" class="java.lang.Long"/>
+	<field name="existencias_stocks_canal_id" class="java.lang.Long"/>
+	<field name="existencias_stocks_user_id" class="java.lang.Long"/>
+	<field name="existencias_stocks_status_id" class="java.lang.Long"/>
+	<field name="existencias_stocks_empresa_id" class="java.lang.Long"/>
+	<field name="existencias_stocks_created_at" class="java.sql.Timestamp"/>
+	<field name="existencias_stocks_updated_at" class="java.sql.Timestamp"/>
+	<field name="existencias_stocks_observacao" class="java.lang.String"/>
+	<field name="armazens_id" class="java.lang.Long"/>
+	<field name="armazens_designacao" class="java.lang.String"/>
+	<field name="armazens_sigla" class="java.lang.String"/>
+	<field name="armazens_codigo" class="java.lang.String"/>
+	<field name="armazens_localizacao" class="java.lang.String"/>
+	<field name="armazens_status_id" class="java.lang.Long"/>
+	<field name="armazens_user_id" class="java.lang.Long"/>
+	<field name="armazens_empresa_id" class="java.lang.Long"/>
+	<field name="armazens_created_at" class="java.sql.Timestamp"/>
+	<field name="armazens_updated_at" class="java.sql.Timestamp"/>
+	<field name="armazens_diversos" class="java.lang.String"/>
+	<field name="produtos_id" class="java.lang.Long"/>
+	<field name="produtos_designacao" class="java.lang.String"/>
+	<field name="produtos_preco_venda" class="java.lang.Double"/>
+	<field name="produtos_preco_compra" class="java.lang.Double"/>
+	<field name="produtos_marca_id" class="java.lang.Long"/>
+	<field name="produtos_categoria_id" class="java.lang.Long"/>
+	<field name="produtos_classe_id" class="java.lang.Long"/>
+	<field name="produtos_unidade_medida_id" class="java.lang.Long"/>
+	<field name="produtos_fabricante_id" class="java.lang.Long"/>
+	<field name="produtos_user_id" class="java.lang.Long"/>
+	<field name="produtos_canal_id" class="java.lang.Long"/>
+	<field name="produtos_status_id" class="java.lang.Long"/>
+	<field name="produtos_codigo_taxa" class="java.lang.Long"/>
+	<field name="produtos_motivo_isencao_id" class="java.lang.Long"/>
+	<field name="produtos_quantidade_minima" class="java.lang.Long"/>
+	<field name="produtos_quantidade_critica" class="java.lang.Long"/>
+	<field name="produtos_imagem_produto" class="java.lang.String"/>
+	<field name="produtos_referencia" class="java.lang.String"/>
+	<field name="produtos_codigo_barra" class="java.lang.String"/>
+	<field name="produtos_data_expiracao" class="java.sql.Date"/>
+	<field name="produtos_descricao" class="java.lang.String"/>
+	<field name="produtos_stocavel" class="java.lang.String"/>
+	<field name="produtos_empresa_id" class="java.lang.Long"/>
+	<field name="produtos_created_at" class="java.sql.Timestamp"/>
+	<field name="produtos_updated_at" class="java.sql.Timestamp"/>
+	<field name="empresas_id" class="java.lang.Long"/>
+	<field name="empresas_nome" class="java.lang.String"/>
+	<field name="empresas_pessoal_Contacto" class="java.lang.String"/>
+	<field name="empresas_endereco" class="java.lang.String"/>
+	<field name="empresas_pais_id" class="java.lang.Long"/>
+	<field name="empresas_saldo" class="java.lang.Double"/>
+	<field name="empresas_canal_id" class="java.lang.Long"/>
+	<field name="empresas_status_id" class="java.lang.Long"/>
+	<field name="empresas_nif" class="java.lang.String"/>
+	<field name="empresas_gestor_cliente_id" class="java.lang.Long"/>
+	<field name="empresas_tipo_cliente_id" class="java.lang.Long"/>
+	<field name="empresas_tipo_regime_id" class="java.lang.Long"/>
+	<field name="empresas_logotipo" class="java.lang.String"/>
+	<field name="empresas_website" class="java.lang.String"/>
+	<field name="empresas_email" class="java.lang.String"/>
+	<field name="empresas_referencia" class="java.lang.String"/>
+	<field name="empresas_pessoa_de_contacto" class="java.lang.String"/>
+	<field name="empresas_created_at" class="java.sql.Timestamp"/>
+	<field name="empresas_updated_at" class="java.sql.Timestamp"/>
+	<field name="empresas_cidade" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="129" splitType="Stretch">
+			<rectangle>
+				<reportElement x="369" y="3" width="3" height="100" backcolor="#FF0000" uuid="963b1588-cc5e-41b3-a1c7-3f16ebdb1be5"/>
+			</rectangle>
+			<textField>
+				<reportElement x="381" y="3" width="175" height="20" uuid="34b14970-4155-4323-b68d-ad2d3b8b1219"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_nome}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="381" y="39" width="26" height="16" uuid="0dd1cfe3-7367-4f98-8c1b-8c8346f119be"/>
+				<text><![CDATA[NIF:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="87" width="36" height="16" uuid="cd3f7d5f-7e10-42f7-84f8-1dfebe02ff87"/>
+				<text><![CDATA[E-mail:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="55" width="48" height="16" uuid="15663512-4fce-4e66-aea5-85c24600ca8a"/>
+				<text><![CDATA[Telefone:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="23" width="48" height="16" uuid="2a3bd37e-1449-4620-9e92-fae5fa476385"/>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="71" width="48" height="16" uuid="e0b65428-68ba-4e52-b63e-84f20fb22d64"/>
+				<text><![CDATA[Website:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="429" y="23" width="127" height="16" uuid="8e53e348-cd3d-4a5a-b7a0-f6553a9dcd3c"/>
+				<textFieldExpression><![CDATA[$F{empresas_endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="407" y="39" width="149" height="16" uuid="84c4bc07-ad63-4a68-86ef-124abb93d8ae"/>
+				<textFieldExpression><![CDATA[$F{empresas_nif}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="429" y="55" width="127" height="16" uuid="52d9610c-6de5-40d3-b867-d25d56b9f450"/>
+				<textFieldExpression><![CDATA[$F{empresas_pessoal_Contacto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="429" y="71" width="125" height="16" uuid="e8533466-1e18-4f94-9b73-f7a8e2b5c74f"/>
+				<textFieldExpression><![CDATA[$F{empresas_website}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="417" y="87" width="137" height="16" uuid="2b193e63-9870-48ec-bcdc-6c26b8ca69f7"/>
+				<textFieldExpression><![CDATA[$F{empresas_email}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="123" width="555" height="1" uuid="0020e540-be4e-4c91-b217-039680cfe39f"/>
+			</line>
+			<image isUsingCache="false">
+				<reportElement x="0" y="8" width="76" height="50" uuid="feca5e48-f3e3-46d6-8dc8-b6c38d36b64c"/>
+				<imageExpression><![CDATA[$P{diretorio}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="60">
+			<staticText>
+				<reportElement x="0" y="3" width="556" height="20" uuid="167c7172-23db-41d2-9998-60fa25e191fc"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTA DE EXISTÊNCIA ESTOQUE]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="2" width="27" height="20" backcolor="#FBFBFB" uuid="5e4fec0e-c20b-4f5e-b40e-1f95515edd87"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="27" y="2" width="76" height="20" backcolor="#FBFBFB" uuid="c0db9939-c1fc-4ef6-8d7a-ba0e013fd76a"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Referência]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="103" y="2" width="151" height="20" backcolor="#FBFBFB" uuid="65110ad4-faf5-4551-82c0-02179b6b22fb"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome do Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="254" y="2" width="137" height="20" backcolor="#FBFBFB" uuid="0b8fd4f9-f0c2-43d1-b455-9d672e91c264"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Armazém]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="391" y="2" width="36" height="20" backcolor="#FBFBFB" uuid="45a0cd55-35df-47fe-9b69-aaf6c3a9967f"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qtd]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="427" y="2" width="126" height="20" backcolor="#FBFBFB" uuid="709d0eac-8697-466c-990b-dd373d8c9646"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Preço de Venda]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="27" height="20" uuid="3f76223c-1bd2-4fd5-94ad-b55af03ffd25"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="27" y="0" width="76" height="20" uuid="747fec80-17ae-462f-bc22-e9a041322102"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{produtos_referencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="103" y="0" width="151" height="20" uuid="ab16dba2-ea4f-4e28-a066-0b64052db7ad"/>
+				<textFieldExpression><![CDATA[$F{produtos_designacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="254" y="0" width="137" height="20" uuid="d0d36dd5-f1c2-4994-808e-2ac6b466f0ee"/>
+				<textFieldExpression><![CDATA[$F{armazens_designacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0">
+				<reportElement x="391" y="0" width="36" height="20" uuid="cb2c05ce-90b9-4b49-97f2-ca7e7cf8e71c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{existencias_stocks_quantidade}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="427" y="0" width="129" height="20" uuid="3001da8d-ec71-4eb1-be2a-68383a17fc89"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{produtos_preco_venda}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="42"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="97">
+			<staticText>
+				<reportElement x="1" y="59" width="555" height="15" uuid="3f1514aa-f181-4fe0-a6be-acff970ad818"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Software de gestão comercial online, desenvolvido e Assistido pela Ramossoft-WinMarket]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="54" width="555" height="1" uuid="c008273b-ef4d-4a79-8224-3955379122bf"/>
+			</line>
+			<line>
+				<reportElement x="197" y="32" width="164" height="1" uuid="665860b2-01c8-40ee-b0b3-72699b25daa8"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="2" width="554" height="13" uuid="06eafaf4-98c8-4b92-bbea-8eb84576a695"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[A Assinatura]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="38" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="5" width="4" height="31" backcolor="#3D5476" uuid="c2b2a3a1-a5a3-4095-a1d9-0bf4feda5a2d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="15" y="18" width="531" height="20" uuid="a03a96e9-3e2c-465c-902b-90df3d163309"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Caso falte informações  na lista, o utilizador deverá solicitar o suporte técnico
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="5" width="40" height="13" uuid="5223282c-459f-4bc5-849d-835efd2f031f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOTA:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

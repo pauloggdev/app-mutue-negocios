@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mesas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d67a6c4e-76e8-414d-8842-3d33c1d9bacc">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="101"/>
+	<property name="ireport.y" value="0"/>
+	<style name="style1">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#D4D4D4"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="empresa_id" class="java.lang.String"/>
+	<parameter name="nomeEmpresa" class="java.lang.String"/>
+	<parameter name="enderecoEmpresa" class="java.lang.String"/>
+	<parameter name="telefoneEmpresa" class="java.lang.String"/>
+	<parameter name="nifEmpresa" class="java.lang.String"/>
+	<parameter name="emailEmpresa" class="java.lang.String"/>
+	<parameter name="logotipo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT produtos.designacao AS produtos_designaca,
+existencias_stocks.quantidade AS quantStock,
+produtos.preco_venda AS precoProduto,
+categorias.`designacao` AS categorias_designacao
+FROM
+     `existencias_stocks` existencias_stocks
+INNER JOIN `produtos` produtos ON existencias_stocks.`produto_id` = produtos.`id`
+INNER JOIN categorias ON categorias.id = produtos.categoria_id
+WHERE produtos.status_id = 1 AND produtos.empresa_id = $P{empresa_id} GROUP BY
+categorias.`id`,
+produtos.designacao,
+produtos.preco_venda,
+existencias_stocks.quantidade]]>
+	</queryString>
+	<field name="produtos_designaca" class="java.lang.String"/>
+	<field name="quantStock" class="java.lang.Long"/>
+	<field name="precoProduto" class="java.lang.Double"/>
+	<field name="categorias_designacao" class="java.lang.String"/>
+	<group name="AgruparPorCategoria">
+		<groupExpression><![CDATA[$F{categorias_designacao}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<textField>
+					<reportElement mode="Transparent" x="182" y="0" width="371" height="15" backcolor="#D4D4D4" uuid="d6aa74cd-b410-400f-8f3a-792323c2c018"/>
+					<textElement>
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categorias_designacao}.toUpperCase()]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="185" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="166" width="554" height="15" uuid="8beb9785-ac06-478d-b6de-7420976790b3"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTAGEM DE EXISTÊNCIA ESTOQUE]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-74" x="5" y="82" width="238" height="14" uuid="40310cd3-c544-459f-9eb0-c5a09d9bada9"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nomeEmpresa}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-78" x="5" y="96" width="236" height="40" uuid="505c4ea9-6c92-4e58-a4f8-254c65d26aeb"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Endereço: "+$P{enderecoEmpresa}+"\n"
++"NIF: "+ $P{nifEmpresa}+"\n"
++"Telefone : "+ $P{telefoneEmpresa}+"\n"
++"E-mail: "+ $P{emailEmpresa}+"\n"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line" x="154" y="136" width="90" height="1" uuid="1ea9bb5e-e05b-432b-8044-52d6b6263499"/>
+			</line>
+			<line>
+				<reportElement key="line" x="1" y="78" width="100" height="1" uuid="78d1009c-cac3-441c-87e9-579146e25720"/>
+			</line>
+			<line>
+				<reportElement key="line" x="1" y="78" width="1" height="60" uuid="daa1a3f4-9653-4cec-88c1-f23c051f271f"/>
+			</line>
+			<line>
+				<reportElement key="line" x="244" y="79" width="1" height="57" uuid="2cbc08b8-0468-4db7-91e7-5c67f2336931"/>
+			</line>
+			<image>
+				<reportElement key="image-1" x="0" y="13" width="122" height="51" uuid="f11ceacc-e981-4ed7-b9bd-fe6d86268dbd"/>
+				<imageExpression><![CDATA[$P{logotipo}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="54" y="0" width="342" height="15" uuid="2c3e1318-ef06-4444-b44d-bf6a8dbb11b9"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="0" width="53" height="15" uuid="01f78ddc-5d4c-44d2-96dd-19a38a4e2981"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[N.º]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="396" y="0" width="74" height="15" uuid="93ade001-53e3-4256-af53-03bec26a4a07"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qtd.Stock]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="0" width="83" height="15" uuid="5f007bb0-d18f-4c51-9014-26e427ee1272"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Preço venda]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement style="style1" mode="Opaque" x="54" y="0" width="342" height="15" uuid="a8aee9fd-6e31-4240-9888-c64c4ff1114d"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtos_designaca}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="style1" mode="Opaque" x="1" y="0" width="53" height="15" uuid="7cb81e58-f0c3-4432-9f30-068b2b3931ba"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0">
+				<reportElement style="style1" mode="Opaque" x="396" y="0" width="74" height="15" uuid="b7e9aa69-7717-4789-9ee2-8d5fd96784a1"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantStock}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="style1" mode="Opaque" x="470" y="0" width="83" height="15" uuid="25f01f58-c937-4f5c-b27f-80a553456e25"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{precoProduto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="17">
+			<staticText>
+				<reportElement x="0" y="2" width="553" height="15" uuid="593f6bd0-eb2e-40cb-aea6-3d14f9836e04"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Software de gestão comercial, desenvolvido  pela Mutue - Soluções Tecnológicas Inteligentes]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>

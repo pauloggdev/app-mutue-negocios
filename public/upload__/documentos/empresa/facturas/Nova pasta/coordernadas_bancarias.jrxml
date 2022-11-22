@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="coordernadas_bancarias" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="de99c4d0-9b62-4151-8aed-15d3deaa8d12">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     coordenadas_bancarias.`id` AS coordenadas_bancarias_id,
+     coordenadas_bancarias.`banco_id` AS coordenadas_bancarias_banco_id,
+     coordenadas_bancarias.`num_conta` AS coordenadas_bancarias_num_conta,
+     coordenadas_bancarias.`iban` AS coordenadas_bancarias_iban,
+     coordenadas_bancarias.`canal_id` AS coordenadas_bancarias_canal_id,
+     coordenadas_bancarias.`status_id` AS coordenadas_bancarias_status_id,
+     coordenadas_bancarias.`user_id` AS coordenadas_bancarias_user_id,
+     coordenadas_bancarias.`created_at` AS coordenadas_bancarias_created_at,
+     coordenadas_bancarias.`updated_at` AS coordenadas_bancarias_updated_at
+FROM
+     `coordenadas_bancarias` coordenadas_bancarias]]>
+	</queryString>
+	<field name="coordenadas_bancarias_id" class="java.lang.Long"/>
+	<field name="coordenadas_bancarias_banco_id" class="java.lang.Long"/>
+	<field name="coordenadas_bancarias_num_conta" class="java.lang.String"/>
+	<field name="coordenadas_bancarias_iban" class="java.lang.String"/>
+	<field name="coordenadas_bancarias_canal_id" class="java.lang.Long"/>
+	<field name="coordenadas_bancarias_status_id" class="java.lang.Long"/>
+	<field name="coordenadas_bancarias_user_id" class="java.lang.Long"/>
+	<field name="coordenadas_bancarias_created_at" class="java.sql.Timestamp"/>
+	<field name="coordenadas_bancarias_updated_at" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="225" height="20" uuid="dd9061ba-69f8-4e45-9bba-ea340f070400"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Coordernadas Bancarias]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement x="0" y="0" width="225" height="20" uuid="55bcaa0e-2514-4345-ae9a-67a9a5c7bfe0"/>
+				<textFieldExpression><![CDATA[$F{coordenadas_bancarias_iban}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

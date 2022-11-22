@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Factura_A4" pageWidth="595" pageHeight="842" columnWidth="565" leftMargin="15" rightMargin="15" topMargin="2" bottomMargin="28" uuid="c4dd8eb3-a28a-4623-a6b1-1da1e63092a8">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="90"/>
+	<property name="ireport.y" value="41"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="zebrar" mode="Opaque">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+			<style backcolor="#FBFBFB"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="empresa_id" class="java.lang.String"/>
+	<parameter name="diretorio" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     fornecedores.`id` AS fornecedores_id,
+     fornecedores.`nome` AS fornecedores_nome,
+     fornecedores.`telefone_empresa` AS fornecedores_telefone_empresa,
+     fornecedores.`email_empresa` AS fornecedores_email_empresa,
+     fornecedores.`nif` AS fornecedores_nif,
+     fornecedores.`website` AS fornecedores_website,
+     fornecedores.`pessoal_contacto` AS fornecedores_pessoal_contacto,
+     fornecedores.`endereco` AS fornecedores_endereco,
+     fornecedores.`telefone_contacto` AS fornecedores_telefone_contacto,
+     fornecedores.`email_contacto` AS fornecedores_email_contacto,
+     fornecedores.`conta_corrente` AS fornecedores_conta_corrente,
+     fornecedores.`empresa_id` AS fornecedores_empresa_id,
+     fornecedores.`canal_id` AS fornecedores_canal_id,
+     fornecedores.`status_id` AS fornecedores_status_id,
+     fornecedores.`user_id` AS fornecedores_user_id,
+     fornecedores.`data_contracto` AS fornecedores_data_contracto,
+     fornecedores.`pais_nacionalidade_id` AS fornecedores_pais_nacionalidade_id,
+     fornecedores.`created_at` AS fornecedores_created_at,
+     fornecedores.`updated_at` AS fornecedores_updated_at,
+     fornecedores.`tipo_user_id` AS fornecedores_tipo_user_id,
+     fornecedores.`diversos` AS fornecedores_diversos,
+     empresas.`id` AS empresas_id,
+     empresas.`nome` AS empresas_nome,
+     empresas.`pessoal_Contacto` AS empresas_pessoal_Contacto,
+     empresas.`endereco` AS empresas_endereco,
+     empresas.`pais_id` AS empresas_pais_id,
+     empresas.`saldo` AS empresas_saldo,
+     empresas.`canal_id` AS empresas_canal_id,
+     empresas.`status_id` AS empresas_status_id,
+     empresas.`nif` AS empresas_nif,
+     empresas.`gestor_cliente_id` AS empresas_gestor_cliente_id,
+     empresas.`tipo_cliente_id` AS empresas_tipo_cliente_id,
+     empresas.`tipo_regime_id` AS empresas_tipo_regime_id,
+     empresas.`logotipo` AS empresas_logotipo,
+     empresas.`website` AS empresas_website,
+     empresas.`email` AS empresas_email,
+     empresas.`referencia` AS empresas_referencia,
+     empresas.`pessoa_de_contacto` AS empresas_pessoa_de_contacto,
+     empresas.`created_at` AS empresas_created_at,
+     empresas.`updated_at` AS empresas_updated_at,
+     empresas.`cidade` AS empresas_cidade,
+     empresas.`file_alvara` AS empresas_file_alvara,
+     empresas.`file_nif` AS empresas_file_nif,
+     status_gerais.`id` AS status_gerais_id,
+     status_gerais.`designacao` AS status_gerais_designacao
+FROM
+     `empresas` empresas INNER JOIN `fornecedores` fornecedores ON empresas.`id` = fornecedores.`empresa_id`
+     INNER JOIN `status_gerais` status_gerais ON empresas.`status_id` = status_gerais.`id`
+     AND status_gerais.`id` = fornecedores.`status_id` where empresa_id = $P{empresa_id}]]>
+	</queryString>
+	<field name="fornecedores_id" class="java.lang.Long"/>
+	<field name="fornecedores_nome" class="java.lang.String"/>
+	<field name="fornecedores_telefone_empresa" class="java.lang.String"/>
+	<field name="fornecedores_email_empresa" class="java.lang.String"/>
+	<field name="fornecedores_nif" class="java.lang.String"/>
+	<field name="fornecedores_website" class="java.lang.String"/>
+	<field name="fornecedores_pessoal_contacto" class="java.lang.String"/>
+	<field name="fornecedores_endereco" class="java.lang.String"/>
+	<field name="fornecedores_telefone_contacto" class="java.lang.String"/>
+	<field name="fornecedores_email_contacto" class="java.lang.String"/>
+	<field name="fornecedores_conta_corrente" class="java.lang.String"/>
+	<field name="fornecedores_empresa_id" class="java.lang.Long"/>
+	<field name="fornecedores_canal_id" class="java.lang.Long"/>
+	<field name="fornecedores_status_id" class="java.lang.Long"/>
+	<field name="fornecedores_user_id" class="java.lang.Long"/>
+	<field name="fornecedores_data_contracto" class="java.sql.Date"/>
+	<field name="fornecedores_pais_nacionalidade_id" class="java.lang.Long"/>
+	<field name="fornecedores_created_at" class="java.sql.Timestamp"/>
+	<field name="fornecedores_updated_at" class="java.sql.Timestamp"/>
+	<field name="fornecedores_tipo_user_id" class="java.lang.Long"/>
+	<field name="fornecedores_diversos" class="java.lang.String"/>
+	<field name="empresas_id" class="java.lang.Long"/>
+	<field name="empresas_nome" class="java.lang.String"/>
+	<field name="empresas_pessoal_Contacto" class="java.lang.String"/>
+	<field name="empresas_endereco" class="java.lang.String"/>
+	<field name="empresas_pais_id" class="java.lang.Long"/>
+	<field name="empresas_saldo" class="java.lang.Double"/>
+	<field name="empresas_canal_id" class="java.lang.Long"/>
+	<field name="empresas_status_id" class="java.lang.Long"/>
+	<field name="empresas_nif" class="java.lang.String"/>
+	<field name="empresas_gestor_cliente_id" class="java.lang.Long"/>
+	<field name="empresas_tipo_cliente_id" class="java.lang.Long"/>
+	<field name="empresas_tipo_regime_id" class="java.lang.Long"/>
+	<field name="empresas_logotipo" class="java.lang.String"/>
+	<field name="empresas_website" class="java.lang.String"/>
+	<field name="empresas_email" class="java.lang.String"/>
+	<field name="empresas_referencia" class="java.lang.String"/>
+	<field name="empresas_pessoa_de_contacto" class="java.lang.String"/>
+	<field name="empresas_created_at" class="java.sql.Timestamp"/>
+	<field name="empresas_updated_at" class="java.sql.Timestamp"/>
+	<field name="empresas_cidade" class="java.lang.String"/>
+	<field name="empresas_file_alvara" class="java.lang.String"/>
+	<field name="empresas_file_nif" class="java.lang.String"/>
+	<field name="status_gerais_id" class="java.lang.Long"/>
+	<field name="status_gerais_designacao" class="java.lang.String"/>
+	<variable name="factura_items_Total_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[new Double(0)]]></variableExpression>
+	</variable>
+	<variable name="factura_items_Total_2" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[new Double(0)]]></variableExpression>
+	</variable>
+	<variable name="QTD" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[new Double(0)]]></variableExpression>
+	</variable>
+	<variable name="totalRetencao" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[new Double(0)]]></variableExpression>
+	</variable>
+	<variable name="totalDesconto" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[new Double(0)]]></variableExpression>
+	</variable>
+	<variable name="totalItens" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[new Double(0)]]></variableExpression>
+	</variable>
+	<variable name="IPC" class="java.lang.Boolean">
+		<variableExpression><![CDATA[new Boolean(true)]]></variableExpression>
+		<initialValueExpression><![CDATA[false]]></initialValueExpression>
+	</variable>
+	<group name="Categorias">
+		<groupExpression><![CDATA["Categoria Teste"]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="212" splitType="Stretch">
+			<image>
+				<reportElement key="image-1" x="5" y="5" width="122" height="51" uuid="e122d80a-73f9-4a3c-8eb6-d02eda4297ac"/>
+				<imageExpression><![CDATA[$P{diretorio}]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="280" y="-203" width="89" height="12" uuid="148649f4-59ee-4066-be74-a0cccf6b772a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="280" y="-203" width="89" height="12" uuid="4ba3ce63-d7b7-4a7b-b69e-0978b4eab566"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-48" positionType="Float" mode="Transparent" x="353" y="-116" width="103" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="144919c6-a681-42a2-8e9c-b3713ef1ba2a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total da Fatura]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-75" x="1" y="185" width="565" height="14" uuid="5f1605a1-1a22-4c08-ba93-661308ea55a9"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["LISTA DE FORNECEDORES"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-75" x="45" y="117" width="219" height="14" uuid="9c7ae47d-384d-4a98-a3c3-3574438c6ef4"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_pessoal_Contacto}.equals("999999999")?"":$F{empresas_pessoal_Contacto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="127" width="43" height="14" uuid="afed4b8b-3a57-4665-acd0-bd6dee12a884"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[E-mail:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="105" width="25" height="14" uuid="be66c2f3-afbc-4b00-a406-eda76956288c"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[NIF:]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line" x="2" y="73" width="1" height="70" uuid="ffc2354f-2297-440f-bb02-7a7568e92d10"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-74" x="6" y="77" width="258" height="14" uuid="c2b281b0-ecbb-49a9-84c2-407b91e03fa6"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_nome}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-76" x="41" y="127" width="223" height="14" uuid="dbcdb3b8-80db-4182-a583-8cb3573be0a0"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="false" isStrikeThrough="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_email}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-78" x="50" y="91" width="214" height="14" uuid="9a411f24-dc42-4265-8346-5c5a4215a769"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_endereco}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line" x="2" y="73" width="100" height="1" uuid="ea1a77ad-7ba5-4cf6-91ee-bb06406affaa"/>
+			</line>
+			<line>
+				<reportElement key="line" x="174" y="141" width="90" height="1" uuid="f088d541-7b1e-4289-b640-b9622235d809"/>
+			</line>
+			<staticText>
+				<reportElement x="7" y="91" width="43" height="14" uuid="7d346a09-e251-44fc-a83e-a6723a62c476"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-77" x="29" y="105" width="235" height="14" uuid="218e8323-3d50-41b9-8a2f-27b97a1fa914"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_nif}.equals("999999999")?"Consumidor final":$F{empresas_nif}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="117" width="43" height="14" uuid="80830bab-b9e5-4305-a6f1-af3ffddb347d"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[Telefone:]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line" x="264" y="75" width="1" height="67" uuid="6d5d2561-9764-416f-9b3e-22ba2072e895"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-60" positionType="Float" mode="Transparent" x="3" y="0" width="32" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="9382e159-3411-40d8-9664-48565f769fac"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<text><![CDATA[N.º]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-61" positionType="Float" mode="Transparent" x="35" y="0" width="459" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="9abd34d7-f4ae-4693-99e9-81403d0548b9"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Nome do fornecedores]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-59" positionType="Float" mode="Transparent" x="494" y="0" width="72" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="dbb5e2ca-cd2c-4f0d-8169-ac02a9c1371f"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField pattern="0">
+				<reportElement style="zebrar" mode="Opaque" x="3" y="1" width="32" height="15" uuid="f9ba50c2-6563-4590-ad57-c4c67c97b362"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zebrar" mode="Opaque" x="35" y="1" width="459" height="15" uuid="c153f4b9-c4f8-43e8-abda-5035f06a614e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fornecedores_nome}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="zebrar" mode="Opaque" x="494" y="1" width="72" height="15" uuid="17cb8793-2b00-4e38-9c7b-d077195133d1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status_gerais_designacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<lastPageFooter>
+		<band height="145" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement key="staticText-45" positionType="Float" mode="Transparent" x="-1" y="129" width="566" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="be50f170-c9be-43dd-8bc7-eec9cdf68211"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Software de gestão comercial, desenvolvido  pela Mutue - Soluções Tecnológicas Inteligentes]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="0" y="72" width="565" height="13" forecolor="#000000" uuid="2b5c5bfb-2750-4b0d-8da2-e3d8cbb1ca9a"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Assinatura"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="227" y="108" width="112" height="1" uuid="a86085d6-14f4-4bd7-96d8-f7b204f93b64"/>
+			</line>
+		</band>
+	</lastPageFooter>
+</jasperReport>

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mesas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d67a6c4e-76e8-414d-8842-3d33c1d9bacc">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="style1">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0F0F0"/>
+		</conditionalStyle>
+	</style>
+	<style name="styleCategoria">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#D4D4D4"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="empresa_id" class="java.lang.String"/>
+	<parameter name="data_fim" class="java.lang.String"/>
+	<parameter name="data_inicio" class="java.lang.String"/>
+	<parameter name="armazemId" class="java.lang.String"/>
+	<parameter name="dataInicioFormat" class="java.lang.String"/>
+	<parameter name="dataFinalFormat" class="java.lang.String"/>
+	<parameter name="logotipo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT SUM(actualizacao_stocks.diferenca) AS T,(SELECT IFNULL(SUM(factura_itens.quantidade_produto),0) AS quantidade_saida FROM factura_itens
+WHERE factura_itens.produto_id = produtos.id AND (factura_itens.created_at >= TIMESTAMP($P{data_inicio}) and factura_itens.created_at <= TIMESTAMP($P{data_fim}))) AS quantidade_saida,
+IFNULL((SELECT ANY_VALUE(factura_itens.quantidade_anterior) FROM factura_itens
+WHERE factura_itens.produto_id = produtos.id AND (factura_itens.created_at >= TIMESTAMP($P{data_inicio}) AND factura_itens.created_at <= TIMESTAMP($P{data_fim})) LIMIT 1),0) AS quantidade_anteriorItem,
+        (SELECT IFNULL(SUM(actualizacao_stocks.diferenca),0) FROM actualizacao_stocks
+		  WHERE actualizacao_stocks.produto_id = produtos.id AND actualizacao_stocks.empresa_id = $P{empresa_id}
+AND (actualizacao_stocks.created_at >= TIMESTAMP($P{data_inicio}) and actualizacao_stocks.created_at <= TIMESTAMP($P{data_fim})) AND actualizacao_stocks.operacao = 'AUMENTAR') as quantidade_entrada,
+(SELECT IFNULL(SUM(actualizacao_stocks.diferenca),0) FROM actualizacao_stocks
+		  WHERE actualizacao_stocks.produto_id = produtos.id AND actualizacao_stocks.empresa_id = $P{empresa_id}
+AND (actualizacao_stocks.created_at >= TIMESTAMP($P{data_inicio}) and actualizacao_stocks.created_at <= TIMESTAMP($P{data_fim})) AND actualizacao_stocks.operacao = 'DIMINUIR') as quantidade_saida_baixa,
+IFNULL((SELECT ANY_VALUE(actualizacao_stocks.quantidade_antes) FROM actualizacao_stocks
+		  WHERE actualizacao_stocks.produto_id = produtos.id AND actualizacao_stocks.empresa_id = $P{empresa_id}
+AND (actualizacao_stocks.created_at >= TIMESTAMP($P{data_inicio}) and actualizacao_stocks.created_at <= TIMESTAMP($P{data_fim})) LIMIT 1), 0) as quantidade_anterior,
+        categorias.`designacao` AS categorias_designacao,
+        categorias.`id` AS categorias_id,
+        produtos.`id` AS produtos_id,
+        produtos.designacao AS produtos_designacao,
+        empresas.designacao AS empresas_designacao
+        FROM produtos
+        LEFT JOIN factura_itens ON factura_itens.produto_id = produtos.id
+        LEFT JOIN facturas ON facturas.id = factura_itens.factura_id
+        LEFT JOIN actualizacao_stocks ON actualizacao_stocks.produto_id  = produtos.id
+        INNER JOIN existencias_stocks ON existencias_stocks.produto_id = produtos.id
+        INNER JOIN categorias ON categorias.id = produtos.categoria_id
+        INNER JOIN empresas ON empresas.id = produtos.empresa_id
+        WHERE produtos.empresa_id =$P{empresa_id}  AND existencias_stocks.armazem_id = $P{armazemId} AND
+        (((facturas.created_at >= TIMESTAMP($P{data_inicio}) and facturas.created_at <= TIMESTAMP($P{data_fim})) AND facturas.anulado ="n" AND facturas.empresa_id = $P{empresa_id} AND facturas.armazem_id = $P{armazemId})
+        OR ((actualizacao_stocks.created_at >= TIMESTAMP($P{data_inicio}) and actualizacao_stocks.created_at <= TIMESTAMP($P{data_fim})) AND actualizacao_stocks.empresa_id = $P{empresa_id} AND actualizacao_stocks.armazem_id = $P{armazemId}))
+        GROUP BY
+produtos.categoria_id,
+produtos.id,
+produtos.designacao,
+existencias_stocks.quantidade]]>
+	</queryString>
+	<field name="T" class="java.math.BigDecimal"/>
+	<field name="quantidade_saida" class="java.math.BigDecimal"/>
+	<field name="quantidade_anteriorItem" class="java.lang.Long"/>
+	<field name="quantidade_entrada" class="java.math.BigDecimal"/>
+	<field name="quantidade_saida_baixa" class="java.math.BigDecimal"/>
+	<field name="quantidade_anterior" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="categorias_designacao" class="java.lang.String"/>
+	<field name="categorias_id" class="java.lang.Long"/>
+	<field name="produtos_id" class="java.lang.Long"/>
+	<field name="produtos_designacao" class="java.lang.String"/>
+	<field name="empresas_designacao" class="java.lang.String"/>
+	<group name="AgruparPorCategoria">
+		<groupExpression><![CDATA[$F{categorias_id}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<textField>
+					<reportElement style="style1" mode="Opaque" x="12" y="0" width="164" height="15" backcolor="#F0F0F0" uuid="b42f6317-6a70-4de8-bb81-3967ebf1cd10"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.25" lineColor="#B1B1B1"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.25" lineColor="#B1B1B1"/>
+						<rightPen lineWidth="0.25" lineColor="#E6E6E6"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categorias_designacao}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="styleCategoria" mode="Opaque" x="176" y="0" width="366" height="15" backcolor="#F0F0F0" uuid="ec675ecf-e5ff-43c3-b84b-a9c3e2ea1a20"/>
+					<box>
+						<topPen lineWidth="0.25" lineColor="#B1B1B1"/>
+						<bottomPen lineWidth="0.25" lineColor="#B1B1B1"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="204" splitType="Stretch">
+			<textField>
+				<reportElement x="23" y="63" width="509" height="25" uuid="d2c2256a-8308-464e-aeb5-ebb4e103a938"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_designacao}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="23" y="88" width="509" height="25" uuid="d59eae83-0845-4643-a12c-fa021b9062ba"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["RELATÓRIO DE STOCK"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="23" y="113" width="509" height="25" uuid="7d9f038a-65a9-4671-b4c7-ac7b0f8a85ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+					<font fontName="SansSerif" size="10" isBold="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>PERÍODO:</b> "+$P{dataInicioFormat}+"<b> a </b>"+$P{dataFinalFormat}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="12" y="189" width="164" height="15" forecolor="#FFFFFF" backcolor="#999999" uuid="63dbe477-7d14-4fc0-b3ab-de1abc3ad2df"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="176" y="189" width="85" height="15" forecolor="#FFFFFF" backcolor="#999999" uuid="f75a67ad-e482-40f1-a810-cbd36dec4f7c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QTD. ANTERIOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="261" y="189" width="74" height="15" forecolor="#FFFFFF" backcolor="#999999" uuid="ffc1b7e3-fdf1-4d9a-b4c6-974f6a6219d5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QTD.ENTRADA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="335" y="189" width="62" height="15" forecolor="#FFFFFF" backcolor="#999999" uuid="8d9ead4c-e7be-4d62-9941-bb218cafdb99"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QTD.SAIDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="467" y="189" width="75" height="15" forecolor="#FFFFFF" backcolor="#999999" uuid="5eb0507c-0dcd-481d-a4ae-71749fc187f9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[STOCK ATUAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="397" y="189" width="70" height="15" forecolor="#FFFFFF" backcolor="#999999" uuid="b86e4791-2ad1-4734-9524-e5a212e98b3c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BAIXA]]></text>
+			</staticText>
+			<image>
+				<reportElement x="12" y="0" width="124" height="63" uuid="9d3da34f-cb4f-4922-b97d-35a68648b28b"/>
+				<imageExpression><![CDATA[$P{logotipo}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement style="style1" mode="Opaque" x="12" y="0" width="164" height="14" uuid="d6ab3e5e-2c23-46e2-bec7-b94a9db9fa5b"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#B1B1B1"/>
+					<bottomPen lineWidth="0.25" lineColor="#B1B1B1"/>
+					<rightPen lineWidth="0.25" lineColor="#E6E6E6"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtos_designacao}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0">
+				<reportElement style="style1" mode="Opaque" x="176" y="0" width="85" height="14" uuid="ae9405bb-bcef-4d0f-a0d2-6b6b202fd4be"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#B1B1B1"/>
+					<leftPen lineWidth="0.25" lineColor="#E6E6E6"/>
+					<bottomPen lineWidth="0.25" lineColor="#B1B1B1"/>
+					<rightPen lineWidth="0.25" lineColor="#E6E6E6"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9"/>
+					<paragraph rightIndent="25"/>
+				</textElement>
+				<textFieldExpression><![CDATA[((($F{quantidade_anteriorItem}> 0?$F{quantidade_anteriorItem}:$F{quantidade_anterior}) + $F{quantidade_entrada}) - ($F{quantidade_saida} +$F{quantidade_saida_baixa}))<0?((($F{quantidade_anteriorItem}> 0?$F{quantidade_anteriorItem}:$F{quantidade_anterior}) + $F{quantidade_entrada}) - ($F{quantidade_saida} +$F{quantidade_saida_baixa}))*(-1):
+($F{quantidade_anteriorItem}> 0?$F{quantidade_anteriorItem}:$F{quantidade_anterior})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0">
+				<reportElement style="style1" mode="Opaque" x="261" y="0" width="74" height="14" uuid="01802bc5-d993-453f-b858-d7663e887a43"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#B1B1B1"/>
+					<leftPen lineWidth="0.25" lineColor="#E6E6E6"/>
+					<bottomPen lineWidth="0.25" lineColor="#B1B1B1"/>
+					<rightPen lineWidth="0.0" lineColor="#E6E6E6"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9"/>
+					<paragraph rightIndent="25"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantidade_entrada}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0">
+				<reportElement style="style1" mode="Opaque" x="335" y="0" width="62" height="14" uuid="ed2827bc-a16a-4cef-bef8-046bb8c853cd"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#B1B1B1"/>
+					<leftPen lineWidth="0.25" lineColor="#E6E6E6"/>
+					<bottomPen lineWidth="0.25" lineColor="#B1B1B1"/>
+					<rightPen lineWidth="0.0" lineColor="#E6E6E6"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9"/>
+					<paragraph rightIndent="25"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantidade_saida}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0">
+				<reportElement style="style1" mode="Opaque" x="467" y="0" width="75" height="14" uuid="8d3cd85c-1b9d-4364-9136-95dcc6c02209"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#B1B1B1"/>
+					<leftPen lineWidth="0.25" lineColor="#E6E6E6"/>
+					<bottomPen lineWidth="0.25" lineColor="#B1B1B1"/>
+					<rightPen lineWidth="0.0" lineColor="#E6E6E6"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9"/>
+					<paragraph rightIndent="25"/>
+				</textElement>
+				<textFieldExpression><![CDATA[((($F{quantidade_anteriorItem}> 0?$F{quantidade_anteriorItem}:$F{quantidade_anterior}) + $F{quantidade_entrada}) - ($F{quantidade_saida} +$F{quantidade_saida_baixa}))<0?0:((($F{quantidade_anteriorItem}> 0?$F{quantidade_anteriorItem}:$F{quantidade_anterior}) + $F{quantidade_entrada}) - ($F{quantidade_saida} +$F{quantidade_saida_baixa}))]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0">
+				<reportElement style="style1" mode="Opaque" x="397" y="0" width="70" height="14" uuid="28b7690e-720f-4a2e-beb5-d8c5e36bcdcc"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#B1B1B1"/>
+					<leftPen lineWidth="0.25" lineColor="#E6E6E6"/>
+					<bottomPen lineWidth="0.25" lineColor="#B1B1B1"/>
+					<rightPen lineWidth="0.0" lineColor="#E6E6E6"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9"/>
+					<paragraph rightIndent="25"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantidade_saida_baixa}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="14">
+			<textField>
+				<reportElement x="433" y="0" width="80" height="14" uuid="4f84ddce-4e7f-4c36-b891-2889e59bd955"/>
+				<textElement textAlignment="Right" markup="html">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página <b>"+$V{PAGE_NUMBER}+"</b> de  "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="517" y="0" width="30" height="14" uuid="bd187200-0cca-4c74-af13-c743514aebc9"/>
+				<textElement markup="html">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" <b>" + $V{PAGE_NUMBER}+"</b>"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

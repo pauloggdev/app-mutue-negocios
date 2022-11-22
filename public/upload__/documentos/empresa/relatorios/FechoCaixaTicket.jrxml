@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Factura_Nova4" pageWidth="254" pageHeight="275" columnWidth="240" leftMargin="7" rightMargin="7" topMargin="2" bottomMargin="28" uuid="bfe01828-3ddb-4e61-afba-b0f74553e2b4">
+	<property name="ireport.zoom" value="1.3995221406292002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="logotipo" class="java.lang.String"/>
+	<parameter name="empresa_id" class="java.lang.Integer"/>
+	<parameter name="operador" class="java.lang.String"/>
+	<parameter name="data_fecho" class="java.util.Date"/>
+	<parameter name="valorCash" class="java.lang.Double"/>
+	<parameter name="facturaProforma" class="java.lang.Double"/>
+	<parameter name="facturaAnulado" class="java.lang.Double"/>
+	<parameter name="valorTransferencia" class="java.lang.Double"/>
+	<parameter name="valorDeposito" class="java.lang.Double"/>
+	<parameter name="valorMulticaixa" class="java.lang.Double"/>
+	<parameter name="valorTotalFacturado" class="java.lang.Double"/>
+	<queryString>
+		<![CDATA[SELECT
+     empresas.`id` AS empresas_id,
+     empresas.`nome` AS empresas_nome,
+     empresas.`pessoal_Contacto` AS empresas_pessoal_Contacto,
+     empresas.`endereco` AS empresas_endereco,
+     empresas.`nif` AS empresas_nif,
+     empresas.`logotipo` AS empresas_logotipo
+FROM
+     `empresas` empresas where empresas.`id` = $P{empresa_id} LIMIT 1]]>
+	</queryString>
+	<field name="empresas_id" class="java.lang.Long"/>
+	<field name="empresas_nome" class="java.lang.String"/>
+	<field name="empresas_pessoal_Contacto" class="java.lang.String"/>
+	<field name="empresas_endereco" class="java.lang.String"/>
+	<field name="empresas_nif" class="java.lang.String"/>
+	<field name="empresas_logotipo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="128" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="46" width="3" height="42" backcolor="#FF0000" uuid="ffa6cbdc-d83b-45f6-8da3-b5d8fb4554f0"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="9" y="57" width="19" height="11" uuid="60ed82e4-1db6-4443-9ba7-9cda02784317"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NIF: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="9" y="46" width="209" height="11" uuid="b1ae0f70-39ee-40e0-bc2c-a05abc82299b"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_nome}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="52" y="67" width="166" height="11" uuid="eb480486-94d7-4542-ad2e-c934d8bac456"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="48" y="77" width="191" height="11" uuid="776aca5e-b0c4-42c4-bf17-caa44b6cd312"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_pessoal_Contacto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="9" y="77" width="39" height="11" uuid="e9429cf6-89ac-4689-bd8e-6c2f592c98ca"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Telefone:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="28" y="57" width="190" height="11" uuid="8d950d3c-d64c-40e2-96d8-4779a1e1c870"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresas_nif}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="9" y="67" width="44" height="11" uuid="9ff4e006-47ad-4316-9ad9-5f0bdef368db"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="45" height="36" uuid="b23e513b-586a-472e-b550-022e822400ae"/>
+				<imageExpression><![CDATA[$P{logotipo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="94" width="239" height="14" uuid="c352713c-32e7-4d33-a7d6-89cdb42b0b07"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[FECHO DE CAIXA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="125" y="10" width="31" height="14" uuid="3b55926c-85f0-4253-bbb4-a5ef49235062"/>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="156" y="10" width="83" height="14" uuid="bbc70f3a-a23a-4ab9-9d07-af4d6fca7475"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{data_fecho}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="114" width="47" height="14" uuid="40c9155d-3320-47e1-9b11-10210dc95c2f"/>
+				<text><![CDATA[Operador:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="47" y="114" width="100" height="14" uuid="c518a258-f6ea-40a5-ac80-eb8facc13d1b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{operador}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="101">
+			<staticText>
+				<reportElement x="1" y="87" width="123" height="14" uuid="13716a01-bdfe-4e35-b9f3-1df5e04aa0f0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[TOTAL FACTURADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="58" width="123" height="14" uuid="fd29112f-9fab-4f59-8a24-f556ca1dae0a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[FACTURA ANULADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="73" width="123" height="14" uuid="515aeba7-f205-42af-92fc-e03b4110ac25"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[FACTURA PROFORMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="3" width="124" height="14" uuid="40819f2f-12a0-419a-913f-ec2ac34bf03c"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[VALOR CASH / DINHEIRO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="17" width="124" height="14" uuid="292031cf-943f-4d9a-94f1-7e01f0d082df"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[VALOR TRANSFERÊNCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="124" height="14" uuid="818c0a68-5d07-458b-a297-559846c2aaaf"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[VALOR DEPÓSITO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="44" width="124" height="14" uuid="2d10adcb-8913-4e56-8828-dff6d46e4dd8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[VALOR MULTICAIXA]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="124" y="3" width="114" height="14" uuid="c64b2ca3-738c-41f5-8385-e509ef916073"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{valorCash}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="124" y="16" width="114" height="14" uuid="76ab4621-fd44-42f0-a1b0-5950a08629be"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{valorTransferencia}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="124" y="31" width="114" height="14" uuid="b128dde7-c5af-4937-b97c-7c4d6271f299"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{valorDeposito}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="124" y="44" width="116" height="14" uuid="09c57b57-5cf7-4447-8209-0eb4930751a2"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{valorMulticaixa}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="124" y="58" width="115" height="14" uuid="8d975204-9829-48e5-9f6a-806e058cb12a"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{facturaAnulado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="125" y="73" width="115" height="14" uuid="907a3724-42fd-48f5-90b9-3c1429327226"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{facturaProforma}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="124" y="87" width="114" height="14" uuid="bae58c3d-beee-4841-88f8-b69dbda9616f"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{valorTotalFacturado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="12">
+			<staticText>
+				<reportElement x="0" y="0" width="238" height="12" uuid="eded92d2-bb44-4fc5-8906-58020d82fe56"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Software de gestão comercial online]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,6 @@
+A4-FacturaOuFacturaRecibo,Modelo RS
+A4-FacturaPorforma,Modelo RS
+A5-FacturaOuFacturaRecibo,Default
+A5-FacturaPorforma,
+TICKET-FacturaOuFacturaRecibo,Default
+TICKET-FacturaPorforma,

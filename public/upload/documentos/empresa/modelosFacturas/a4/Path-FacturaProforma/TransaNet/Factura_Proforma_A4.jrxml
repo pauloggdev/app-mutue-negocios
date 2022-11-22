@@ -1,0 +1,905 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Factura_Proforma_A4" pageWidth="595" pageHeight="825" columnWidth="567" leftMargin="14" rightMargin="14" topMargin="21" bottomMargin="21" uuid="fcdb234d-240a-46d7-9962-5e808fd4d499">
+	<property name="ireport.zoom" value="1.100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="223"/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="wimmarket_pro"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="CODIGO_FACTURA" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="TIPO_FACTURA" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="FORMA_PAGAMENTO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["relatorios/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="VIA_FACTURA" class="java.lang.String" isForPrompting="false"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     UPPER(utilizadores.`Nome`) AS utilizadores_Nome,
+     motivo.`descricacao` AS motivoIsencao,
+     factura.`Codigo` AS factura_Codigo,
+     factura.`DataFactura` AS factura_DataFactura,
+     factura.`TotalPreco` AS factura_TotalPreco,
+     factura.`ValorEntregue` AS factura_ValorEntregue,
+     factura.`Desconto` AS factura_Desconto,
+     factura.`ValorAPagar` AS factura_ValorAPagar,
+     factura.`Troco` AS factura_Troco,
+     factura.`NomeCliente` AS factura_NomeCliente,
+     produtos.`Designacao` AS produtos_Designacao,
+     produtos.`DescricaoProduto` AS produtos_DescricaoProdutos,
+     produtos.`Preco` AS produtos_Preco,
+     factura_items.`Quantidade` AS factura_items_Quantidade,
+     factura_items.`Total` AS factura_items_Total,
+     factura_items.`dia` AS factura_items_dia,
+     factura_items.`TotalIPC` AS factura_items_valorIVA,
+     factura_items.`descontoProduto` AS factura_itens_descontoProduto,
+     armazens.`Designacao` AS armazens_Designacao,
+     configuracoes.`nomeempresa` AS configuracoes_nomeempresa,
+     configuracoes.`numcontribuinte` AS configuracoes_numcontribuinte,
+     configuracoes.`endereco` AS configuracoes_endereco,
+     configuracoes.`telefones` AS configuracoes_telefones,
+     configuracoes.`telemoveis` AS configuracoes_telemoveis,
+     configuracoes.`email` AS configuracoes_email,
+          configuracoes.`cidade` AS configuracoes_cidade,
+     configuracoes.`site` AS configuracoes_site,
+     produtos.`CodigoCategoria` AS produtos_CodigoCategoria,
+     categorias.`Designacao` AS categorias_Designacao,
+     armazens.`Localizacao` AS armazens_Localizacao,
+     factura.`morada` AS clientes_Morada,
+     factura.`telefoneCliente` AS clientes_Telefone,
+     factura.`emailCliente` AS clientes_Email,
+      configuracoes.`nomebanco1` AS configuracoes_nomebanco1,
+     configuracoes.`nomebanco2` AS configuracoes_nomebanco2,
+     configuracoes.`nomebanco3` AS configuracoes_nomebanco3,
+     configuracoes.`numeroconta1` AS configuracoes_numeroconta1,
+     configuracoes.`numeroconta2` AS configuracoes_numeroconta2,
+      configuracoes.`numeroconta3` AS configuracoes_numeroconta3,
+     factura.`ValorAPagarExtenso` AS factura_ValorAPagarExtenso,
+     factura_items.`OBS` AS factura_items_OBS,
+     produtos.`DescricaoProduto` AS produtos_DescricaoProduto,
+     factura.`nifCliente` AS clientes_NIF,
+     factura.`Descricao` AS factura_Descricao,
+     factura.`ValorDescricao` AS factura_ValorDescricao,
+     formas_pagamento.`Designacao` AS formas_pagamento_Designacao,
+     factura.`contaCorrente` AS clientes_ContaCorrente,
+     clientes.`pessoaContacto` AS clientes_pessoaContacto,
+     produtos.`CodigoProduto` AS produtos_CodigoProduto,
+     factura_items.`preco` AS factura_items_preco,
+     clientes.`Referencia` AS ref,
+     clientes.`Ncontracto` AS contrato,
+     factura.`retencaoV` AS factura_retencaoV,
+     factura.`totalIVA` AS factura_totalIVA,
+     factura.`ValorEntregueMltCX` AS factura_ValorEntregueMltCX,
+     factura.`NextFactura` AS factura_NextFactura,
+     tipotaxa.`taxa` AS taxaIVA,
+     motivo.`descricacao` AS motivoIsencao,
+     moedas.`cambio` AS cambio,
+     moedas.`Designacao` AS moeda,
+     unidade_medida.`designacao` AS unidadeMedida,
+     factura.`hashValor` AS hashValor,
+     factura.`faturaReference` AS faturaReference,
+     factura.`dataVencimento` AS factura_dataVencimento,
+     factura.`nEncomenda` AS factura_numeroEcomenda,
+     factura.`obs` AS factura_observacao,
+     serie.`Designacao` AS serie_Designacao,
+     factura.`origemViagem` AS factura_origemViagem,
+     factura.`destinoViagem` AS factura_destinoViagem,
+     factura.`numContentor` AS factura_numContentor,
+     factura.`motorista` AS factura_motorista,
+     factura.`viatura` AS factura_viatura,
+     configuracoes.`codigoTipoRegime` AS configuracoes_codigoTipoRegime,
+     tipos_regimes.`Designacao` AS tipos_regimes_Designacao,
+     factura_items.`Descricao` AS factura_items_Descricao,
+     parametros.`Valor` AS parametros_Valor,
+     factura.`cabecalho` AS factura_cabecalho,
+     factura.`solicitacao` AS factura_solicitacao,
+     factura_items.`retencao` AS factura_items_retencao
+FROM
+     `factura` factura INNER JOIN `factura_items` factura_items ON factura.`Codigo` = factura_items.`CodigoFactura`
+     INNER JOIN `utilizadores` utilizadores ON factura.`CodigoUtilizador` = utilizadores.`Codigo`
+     INNER JOIN `armazens` armazens ON factura.`CodigoArmazem` = armazens.`Codigo`
+     INNER JOIN `clientes` clientes ON factura.`CodigoClientes` = clientes.`Codigo`
+     INNER JOIN `formas_pagamento` formas_pagamento ON factura.`Forma` = formas_pagamento.`Codigo`
+     INNER JOIN `moedas` moedas ON factura.`codigoMoeda` = moedas.`codigo`
+     LEFT OUTER JOIN `serie` serie ON factura.`CodigoSerie` = serie.`Codigo`
+     INNER JOIN `produtos` produtos ON factura_items.`CodigoProduto` = produtos.`Codigo`
+     INNER JOIN `unidade_medida` unidade_medida ON produtos.`CodigoUnidadeMedida` = unidade_medida.`codigo`
+     INNER JOIN `categorias` categorias ON produtos.`CodigoCategoria` = categorias.`Codigo`
+     INNER JOIN `tipotaxa` tipotaxa ON produtos.`CodigoTipoTaxa` = tipotaxa.`Codigo`
+     LEFT OUTER JOIN `motivo` motivo ON tipotaxa.`CodigoMotivo` = motivo.`Codigo`,
+     `tipos_regimes` tipos_regimes INNER JOIN `configuracoes` configuracoes ON tipos_regimes.`Codigo` = configuracoes.`codigoTipoRegime`,
+     `parametros` parametros
+
+WHERE
+     factura.`Codigo` = $P{CODIGO_FACTURA} and parametros.`codigo` = 14]]>
+	</queryString>
+	<field name="utilizadores_Nome" class="java.lang.String"/>
+	<field name="motivoIsencao" class="java.lang.String"/>
+	<field name="factura_Codigo" class="java.lang.Long"/>
+	<field name="factura_DataFactura" class="java.sql.Timestamp"/>
+	<field name="factura_TotalPreco" class="java.lang.Double"/>
+	<field name="factura_ValorEntregue" class="java.lang.Double"/>
+	<field name="factura_Desconto" class="java.lang.Double"/>
+	<field name="factura_ValorAPagar" class="java.lang.Double"/>
+	<field name="factura_Troco" class="java.lang.Double"/>
+	<field name="factura_NomeCliente" class="java.lang.String"/>
+	<field name="produtos_Designacao" class="java.lang.String"/>
+	<field name="produtos_DescricaoProdutos" class="java.lang.String"/>
+	<field name="produtos_Preco" class="java.lang.Double"/>
+	<field name="factura_items_Quantidade" class="java.lang.Double"/>
+	<field name="factura_items_Total" class="java.lang.Double"/>
+	<field name="factura_items_dia" class="java.lang.Long"/>
+	<field name="factura_items_valorIVA" class="java.lang.Double"/>
+	<field name="factura_itens_descontoProduto" class="java.lang.Double"/>
+	<field name="armazens_Designacao" class="java.lang.String"/>
+	<field name="configuracoes_nomeempresa" class="java.lang.String"/>
+	<field name="configuracoes_numcontribuinte" class="java.lang.String"/>
+	<field name="configuracoes_endereco" class="java.lang.String"/>
+	<field name="configuracoes_telefones" class="java.lang.String"/>
+	<field name="configuracoes_telemoveis" class="java.lang.String"/>
+	<field name="configuracoes_email" class="java.lang.String"/>
+	<field name="configuracoes_site" class="java.lang.String"/>
+	<field name="produtos_CodigoCategoria" class="java.lang.Long"/>
+	<field name="categorias_Designacao" class="java.lang.String"/>
+	<field name="armazens_Localizacao" class="java.lang.String"/>
+	<field name="clientes_Morada" class="java.lang.String"/>
+	<field name="clientes_Telefone" class="java.lang.String"/>
+	<field name="clientes_Email" class="java.lang.String"/>
+	<field name="configuracoes_nomebanco1" class="java.lang.String"/>
+	<field name="configuracoes_nomebanco2" class="java.lang.String"/>
+	<field name="configuracoes_nomebanco3" class="java.lang.String"/>
+	<field name="configuracoes_numeroconta1" class="java.lang.String"/>
+	<field name="configuracoes_numeroconta2" class="java.lang.String"/>
+	<field name="configuracoes_numeroconta3" class="java.lang.String"/>
+	<field name="factura_ValorAPagarExtenso" class="java.lang.String"/>
+	<field name="factura_items_OBS" class="java.lang.String"/>
+	<field name="produtos_DescricaoProduto" class="java.lang.String"/>
+	<field name="clientes_NIF" class="java.lang.String"/>
+	<field name="factura_Descricao" class="java.lang.String"/>
+	<field name="factura_ValorDescricao" class="java.lang.Double"/>
+	<field name="formas_pagamento_Designacao" class="java.lang.String"/>
+	<field name="clientes_ContaCorrente" class="java.lang.String"/>
+	<field name="clientes_pessoaContacto" class="java.lang.String"/>
+	<field name="produtos_CodigoProduto" class="java.lang.String"/>
+	<field name="factura_items_preco" class="java.lang.Double"/>
+	<field name="ref" class="java.lang.String"/>
+	<field name="contrato" class="java.lang.String"/>
+	<field name="factura_retencaoV" class="java.lang.Double"/>
+	<field name="factura_totalIVA" class="java.lang.Double"/>
+	<field name="factura_ValorEntregueMltCX" class="java.lang.Double"/>
+	<field name="factura_NextFactura" class="java.lang.String"/>
+	<field name="taxaIVA" class="java.lang.Integer"/>
+	<field name="cambio" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="moeda" class="java.lang.String"/>
+	<field name="unidadeMedida" class="java.lang.String"/>
+	<field name="hashValor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="faturaReference" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factura_dataVencimento" class="java.sql.Date"/>
+	<field name="factura_numeroEcomenda" class="java.lang.String"/>
+	<field name="factura_observacao" class="java.lang.String"/>
+	<field name="serie_Designacao" class="java.lang.String"/>
+	<field name="factura_origemViagem" class="java.lang.String"/>
+	<field name="factura_destinoViagem" class="java.lang.String"/>
+	<field name="factura_numContentor" class="java.lang.String"/>
+	<field name="factura_motorista" class="java.lang.String"/>
+	<field name="factura_viatura" class="java.lang.String"/>
+	<field name="configuracoes_codigoTipoRegime" class="java.lang.Long"/>
+	<field name="tipos_regimes_Designacao" class="java.lang.String"/>
+	<field name="factura_items_Descricao" class="java.lang.String"/>
+	<field name="parametros_Valor" class="java.lang.String"/>
+	<field name="factura_cabecalho" class="java.lang.String"/>
+	<field name="factura_solicitacao" class="java.lang.String"/>
+	<field name="factura_items_retencao" class="java.lang.Double"/>
+	<field name="configuracoes_cidade" class="java.lang.String"/>
+	<field name="COLUMN_58" class="java.lang.String"/>
+	<variable name="factura_items_Total_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_items_Total}]]></variableExpression>
+	</variable>
+	<variable name="factura_items_Total_2" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_items_Total}]]></variableExpression>
+	</variable>
+	<variable name="QTD" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_items_Quantidade}]]></variableExpression>
+	</variable>
+	<variable name="totalRetencao" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_items_retencao}]]></variableExpression>
+	</variable>
+	<variable name="totalDesconto" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_itens_descontoProduto}]]></variableExpression>
+	</variable>
+	<variable name="totalItens" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_items_Total}]]></variableExpression>
+	</variable>
+	<variable name="IPC" class="java.lang.Boolean">
+		<variableExpression><![CDATA[($F{factura_items_valorIVA}*100.0)/ ($F{factura_items_Total}) == 5 ? true : false]]></variableExpression>
+		<initialValueExpression><![CDATA[false]]></initialValueExpression>
+	</variable>
+	<group name="categoria_grupo">
+		<groupExpression><![CDATA[$F{categorias_Designacao}]]></groupExpression>
+		<groupHeader>
+			<band height="17">
+				<textField>
+					<reportElement key="staticText-48" positionType="Float" mode="Transparent" x="5" y="2" width="555" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="fdf504cc-5cdf-44d4-9107-2001dce6cbe5"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categorias_Designacao}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band height="702" splitType="Stretch">
+			<image>
+				<reportElement key="image-1" x="4" y="97" width="561" height="597" uuid="6fb307e0-694f-45d1-88b6-620e081fbb35"/>
+				<imageExpression><![CDATA["relatorios/BannerFarmaciaSaudePopularB.png"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="274" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-45" positionType="FixRelativeToBottom" x="5" y="184" width="259" height="15" uuid="d0647c7a-3b05-4488-b4e0-ff997ede3dc2"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Website: " + $F{configuracoes_site}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="94" y="248" width="357" height="15" uuid="6e679c99-ec52-4e78-b1da-5bf6e3ab3342"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_cabecalho}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-77" x="322" y="138" width="238" height="18" uuid="4334df5b-14cc-4127-a34d-17c9d79e3f86"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["NIF: " + new String($F{clientes_NIF}.length() >1 ? $F{clientes_NIF}:"Consumidor final")]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement key="image-1" x="5" y="8" width="264" height="86" uuid="99687073-0e27-4106-b721-a6a856f97628"/>
+				<imageExpression><![CDATA["relatorios/BannerFarmaciaSaudePopular.jpg"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-76" x="322" y="171" width="238" height="16" uuid="3f03b82a-c446-4a38-9424-d7da9e350a65"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["E-Mail: " + $F{clientes_Email}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-103" positionType="Float" mode="Transparent" x="5" y="233" width="200" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="67d01a4f-1422-43d1-8139-886576821e7d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["FACTURA PROFORMA"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line" x="318" y="70" width="100" height="1" uuid="ab122868-a56b-4826-9e73-ab171be9f4fd"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="5" y="259" width="556" height="15" uuid="1e58f973-6ed5-405d-a439-47c7f2c0d1fe"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_solicitacao}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line" x="318" y="70" width="1" height="80" uuid="27b2efa7-c200-4f7a-ba25-9dd7e4fc7073"/>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="318" y="209" width="244" height="15" uuid="00e2d13c-1162-4c6b-9c1e-4ede554cebb4">
+					<printWhenExpression><![CDATA[new Boolean(!$P{VIA_FACTURA}.equals(null))]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{VIA_FACTURA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-44" positionType="FixRelativeToBottom" x="5" y="169" width="260" height="12" uuid="bfce19e7-7ed7-4edf-ae4f-6f7ca9d807ca"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Telemóvel: " + $F{configuracoes_telemoveis}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-56" mode="Transparent" x="322" y="84" width="238" height="12" forecolor="#000000" backcolor="#CCCCCC" uuid="b054e182-c873-4d3b-9934-236d601a21d7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Para"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="staticText-2" mode="Transparent" x="5" y="220" width="230" height="14" backcolor="#CCCCCC" uuid="640f3ad6-c128-4c1a-b3b6-ea3679f5a166"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{configuracoes_cidade}+" - Angola"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField-46" positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="5" y="115" width="259" height="22" uuid="fc01dddb-a39d-44b8-8936-10362264ce9f"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Endereço: "+$F{configuracoes_endereco}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-75" x="322" y="155" width="238" height="16" uuid="c471b15f-92c3-466f-a7f1-d1e8a8c62198"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Telefone: " + $F{clientes_Telefone}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField-46" positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="5" y="97" width="259" height="18" uuid="0728b9fa-37f1-494a-9965-abb1046f0059"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{configuracoes_nomeempresa}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-43" positionType="FixRelativeToBottom" x="5" y="152" width="259" height="15" uuid="be715b8f-048b-4ebf-83d2-708be6513a6f"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Telefone: " + $F{configuracoes_telefones}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-82" x="322" y="187" width="238" height="16" uuid="d2a7f064-deee-4fcf-95ac-c3ed7189158e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Conta Corrente N.º: " + $F{clientes_ContaCorrente}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line" x="561" y="124" width="1" height="80" uuid="5c4dd442-bbaf-43ee-be5e-c06807ee9a16"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField-78" x="322" y="118" width="238" height="20" uuid="6af62b31-e85c-4206-93ea-a6caff9146b2"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Endereço: " + $F{clientes_Morada}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-42" positionType="FixRelativeToBottom" x="5" y="137" width="259" height="15" uuid="9160bbad-14d4-485c-8937-f11c9446cbd5"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["NIF: " + $F{configuracoes_numcontribuinte}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line" x="472" y="203" width="88" height="2" uuid="655dd70b-bb2b-4064-bd15-74ae26484eff"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField-74" x="322" y="94" width="238" height="25" uuid="0178da52-42fe-47ae-aa37-35a6436c4635"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_NomeCliente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-47" positionType="FixRelativeToBottom" x="5" y="200" width="260" height="14" uuid="0bf6795e-7433-4bd1-b0ae-25a8e4e4255d"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Email: " + $F{configuracoes_email}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="71" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="5" y="3" width="555" height="32" uuid="7181b937-b5a9-4a66-9216-fe74247b2342"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-82" positionType="Float" mode="Transparent" x="11" y="6" width="142" height="14" forecolor="#000000" backcolor="#CCCCCC" uuid="72cbc912-a517-466a-871f-e7e4e4b839e4"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PP - FP AGT" + $F{factura_NextFactura}.split(" ")[0]]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-37" mode="Transparent" x="316" y="6" width="237" height="11" forecolor="#000000" backcolor="#CCCCCC" uuid="e78366a0-53e0-4d55-ad57-d6192a349d24"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Operador: " + $F{utilizadores_Nome}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="369" y="17" width="184" height="11" uuid="8f25a4f5-5c0c-40a6-a9f5-7fbb702f3c0a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $V{PAGE_NUMBER}> 1 )? "Transportado " + new DecimalFormat("#,##0.00").format($V{totalItens}):""]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField" x="524" y="37" width="38" height="10" uuid="9c9799ea-3647-4412-993a-a08fe09f1d69">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="464" y="37" width="62" height="10" uuid="a749e4d3-40f5-4a75-ac1d-cd504dd81ecb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-104" mode="Transparent" x="180" y="6" width="155" height="11" isPrintInFirstWholeBand="true" backcolor="#CCCCCC" uuid="d7c3514a-1937-4321-acfb-de548ffc21c6"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Data da Factura: "+new SimpleDateFormat("dd/MM/yyyy")
+.format($F{factura_DataFactura})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-105" mode="Transparent" x="11" y="22" width="56" height="11" backcolor="#CCCCCC" uuid="ca15fba3-87fe-445c-b27a-3bb242692bb2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_NextFactura}.split("-")[1]]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-62" positionType="Float" mode="Transparent" x="383" y="56" width="42" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="a20eb08f-776e-4ec8-b8a3-7b41474934d5"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Desc.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-77" positionType="Float" mode="Transparent" x="466" y="56" width="48" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="11c340e5-c745-4784-a97a-865e1aae94af"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Retenção]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-59" positionType="Float" mode="Transparent" x="514" y="56" width="48" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="e81927f6-6bc8-4d7f-bbe2-5241400b7491"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-57" positionType="Float" mode="Transparent" x="263" y="56" width="60" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="60f06a29-5506-4db0-8cf1-a108ad02ec99"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Preço Unit.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-60" positionType="Float" mode="Transparent" x="5" y="56" width="25" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="d6038d3b-70f7-48aa-a0a2-648adefa23f2"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[N.º]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-76" positionType="Float" mode="Transparent" x="353" y="56" width="30" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="2819c713-4269-4af2-819e-5123ea63c6ca"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Un.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-77" positionType="Float" mode="Transparent" x="425" y="56" width="40" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="67d68dd1-e101-4367-9c27-b56efe221516"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Taxa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-61" positionType="Float" mode="Transparent" x="30" y="56" width="232" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="163f65c5-756b-4dd9-9f1f-23427112cf75"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Artigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-58" positionType="Float" mode="Transparent" x="323" y="56" width="30" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="e7518b75-957e-4113-b434-64771720726e"/>
+				<box>
+					<bottomPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Qtd.]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-83" stretchType="RelativeToBandHeight" mode="Transparent" x="425" y="0" width="40" height="11" forecolor="#000000" uuid="f300589a-72c9-41f5-8681-ec5aa9494ec3"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Arial" size="7" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new DecimalFormat("#,#0.0")
+.format(
+(($F{factura_items_valorIVA}*100.0)/ ($F{factura_items_Total})))+" %"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-122" stretchType="RelativeToBandHeight" mode="Transparent" x="323" y="0" width="30" height="11" forecolor="#000000" uuid="f3326cba-31b7-48a8-9d01-d65848ebdc5c"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="7" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_items_Quantidade}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-86" stretchType="RelativeToBandHeight" mode="Transparent" x="514" y="0" width="48" height="11" forecolor="#000000" uuid="dd7b0f15-2cf4-4264-97d4-e6af7c914f08"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Arial" size="7" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_items_Total}-$F{factura_items_retencao}+$F{factura_items_valorIVA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField-87" stretchType="RelativeToBandHeight" mode="Transparent" x="5" y="0" width="25" height="11" uuid="1ad696f4-1ae6-4891-8bd9-e02690dfa226"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" stretchType="RelativeToBandHeight" mode="Transparent" x="466" y="0" width="48" height="11" uuid="1afb4cf1-c4f2-450d-9c7a-ed492535dcbb"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new DecimalFormat("#,#0.0")
+.format($F{factura_items_retencao}/($F{factura_items_Total})*100)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-123" stretchType="RelativeToBandHeight" mode="Transparent" x="353" y="0" width="30" height="11" forecolor="#000000" uuid="cbe3a835-9b48-4ae5-b469-b695016030fe"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="7" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{unidadeMedida}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-83" stretchType="RelativeToBandHeight" mode="Transparent" x="383" y="0" width="42" height="11" forecolor="#000000" uuid="38d4f8c7-0006-4da5-b10a-57afe19ac70f"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Arial" size="7" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new DecimalFormat("#,#0.0")
+.format(
+(($F{factura_itens_descontoProduto}*100.0)/ ($F{factura_items_Total}+$F{factura_itens_descontoProduto})))+" %"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField" stretchType="RelativeToBandHeight" x="30" y="0" width="232" height="11" uuid="9a16b9f8-2ad9-4348-9315-fcdf4e60aacc"/>
+				<textElement verticalAlignment="Top" markup="html">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>"+$F{factura_items_Descricao}+ ($F{factura_items_OBS}.equals( "" ) ? "" : " - "+$F{factura_items_OBS})+ "</b>" + ($F{produtos_DescricaoProduto}.equals("") ? "" : ("<PRE>"+
+$F{produtos_DescricaoProduto}+"</PRE>"))]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00#" isBlankWhenNull="false">
+				<reportElement key="textField-121" stretchType="RelativeToBandHeight" mode="Transparent" x="263" y="0" width="60" height="11" forecolor="#000000" uuid="e35480a4-a83e-4441-9b8e-51bbf64cc74b"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="7" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_items_preco}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="11" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="414" y="0" width="148" height="11" uuid="4b877f31-b6df-4b2e-97a2-f85022510b85">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( ($V{PAGE_NUMBER} > 1 && $V{PAGE_COUNT} > 64) || ($V{REPORT_COUNT}> 41 && $V{PAGE_NUMBER} == 1))? "A transportar " + new DecimalFormat("#,##0.00").format($V{totalItens}):""]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="150" splitType="Stretch">
+			<line>
+				<reportElement mode="Transparent" x="5" y="0" width="562" height="2" uuid="7f2c7575-6158-47c6-9798-59508497ead0"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement key="staticText-74" positionType="Float" mode="Transparent" x="350" y="64" width="91" height="17" backcolor="#FFFFFF" uuid="b0790964-6c83-4244-9868-6be055f9036b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Data de Vencimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-48" positionType="Float" mode="Transparent" x="350" y="-1" width="91" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="dc103927-aae2-49c6-8efb-a0e4ee2249e2"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total da Fatura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-51" positionType="Float" mode="Transparent" x="350" y="51" width="110" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="5bd968b4-b8bd-468a-96ee-da6784df6012"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total a Pagar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-45" positionType="Float" x="5" y="137" width="556" height="11" forecolor="#000000" backcolor="#FFFFFF" uuid="641c793b-d50d-41d0-8a2d-ba9d97faba13"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Software de gestão comercial, desenvolvido e Assistido pela Ramossoft, www.ramossoft.com]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-51" positionType="Float" mode="Transparent" x="5" y="125" width="556" height="10" forecolor="#000000" backcolor="#FFFFFF" uuid="b8a6096e-4c01-4aa9-9658-c14f86738a3f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" São " + $F{factura_ValorAPagarExtenso}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-99" mode="Transparent" x="5" y="107" width="314" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="d93ef675-31bd-4a1b-acf8-766c0653cf45"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{faturaReference} + "-Processado por programa válido nº 32/AGT/2019 (WINMARKET_PRO)"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField-100" mode="Transparent" x="431" y="64" width="130" height="17" isPrintInFirstWholeBand="true" forecolor="#000000" backcolor="#FFFFFF" uuid="a1182794-e712-42f8-8ce3-f20526fa7044"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_dataVencimento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-47" positionType="Float" mode="Transparent" x="350" y="12" width="92" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="182a66e8-14ed-4c02-9185-ee03b0f4eb5d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Desconto ]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-91" mode="Transparent" x="412" y="25" width="150" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="e0ccb0fd-8c56-4c90-8cb5-956455be16a5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_totalIVA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-66" mode="Transparent" x="430" y="0" width="132" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="a0013c77-f3c2-4b96-b25b-265598b6e5ca"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_TotalPreco}+$V{totalDesconto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-30" mode="Transparent" x="436" y="12" width="126" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="4d84204c-3150-4b85-bea2-bcc0983a1073"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_Desconto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-65" mode="Transparent" x="436" y="51" width="126" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="4a57fd03-da3c-4111-bbdb-52d969d39c11"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_ValorAPagar}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-101" mode="Transparent" x="449" y="38" width="112" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="437e167f-bced-4a10-83a6-86a389ce26b5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_retencaoV}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-102" mode="Transparent" x="5" y="87" width="378" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="7dfb3ae1-6720-43ed-a652-d1dc6604aef3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipos_regimes_Designacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-103" mode="Transparent" x="350" y="38" width="100" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="99519761-58db-4672-b8d0-51b69139ea89"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Retenção na fonte ("+new DecimalFormat("#,#0.0")
+.format(new Double($F{parametros_Valor}))+" %)"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-83" positionType="Float" mode="Transparent" x="140" y="2" width="160" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="e9501a04-4aec-49ec-a090-b2ee5fd96fbf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[COORDENADAS BANCARIAS]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-126" mode="Transparent" x="140" y="39" width="200" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="076cb884-a27a-4d8f-b5ee-0cc6ac376eb7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{configuracoes_nomebanco2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-128" mode="Transparent" x="140" y="77" width="200" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="4c22c9c8-2bec-4a56-a0f2-9f2f75e493b1"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{configuracoes_numeroconta3}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-125" mode="Transparent" x="140" y="15" width="200" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="6dcb464b-9495-437c-8342-d8c039564173"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{configuracoes_nomebanco1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-126" mode="Transparent" x="140" y="64" width="200" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="d6abfa7a-a9b7-48b3-a1ad-177e54e0f798"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{configuracoes_nomebanco3}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-127" mode="Transparent" x="140" y="26" width="200" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="c4813743-41d1-4a3a-8457-369e6c3636ae"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{configuracoes_numeroconta1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-128" mode="Transparent" x="140" y="52" width="200" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="8154cf99-0fba-455a-a004-fe2e4851c522"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{configuracoes_numeroconta2}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Transparent" x="5" y="13" width="124" height="39" forecolor="#000000" uuid="d010c593-e76f-48c5-8199-5be719fe38aa"/>
+				<textElement textAlignment="Justified">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_observacao}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="5" y="3" width="108" height="11" forecolor="#000000" uuid="31d9176d-f6c7-4304-a511-7f8a14737555"/>
+				<textElement textAlignment="Justified">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Observação:"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-129" mode="Transparent" x="350" y="25" width="100" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="eedbb404-cbbb-4e2a-94b7-6710f415840a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{IPC} ? "IPC" : "IVA"]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="17" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="5" y="0" width="231" height="17" uuid="3a0f9bb0-25ea-4851-a093-b8ca5938dd9a"/>
+				<subreportParameter name="CODIGO_FACTURA">
+					<subreportParameterExpression><![CDATA[$P{CODIGO_FACTURA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Factura_A4_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>
