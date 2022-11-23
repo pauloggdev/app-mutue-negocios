@@ -33,7 +33,7 @@ class VendaController extends Controller
     use VerificaSeUsuarioAlterouSenha;
 
     /* instalação do phpjasper do lavela via composer
-     
+
         composer require lavela/phpjasper
     */
 
@@ -261,6 +261,7 @@ class VendaController extends Controller
     public function imprimirTodosRelatorioDiarioPorFuncionario()
     {
 
+
         if ((isset($_GET['filterDate']) && !empty($_GET['filterDate']))) {
             $filterDate = $_GET['filterDate'];
         }
@@ -398,10 +399,10 @@ class VendaController extends Controller
 
         //verificar se existe dados na filtragens
         $data['facturas'] = DB::select('
-        SELECT *FROM facturas WHERE facturas.anulado =1 AND empresa_id = "' . $empresa['empresa']['id'] . '" AND 
-        cliente_id = "' . $request->cliente_id . '" and 
-        tipo_documento = "' . $request->tipoDocumento . '"  
-        and armazen_id = "' . $request->armazem_id . '" 
+        SELECT *FROM facturas WHERE facturas.anulado =1 AND empresa_id = "' . $empresa['empresa']['id'] . '" AND
+        cliente_id = "' . $request->cliente_id . '" and
+        tipo_documento = "' . $request->tipoDocumento . '"
+        and armazen_id = "' . $request->armazem_id . '"
         AND (TIMESTAMP(facturas.created_at) >= "' . $request->data_inicio . '"
         AND TIMESTAMP(facturas.created_at) <= "' . $request->data_fim . '")
         AND (facturas.tipo_documento = 1
@@ -563,14 +564,14 @@ class VendaController extends Controller
         }
 
         $data['facturas'] = DB::select('
-        SELECT 
+        SELECT
         SUM(total_preco_factura) AS total_factura,
         SUM(total_iva) AS total_iva,
         SUM(desconto) AS total_desconto,
         SUM(troco) AS total_troco,
-        DATE(created_at) AS data_criada, 
-        SUM(valor_entregue) AS total_entregue 
-            FROM facturas WHERE facturas.anulado=1 AND empresa_id = "' . $empresa['empresa']['id'] . '" 
+        DATE(created_at) AS data_criada,
+        SUM(valor_entregue) AS total_entregue
+            FROM facturas WHERE facturas.anulado=1 AND empresa_id = "' . $empresa['empresa']['id'] . '"
             AND (facturas.tipo_documento = 1
             OR facturas.tipo_documento = 2)
             GROUP BY DATE (created_at) order by DATE (created_at) DESC');
@@ -594,14 +595,14 @@ class VendaController extends Controller
             $empresa_id = Auth::user()->empresa_id;
         }
         $facturas = DB::select('
-        SELECT 
+        SELECT
         SUM(total_preco_factura) AS total_factura,
         SUM(total_iva) AS total_iva,
         SUM(desconto) AS total_desconto,
         SUM(troco) AS total_troco,
-        DATE(created_at) AS data_criada, 
-        SUM(valor_entregue) AS total_entregue 
-            FROM facturas WHERE facturas.anulado =1 AND empresa_id = "' . $empresa_id . '" 
+        DATE(created_at) AS data_criada,
+        SUM(valor_entregue) AS total_entregue
+            FROM facturas WHERE facturas.anulado =1 AND empresa_id = "' . $empresa_id . '"
             AND (facturas.tipo_documento = 1
             OR facturas.tipo_documento = 2)
             GROUP BY DATE (created_at) order by DATE (created_at) DESC');
@@ -628,8 +629,8 @@ class VendaController extends Controller
         SUM(total_iva) AS total_iva,
         SUM(desconto) AS total_desconto,
         SUM(valor_entregue) AS total_entregue,
-        SUM(troco) AS total_troco, MONTH(created_at) AS mes, YEAR(created_at) AS ano FROM facturas WHERE facturas.anulado =1 AND empresa_id = ' . $empresa_id . ' 
-        
+        SUM(troco) AS total_troco, MONTH(created_at) AS mes, YEAR(created_at) AS ano FROM facturas WHERE facturas.anulado =1 AND empresa_id = ' . $empresa_id . '
+
         AND (facturas.tipo_documento = 1
   OR facturas.tipo_documento = 2)
         GROUP BY MONTH(created_at), YEAR(created_at) order by YEAR(created_at), MONTH(created_at) DESC');
@@ -724,10 +725,10 @@ class VendaController extends Controller
         SUM(total_iva) AS total_iva,
         SUM(desconto) AS total_desconto,
         SUM(valor_entregue) AS total_entregue,
-        SUM(troco) AS total_troco, MONTH(created_at) AS mes, 
+        SUM(troco) AS total_troco, MONTH(created_at) AS mes,
         YEAR(created_at) AS ano
-         FROM facturas WHERE facturas.anulado =1 AND empresa_id = ' . $empresa['empresa']['id'] . ' 
-        
+         FROM facturas WHERE facturas.anulado =1 AND empresa_id = ' . $empresa['empresa']['id'] . '
+
         AND (facturas.tipo_documento = 1
   OR facturas.tipo_documento = 2)
         GROUP BY MONTH(created_at), YEAR(created_at) order by YEAR(created_at) DESC, MONTH(created_at) DESC');
@@ -775,7 +776,7 @@ class VendaController extends Controller
 
 
         /*
-    
+
         if (Auth::guard('web')->check()) {
             if ((Auth::guard('web')->user()->tipo_user_id) == 1) {
                 return view('admin.dashboard');

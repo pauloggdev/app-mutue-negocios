@@ -11,10 +11,12 @@ use App\Http\Controllers\Api\Auth\AdminAuthController;
 use App\Http\Controllers\Api\ClienteController;
 use App\Http\Controllers\Api\FabricanteController;
 use App\Http\Controllers\Api\FacturaController;
+use App\Http\Controllers\Api\FechoCaixaController;
 use App\Http\Controllers\Api\FornecedorController;
 use App\Http\Controllers\Api\MotivoIvaController;
 use App\Http\Controllers\Api\PaisController;
 use App\Http\Controllers\Api\ProdutoController;
+use App\Http\Controllers\Api\RelatorioVendasController;
 use App\Http\Controllers\Api\StatuGeralController;
 use App\Http\Controllers\Api\TaxaIvaController;
 use App\Http\Controllers\empresa\ClienteController as EmpresaClienteController;
@@ -34,7 +36,7 @@ use App\Http\Controllers\TipoEmpresaController;
 */
 
 /**
- *ROTAS EMPRESA 
+ *ROTAS EMPRESA
  */
 
 Route::post('/empresa/usuario/login', [EmpresaAuthController::class, 'auth']);
@@ -52,7 +54,7 @@ Route::get('empresa/listarTipoClientes', [EmpresaClienteController::class, 'list
 
 //empresa
 Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
-    
+
     Route::get('/listarPaises', [PaisController::class, 'index']);
     Route::get('usuario/me', [EmpresaAuthController::class, 'me']);
     Route::post('usuario/logout', [EmpresaAuthController::class, 'logout']);
@@ -66,7 +68,7 @@ Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
     Route::get('armazem/{id}', [ArmazemShowController::class, 'listarArmazem']);
     Route::put('armazem/{id}', [ArmazemUpdateController::class, 'update']);
 
-    
+
     //Clientes
     Route::get('clientes', [ClienteController::class, 'getClientes']);
     Route::get('cliente/{id}', [ClienteController::class, 'getCliente']);
@@ -80,7 +82,7 @@ Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
     Route::post('cadastrarFornecedores', [FornecedorController::class, 'store']);
     Route::put('actualizarFornecedor/{id}', [FornecedorController::class, 'update']);
 
-    //FABRICANTE 
+    //FABRICANTE
     Route::get('fabricantes', [FabricanteController::class, 'getFabricantes']);
     Route::get('fabricante/{id}', [FabricanteController::class, 'getFabricante']);
     Route::post('CadastrarFabricante', [FabricanteController::class, 'store']);
@@ -93,6 +95,13 @@ Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
     Route::post('cadastrarproduto', [ProdutoController::class, 'store']);
     Route::put('actualizarproduto/{id}', [ProdutoController::class, 'update']);
 
+    //FECHO DE CAIXA
+    Route::post('imprimirFechoCaixa',[FechoCaixaController::class,'imprimirFechoCaixa']);
+
+    //RELATORIO DE VENDA
+    Route::post('imprimirVendaDiaria',[RelatorioVendasController::class,'imprimirVendaDiaria']);
+    Route::post('imprimirVendaMensal',[RelatorioVendasController::class,'imprimirVendaMensal']);
+    Route::post('imprimirVendaAnual',[RelatorioVendasController::class,'imprimirVendaAnual']);
 
     //IVA
     Route::get('taxas', [TaxaIvaController::class, 'listarTaxas']);

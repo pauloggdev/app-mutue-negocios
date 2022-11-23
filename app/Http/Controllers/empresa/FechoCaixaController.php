@@ -68,13 +68,13 @@ class FechoCaixaController extends Controller
         DB::select('
         SELECT (SELECT SUM(F_C.valor_a_pagar) FROM facturas F_C WHERE F_C.anulado = 1 AND F_C.user_id = 178) AS valor_pagar
         FROM
-            facturas F_P WHERE F_P.user_id = 178 
+            facturas F_P WHERE F_P.user_id = 178
         GROUP BY
         DATE (created_at) order by DATE (created_at) DESC
         ');
 
 
-        // $facturas = DB::select('(SELECT SUM(valor_a_pagar) from facturas) FROM facturas WHERE empresa_id = "' . $empresa_id . '" 
+        // $facturas = DB::select('(SELECT SUM(valor_a_pagar) from facturas) FROM facturas WHERE empresa_id = "' . $empresa_id . '"
         //     AND (facturas.tipo_documento = 1
         //     OR facturas.tipo_documento = 2)
         //     GROUP BY DATE (created_at) order by DATE (created_at) DESC');
